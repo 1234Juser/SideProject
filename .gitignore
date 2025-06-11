@@ -18,7 +18,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -35,3 +35,22 @@ out/
 
 ### VS Code ###
 .vscode/
+
+#  Java/Spring Boot 관련
+/target/                      # Maven/Gradle 빌드 결과
+*.log                         # 로그파일
+*.class                       # 컴파일된 클래스
+*.jar                         # 빌드된 jar
+logs/application.log
+# ⚛React 관련 (frontend 폴더 안에 있는 것들)
+frontend/node_modules/        # 의존성 (용량 큼)
+frontend/build/               # yarn build 결과물
+
+#  운영체제 임시 파일
+.DS_Store
+Thumbs.db
+
+#  테스트 관련
+coverage/
+*.test.js.snap
+*.test.ts.snap
