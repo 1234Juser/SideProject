@@ -1,10 +1,14 @@
 import './App.css';
+import MainPage from "./pages/common/MainPage";
+import {Route, Routes} from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      리액트 페이지 ㅇㅇㅇ
-    </div>
+      <div className="main-page-container">
+        <Routes>
+            <Route path="/" element={<MainPage/>} />
+        </Routes>
+      </div>
   );
 }
 
