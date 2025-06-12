@@ -1,90 +1,869 @@
-2025-06-11T16:00:56.924+09:00  INFO 7288 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 7288 (D:\myWorkspace\nowpick\build\classes\java\main started by fpemv in D:\myWorkspace\nowpick)
-2025-06-11T16:00:56.925+09:00  INFO 7288 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
-2025-06-11T16:00:56.959+09:00  INFO 7288 --- [nowpick] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2025-06-11T16:00:56.959+09:00  INFO 7288 --- [nowpick] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2025-06-11T16:00:57.431+09:00  INFO 7288 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-06-11T16:00:57.447+09:00  INFO 7288 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 0 JPA repository interfaces.
-2025-06-11T16:00:57.870+09:00  INFO 7288 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2025-06-11T16:00:57.881+09:00  INFO 7288 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-06-11T16:00:57.881+09:00  INFO 7288 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
-2025-06-11T16:00:57.932+09:00  INFO 7288 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2025-06-11T16:00:57.932+09:00  INFO 7288 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 973 ms
-2025-06-11T16:00:58.024+09:00  INFO 7288 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-06-11T16:00:58.167+09:00  INFO 7288 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@306992a1
-2025-06-11T16:00:58.168+09:00  INFO 7288 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-06-11T16:00:58.200+09:00  INFO 7288 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-06-11T16:00:58.237+09:00  INFO 7288 --- [nowpick] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
-2025-06-11T16:00:58.261+09:00  INFO 7288 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-06-11T16:00:58.491+09:00  INFO 7288 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-06-11T16:00:58.570+09:00  INFO 7288 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2025-06-12T14:22:01.529+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:22:01.541+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:22:01.617+09:00  INFO 35596 --- [nowpick] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-06-12T14:22:01.618+09:00  INFO 35596 --- [nowpick] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-06-12T14:22:02.992+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:22:02.996+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:22:03.032+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:22:03.059+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:22:03.060+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:22:03.076+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:22:04.218+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:22:04.236+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:22:04.237+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:22:04.352+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:22:04.353+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2733 ms
+2025-06-12T14:22:04.564+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-06-12T14:22:04.833+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@48c7d516
+2025-06-12T14:22:04.835+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-06-12T14:22:04.890+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:22:05.015+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
+2025-06-12T14:22:05.093+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:22:05.620+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:22:05.788+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
-	Database version: 8.0.34
+	Database version: 8.0.41
 	Autocommit mode: undefined/unknown
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-06-11T16:00:58.799+09:00  INFO 7288 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-06-11T16:00:58.802+09:00  INFO 7288 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-06-11T16:00:58.835+09:00  WARN 7288 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-06-11T16:00:59.132+09:00  WARN 7288 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2025-06-12T14:22:06.279+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:22:06.289+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:22:06.370+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:22:06.613+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 03e1302e-d181-4419-bac0-71127d08a85f
+Using generated security password: fae73c6b-bedd-4ee7-8d76-eba51c1938a6
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2025-06-11T16:00:59.137+09:00  INFO 7288 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2025-06-11T16:00:59.229+09:00  INFO 7288 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2025-06-11T16:00:59.265+09:00  INFO 7288 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2025-06-11T16:00:59.271+09:00  INFO 7288 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 2.709 seconds (process running for 3.215)
-2025-06-11T16:01:18.466+09:00  INFO 7288 --- [nowpick] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-06-11T16:01:18.466+09:00  INFO 7288 --- [nowpick] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2025-06-11T16:01:18.467+09:00  INFO 7288 --- [nowpick] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2025-06-11T16:05:29.525+09:00  INFO 7288 --- [nowpick] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
-2025-06-11T16:05:29.687+09:00  INFO 7288 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
-2025-06-11T16:05:29.690+09:00  INFO 7288 --- [nowpick] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-06-11T16:05:29.692+09:00  INFO 7288 --- [nowpick] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2025-06-11T16:05:29.698+09:00  INFO 7288 --- [nowpick] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2025-06-11T16:05:31.832+09:00  INFO 17520 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 17520 (D:\myWorkspace\nowpick\build\classes\java\main started by fpemv in D:\myWorkspace\nowpick)
-2025-06-11T16:05:31.834+09:00  INFO 17520 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
-2025-06-11T16:05:31.867+09:00  INFO 17520 --- [nowpick] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2025-06-11T16:05:31.867+09:00  INFO 17520 --- [nowpick] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2025-06-11T16:05:32.334+09:00  INFO 17520 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-06-11T16:05:32.349+09:00  INFO 17520 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 0 JPA repository interfaces.
-2025-06-11T16:05:32.724+09:00  INFO 17520 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2025-06-11T16:05:32.734+09:00  INFO 17520 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-06-11T16:05:32.735+09:00  INFO 17520 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
-2025-06-11T16:05:32.784+09:00  INFO 17520 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2025-06-11T16:05:32.784+09:00  INFO 17520 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 916 ms
-2025-06-11T16:05:32.898+09:00  INFO 17520 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-06-11T16:05:33.029+09:00  INFO 17520 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@366fb09e
-2025-06-11T16:05:33.031+09:00  INFO 17520 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-06-11T16:05:33.065+09:00  INFO 17520 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-06-11T16:05:33.102+09:00  INFO 17520 --- [nowpick] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
-2025-06-11T16:05:33.128+09:00  INFO 17520 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-06-11T16:05:33.342+09:00  INFO 17520 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-06-11T16:05:33.416+09:00  INFO 17520 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+2025-06-12T14:22:06.624+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:22:06.718+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:22:07.514+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:22:07.562+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:22:07.573+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 6.873 seconds (process running for 8.669)
+2025-06-12T14:23:55.394+09:00  INFO 35596 --- [nowpick] [http-nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-12T14:23:55.395+09:00  INFO 35596 --- [nowpick] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-06-12T14:23:55.398+09:00  INFO 35596 --- [nowpick] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-06-12T14:31:14.870+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:31:14.876+09:00  INFO 35596 --- [nowpick] [Thread-5] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:31:15.689+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:31:15.715+09:00  INFO 35596 --- [nowpick] [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:31:15.719+09:00  INFO 35596 --- [nowpick] [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-06-12T14:31:15.733+09:00  INFO 35596 --- [nowpick] [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-06-12T14:31:15.873+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:31:15.874+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:31:16.302+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:31:16.303+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:31:16.306+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:31:16.311+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:31:16.311+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:31:16.315+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:31:16.502+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:31:16.503+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:31:16.504+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:31:16.561+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:31:16.561+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 679 ms
+2025-06-12T14:31:16.599+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2025-06-12T14:31:16.607+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4d60b682
+2025-06-12T14:31:16.607+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2025-06-12T14:31:16.609+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:31:16.620+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:31:16.665+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:31:16.683+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
 	Database driver: undefined/unknown
-	Database version: 8.0.34
+	Database version: 8.0.41
 	Autocommit mode: undefined/unknown
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-06-11T16:05:33.634+09:00  INFO 17520 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-06-11T16:05:33.638+09:00  INFO 17520 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-06-11T16:05:33.669+09:00  WARN 17520 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-06-11T16:05:33.928+09:00  WARN 17520 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+2025-06-12T14:31:16.745+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:31:16.745+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:31:16.797+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:31:16.972+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 4939ba05-815b-4a8e-bb57-48c10f6f679d
+Using generated security password: 23707db7-9b0c-4c20-8d10-f2b342390511
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2025-06-11T16:05:33.933+09:00  INFO 17520 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2025-06-11T16:05:34.025+09:00  INFO 17520 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2025-06-11T16:05:34.054+09:00  INFO 17520 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2025-06-11T16:05:34.061+09:00  INFO 17520 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 2.57 seconds (process running for 3.137)
-2025-06-11T16:05:41.426+09:00  INFO 17520 --- [nowpick] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-06-11T16:05:41.426+09:00  INFO 17520 --- [nowpick] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2025-06-11T16:05:41.427+09:00  INFO 17520 --- [nowpick] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2025-06-11T16:36:11.673+09:00  WARN 17520 --- [nowpick] [HikariPool-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m8s388ms377µs500ns).
+2025-06-12T14:31:16.973+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:31:16.978+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:31:17.106+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:31:17.123+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:31:17.129+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 1.335 seconds (process running for 558.225)
+2025-06-12T14:31:17.132+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:31:36.035+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:31:36.042+09:00  INFO 35596 --- [nowpick] [Thread-7] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:31:36.827+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:31:36.844+09:00  INFO 35596 --- [nowpick] [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:31:36.845+09:00  INFO 35596 --- [nowpick] [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2025-06-12T14:31:36.852+09:00  INFO 35596 --- [nowpick] [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2025-06-12T14:31:36.943+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:31:36.943+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:31:37.443+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:31:37.443+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:31:37.448+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:31:37.453+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:31:37.455+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:31:37.460+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:31:37.588+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:31:37.589+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:31:37.589+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:31:37.628+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:31:37.628+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 683 ms
+2025-06-12T14:31:37.661+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2025-06-12T14:31:37.667+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@122d504b
+2025-06-12T14:31:37.667+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2025-06-12T14:31:37.669+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:31:37.676+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:31:37.688+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:31:37.691+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-3)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:31:37.724+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:31:37.724+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:31:37.753+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:31:39.420+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 90833489-e414-4533-991f-164d139058ba
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:31:39.429+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:31:39.437+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:31:39.919+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:31:39.944+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:31:39.953+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 3.051 seconds (process running for 581.048)
+2025-06-12T14:31:39.955+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:33:03.137+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:33:03.140+09:00  INFO 35596 --- [nowpick] [Thread-11] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:33:03.872+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:33:03.879+09:00  INFO 35596 --- [nowpick] [Thread-11] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:33:03.880+09:00  INFO 35596 --- [nowpick] [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2025-06-12T14:33:03.883+09:00  INFO 35596 --- [nowpick] [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2025-06-12T14:33:03.980+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:33:03.981+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:33:04.403+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:33:04.403+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:33:04.409+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:33:04.413+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:33:04.413+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:33:04.417+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:33:04.549+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:33:04.550+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:33:04.550+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:33:04.600+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:33:04.600+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 617 ms
+2025-06-12T14:33:04.636+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2025-06-12T14:33:04.643+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@a59ef87
+2025-06-12T14:33:04.643+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2025-06-12T14:33:04.646+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:33:04.655+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:33:04.672+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:33:04.678+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-4)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:33:04.718+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:33:04.718+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:33:04.745+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:33:04.808+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 568cfe34-4de7-467d-b96b-b1f8d0be99ef
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:33:04.809+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:33:04.813+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:33:04.939+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:33:04.955+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:33:04.960+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 1.026 seconds (process running for 666.056)
+2025-06-12T14:33:04.962+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:33:43.690+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:33:43.692+09:00  INFO 35596 --- [nowpick] [Thread-15] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:33:44.329+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:33:44.337+09:00  INFO 35596 --- [nowpick] [Thread-15] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:33:44.337+09:00  INFO 35596 --- [nowpick] [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2025-06-12T14:33:44.340+09:00  INFO 35596 --- [nowpick] [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2025-06-12T14:33:44.420+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:33:44.421+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:33:44.749+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:33:44.749+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:33:44.754+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:33:44.757+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:33:44.757+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:33:44.760+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:33:44.883+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:33:44.883+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:33:44.883+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:33:44.918+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:33:44.918+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 495 ms
+2025-06-12T14:33:44.947+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2025-06-12T14:33:44.953+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3d067a92
+2025-06-12T14:33:44.954+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2025-06-12T14:33:44.955+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:33:44.962+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:33:44.974+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:33:44.976+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-5)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:33:45.003+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:33:45.003+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:33:45.025+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:33:45.073+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: e2e3ed9d-8f0b-4209-bb10-e182965a4ed5
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:33:45.074+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:33:45.077+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:33:45.167+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:33:45.179+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:33:45.183+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.803 seconds (process running for 706.279)
+2025-06-12T14:33:45.184+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:34:02.161+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:34:02.165+09:00  INFO 35596 --- [nowpick] [Thread-19] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:34:02.932+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:34:02.940+09:00  INFO 35596 --- [nowpick] [Thread-19] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:34:02.940+09:00  INFO 35596 --- [nowpick] [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2025-06-12T14:34:02.945+09:00  INFO 35596 --- [nowpick] [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2025-06-12T14:34:03.034+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:34:03.035+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:34:03.365+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:34:03.365+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:34:03.369+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:34:03.372+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:34:03.373+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:34:03.379+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:34:03.496+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:34:03.497+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:34:03.497+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:34:03.549+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:34:03.550+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 513 ms
+2025-06-12T14:34:03.583+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
+2025-06-12T14:34:03.588+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-6 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2cc2f5b9
+2025-06-12T14:34:03.589+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
+2025-06-12T14:34:03.591+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:34:03.598+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:34:03.614+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:34:03.617+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-6)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:34:03.654+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:34:03.654+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:34:03.678+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:34:03.737+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 4eef67dc-6e60-4f1d-aae5-1196ab6becc2
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:34:03.738+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:34:03.744+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:34:03.841+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:34:03.853+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:34:03.857+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.868 seconds (process running for 724.953)
+2025-06-12T14:34:03.858+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:34:45.464+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:34:45.467+09:00  INFO 35596 --- [nowpick] [Thread-23] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:34:46.227+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:34:46.234+09:00  INFO 35596 --- [nowpick] [Thread-23] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:34:46.234+09:00  INFO 35596 --- [nowpick] [Thread-23] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+2025-06-12T14:34:46.237+09:00  INFO 35596 --- [nowpick] [Thread-23] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
+2025-06-12T14:34:46.337+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:34:46.337+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:34:46.761+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:34:46.761+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:34:46.766+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:34:46.771+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:34:46.771+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:34:46.775+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:34:46.897+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:34:46.898+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:34:46.899+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:34:46.944+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:34:46.944+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 604 ms
+2025-06-12T14:34:46.971+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Starting...
+2025-06-12T14:34:46.980+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5a81562e
+2025-06-12T14:34:46.980+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Start completed.
+2025-06-12T14:34:46.982+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:34:46.989+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:34:47.004+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:34:47.007+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-7)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:34:47.040+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:34:47.040+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:34:47.061+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:34:47.154+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 1bea611f-d99b-4e9c-ba1f-c934b6b69e04
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:34:47.155+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:34:47.158+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:34:47.263+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:34:47.279+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:34:47.283+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.996 seconds (process running for 768.379)
+2025-06-12T14:34:47.284+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:40:34.526+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:40:34.528+09:00  INFO 35596 --- [nowpick] [Thread-27] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:40:34.985+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:40:34.989+09:00  INFO 35596 --- [nowpick] [Thread-27] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:40:34.990+09:00  INFO 35596 --- [nowpick] [Thread-27] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
+2025-06-12T14:40:34.992+09:00  INFO 35596 --- [nowpick] [Thread-27] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
+2025-06-12T14:40:35.050+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:40:35.050+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:40:35.233+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:40:35.233+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:40:35.236+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:40:35.238+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:40:35.238+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:40:35.240+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:40:35.316+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:40:35.316+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:40:35.316+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:40:35.341+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:40:35.341+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 289 ms
+2025-06-12T14:40:35.362+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Starting...
+2025-06-12T14:40:35.367+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-8 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5b473e41
+2025-06-12T14:40:35.368+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Start completed.
+2025-06-12T14:40:35.369+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:40:35.374+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:40:35.382+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:40:35.385+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-8)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:40:35.403+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:40:35.403+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:40:35.417+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:40:35.459+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: f7c321ea-18c7-4895-b379-52c2a438c550
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:40:35.460+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:40:35.463+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:40:35.533+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:40:35.542+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:40:35.544+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.518 seconds (process running for 1116.64)
+2025-06-12T14:40:35.545+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:42:13.420+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:42:13.423+09:00  INFO 35596 --- [nowpick] [Thread-31] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:42:13.871+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:42:13.875+09:00  INFO 35596 --- [nowpick] [Thread-31] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:42:13.876+09:00  INFO 35596 --- [nowpick] [Thread-31] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown initiated...
+2025-06-12T14:42:13.878+09:00  INFO 35596 --- [nowpick] [Thread-31] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown completed.
+2025-06-12T14:42:13.931+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:42:13.931+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:42:14.088+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:42:14.088+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:42:14.091+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:42:14.093+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:42:14.093+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:42:14.095+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:42:14.169+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:42:14.170+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:42:14.170+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:42:14.191+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:42:14.191+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 258 ms
+2025-06-12T14:42:14.211+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Starting...
+2025-06-12T14:42:14.217+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-9 - Added connection com.mysql.cj.jdbc.ConnectionImpl@232f240c
+2025-06-12T14:42:14.217+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Start completed.
+2025-06-12T14:42:14.219+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:42:14.222+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:42:14.229+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:42:14.230+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-9)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:42:14.248+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:42:14.248+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:42:14.262+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:42:14.305+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 85aabcfa-f7e6-45d3-bde1-335af2db50e0
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:42:14.306+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:42:14.309+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:42:14.388+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:42:14.395+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:42:14.399+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.488 seconds (process running for 1215.495)
+2025-06-12T14:42:14.401+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:44:03.817+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:44:03.819+09:00  INFO 35596 --- [nowpick] [Thread-35] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:44:04.229+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:44:04.234+09:00  INFO 35596 --- [nowpick] [Thread-35] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:44:04.234+09:00  INFO 35596 --- [nowpick] [Thread-35] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Shutdown initiated...
+2025-06-12T14:44:04.236+09:00  INFO 35596 --- [nowpick] [Thread-35] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Shutdown completed.
+2025-06-12T14:44:04.291+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:44:04.291+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:44:04.442+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:44:04.442+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:44:04.444+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:44:04.446+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:44:04.446+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:44:04.448+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 0 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:44:04.510+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:44:04.510+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:44:04.510+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:44:04.529+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:44:04.529+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 237 ms
+2025-06-12T14:44:04.548+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Starting...
+2025-06-12T14:44:04.552+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-10 - Added connection com.mysql.cj.jdbc.ConnectionImpl@528721ce
+2025-06-12T14:44:04.552+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Start completed.
+2025-06-12T14:44:04.553+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:44:04.556+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:44:04.563+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:44:04.564+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-10)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:44:04.578+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:44:04.578+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:44:04.589+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:44:04.617+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 58ef465c-0d1a-41f9-a1dc-81a7ac70cf9d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:44:04.618+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:44:04.620+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:44:04.673+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:44:04.680+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:44:04.683+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.416 seconds (process running for 1325.779)
+2025-06-12T14:44:04.683+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:44:17.396+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:44:17.398+09:00  INFO 35596 --- [nowpick] [Thread-39] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:44:17.858+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:44:17.863+09:00  INFO 35596 --- [nowpick] [Thread-39] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:44:17.863+09:00  INFO 35596 --- [nowpick] [Thread-39] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Shutdown initiated...
+2025-06-12T14:44:17.865+09:00  INFO 35596 --- [nowpick] [Thread-39] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Shutdown completed.
+2025-06-12T14:44:17.920+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:44:17.920+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:44:18.072+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:44:18.072+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:44:18.074+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:44:18.077+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:44:18.077+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:44:18.079+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:44:18.139+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:44:18.139+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:44:18.139+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:44:18.158+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:44:18.159+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 237 ms
+2025-06-12T14:44:18.175+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Starting...
+2025-06-12T14:44:18.178+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-11 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3b098981
+2025-06-12T14:44:18.178+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Start completed.
+2025-06-12T14:44:18.179+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:44:18.182+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:44:18.188+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:44:18.190+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-11)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:44:18.205+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:44:18.205+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:44:18.217+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:44:18.246+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: e65add09-0e8c-4a29-97be-28bf2fd60e49
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:44:18.246+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:44:18.248+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:44:18.303+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:44:18.312+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:44:18.315+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.418 seconds (process running for 1339.41)
+2025-06-12T14:44:18.315+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:48:27.953+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:48:27.955+09:00  INFO 35596 --- [nowpick] [Thread-43] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:48:28.343+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:48:28.349+09:00  INFO 35596 --- [nowpick] [Thread-43] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:48:28.349+09:00  INFO 35596 --- [nowpick] [Thread-43] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Shutdown initiated...
+2025-06-12T14:48:28.352+09:00  INFO 35596 --- [nowpick] [Thread-43] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Shutdown completed.
+2025-06-12T14:48:28.406+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:48:28.406+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:48:28.561+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:48:28.561+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:48:28.564+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:48:28.566+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:48:28.566+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:48:28.568+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:48:28.624+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:48:28.624+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:48:28.624+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:48:28.642+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:48:28.642+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 235 ms
+2025-06-12T14:48:28.657+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Starting...
+2025-06-12T14:48:28.662+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-12 - Added connection com.mysql.cj.jdbc.ConnectionImpl@46e72525
+2025-06-12T14:48:28.662+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Start completed.
+2025-06-12T14:48:28.663+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:48:28.668+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:48:28.674+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:48:28.676+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-12)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:48:28.688+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:48:28.688+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:48:28.704+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:48:28.732+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: d23b30ee-9299-4567-bf33-1bf7405d217f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:48:28.732+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:48:28.734+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:48:28.784+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:48:28.792+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:48:28.795+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.409 seconds (process running for 1589.891)
+2025-06-12T14:48:28.796+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:49:12.584+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:49:12.589+09:00  INFO 35596 --- [nowpick] [Thread-47] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:49:12.956+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:49:12.961+09:00  INFO 35596 --- [nowpick] [Thread-47] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:49:12.961+09:00  INFO 35596 --- [nowpick] [Thread-47] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown initiated...
+2025-06-12T14:49:12.963+09:00  INFO 35596 --- [nowpick] [Thread-47] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown completed.
+2025-06-12T14:49:13.013+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:49:13.014+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:49:13.152+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:49:13.152+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:49:13.154+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:49:13.155+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:49:13.156+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:49:13.157+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 0 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:49:13.215+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:49:13.215+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:49:13.215+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:49:13.232+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:49:13.232+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 217 ms
+2025-06-12T14:49:13.247+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Starting...
+2025-06-12T14:49:13.252+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-13 - Added connection com.mysql.cj.jdbc.ConnectionImpl@46c032
+2025-06-12T14:49:13.252+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Start completed.
+2025-06-12T14:49:13.253+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:49:13.256+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:49:13.262+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:49:13.263+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-13)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:49:13.278+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:49:13.278+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:49:13.289+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:49:13.320+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: e74c19d2-3c9f-49f3-8595-a9be2be83683
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:49:13.320+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:49:13.323+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:49:13.376+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:49:13.384+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:49:13.386+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.392 seconds (process running for 1634.482)
+2025-06-12T14:49:13.387+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:50:35.021+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T14:50:35.023+09:00  INFO 35596 --- [nowpick] [Thread-51] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T14:50:35.416+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T14:50:35.422+09:00  INFO 35596 --- [nowpick] [Thread-51] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:50:35.422+09:00  INFO 35596 --- [nowpick] [Thread-51] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Shutdown initiated...
+2025-06-12T14:50:35.424+09:00  INFO 35596 --- [nowpick] [Thread-51] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Shutdown completed.
+2025-06-12T14:50:35.480+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T14:50:35.480+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T14:50:35.637+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:50:35.637+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T14:50:35.639+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2025-06-12T14:50:35.641+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T14:50:35.642+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T14:50:35.643+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 0 ms. Found 0 Redis repository interfaces.
+2025-06-12T14:50:35.706+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T14:50:35.706+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T14:50:35.707+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T14:50:35.729+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T14:50:35.729+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 247 ms
+2025-06-12T14:50:35.746+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-14 - Starting...
+2025-06-12T14:50:35.751+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-14 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2fa0f8fe
+2025-06-12T14:50:35.751+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-14 - Start completed.
+2025-06-12T14:50:35.752+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T14:50:35.755+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T14:50:35.760+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T14:50:35.763+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-14)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T14:50:35.776+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T14:50:35.776+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T14:50:35.787+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T14:50:35.817+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 54173f5e-aa4f-4883-802e-450ae68efdb4
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T14:50:35.817+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T14:50:35.819+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T14:50:35.881+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T14:50:35.888+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T14:50:35.891+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.435 seconds (process running for 1716.987)
+2025-06-12T14:50:35.891+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T14:54:32.830+09:00  INFO 35596 --- [nowpick] [http-nio-8080-exec-8] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-12T14:54:32.831+09:00  INFO 35596 --- [nowpick] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-06-12T14:54:32.832+09:00  INFO 35596 --- [nowpick] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-06-12T15:00:40.326+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T15:00:40.327+09:00  INFO 35596 --- [nowpick] [Thread-55] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T15:00:40.846+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T15:00:40.850+09:00  INFO 35596 --- [nowpick] [Thread-55] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T15:00:40.851+09:00  INFO 35596 --- [nowpick] [Thread-55] com.zaxxer.hikari.HikariDataSource       : HikariPool-14 - Shutdown initiated...
+2025-06-12T15:00:40.853+09:00  INFO 35596 --- [nowpick] [Thread-55] com.zaxxer.hikari.HikariDataSource       : HikariPool-14 - Shutdown completed.
+2025-06-12T15:00:40.907+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T15:00:40.907+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T15:00:41.059+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T15:00:41.059+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T15:00:41.061+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2025-06-12T15:00:41.063+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T15:00:41.063+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T15:00:41.066+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2025-06-12T15:00:41.120+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T15:00:41.120+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T15:00:41.120+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T15:00:41.140+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T15:00:41.140+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 231 ms
+2025-06-12T15:00:41.158+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-15 - Starting...
+2025-06-12T15:00:41.163+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-15 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1cc6d476
+2025-06-12T15:00:41.163+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-15 - Start completed.
+2025-06-12T15:00:41.164+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T15:00:41.168+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T15:00:41.174+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T15:00:41.175+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-15)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T15:00:41.193+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T15:00:41.193+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T15:00:41.206+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T15:00:41.239+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 41933704-7207-4a43-bddc-9e951ec1488c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T15:00:41.239+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T15:00:41.242+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T15:00:41.293+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T15:00:41.300+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T15:00:41.302+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.416 seconds (process running for 2322.399)
+2025-06-12T15:00:41.303+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T15:28:32.235+09:00  INFO 35596 --- [nowpick] [http-nio-8080-exec-4] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-12T15:28:32.236+09:00  INFO 35596 --- [nowpick] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-06-12T15:28:32.237+09:00  INFO 35596 --- [nowpick] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-06-12T16:04:57.304+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T16:04:57.308+09:00  INFO 35596 --- [nowpick] [Thread-59] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T16:04:57.739+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T16:04:57.749+09:00  INFO 35596 --- [nowpick] [Thread-59] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T16:04:57.752+09:00  INFO 35596 --- [nowpick] [Thread-59] com.zaxxer.hikari.HikariDataSource       : HikariPool-15 - Shutdown initiated...
+2025-06-12T16:04:57.754+09:00  INFO 35596 --- [nowpick] [Thread-59] com.zaxxer.hikari.HikariDataSource       : HikariPool-15 - Shutdown completed.
+2025-06-12T16:04:57.856+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T16:04:57.856+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T16:04:58.044+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T16:04:58.044+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T16:04:58.047+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2025-06-12T16:04:58.049+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T16:04:58.049+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T16:04:58.053+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2025-06-12T16:04:58.152+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T16:04:58.152+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T16:04:58.152+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T16:04:58.186+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T16:04:58.186+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 328 ms
+2025-06-12T16:04:58.215+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-16 - Starting...
+2025-06-12T16:04:58.220+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-16 - Added connection com.mysql.cj.jdbc.ConnectionImpl@73e79539
+2025-06-12T16:04:58.220+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-16 - Start completed.
+2025-06-12T16:04:58.222+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T16:04:58.225+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T16:04:58.233+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T16:04:58.235+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-16)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T16:04:58.252+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T16:04:58.253+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T16:04:58.266+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T16:04:58.306+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 98d58d6a-f6a6-4d31-90d9-f11f9c4b01a2
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T16:04:58.307+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T16:04:58.310+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T16:04:58.386+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T16:04:58.407+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T16:04:58.410+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.578 seconds (process running for 6179.505)
+2025-06-12T16:04:58.410+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T18:34:18.838+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 5 class path changes (5 additions, 0 deletions, 0 modifications)
+2025-06-12T18:34:18.841+09:00  INFO 35596 --- [nowpick] [Thread-63] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T18:34:25.593+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T18:34:25.648+09:00  INFO 35596 --- [nowpick] [Thread-63] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T18:34:25.649+09:00  INFO 35596 --- [nowpick] [Thread-63] com.zaxxer.hikari.HikariDataSource       : HikariPool-16 - Shutdown initiated...
+2025-06-12T18:34:25.727+09:00  INFO 35596 --- [nowpick] [Thread-63] com.zaxxer.hikari.HikariDataSource       : HikariPool-16 - Shutdown completed.
+2025-06-12T18:34:26.166+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T18:34:26.180+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T18:34:28.758+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T18:34:28.759+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T18:34:28.780+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 JPA repository interfaces.
+2025-06-12T18:34:28.896+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T18:34:28.896+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T18:34:28.906+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2025-06-12T18:34:29.657+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T18:34:29.670+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T18:34:29.674+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T18:34:29.799+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T18:34:29.799+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3605 ms
+2025-06-12T18:34:30.426+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-17 - Starting...
+2025-06-12T18:34:30.435+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-17 - Added connection com.mysql.cj.jdbc.ConnectionImpl@51a7b5f3
+2025-06-12T18:34:30.435+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-17 - Start completed.
+2025-06-12T18:34:30.439+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T18:34:30.457+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T18:34:30.488+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T18:34:30.495+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-17)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T18:34:30.558+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T18:34:30.558+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T18:34:30.631+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T18:34:31.447+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 9b9634b4-e56b-48e2-8fbc-676309b55bd0
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T18:34:31.450+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T18:34:31.466+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T18:34:32.002+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T18:34:32.025+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T18:34:32.033+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 6.075 seconds (process running for 15153.129)
+2025-06-12T18:34:32.035+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-06-12T18:39:29.433+09:00  INFO 35596 --- [nowpick] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 8 class path changes (0 additions, 0 deletions, 8 modifications)
+2025-06-12T18:39:29.434+09:00  INFO 35596 --- [nowpick] [Thread-67] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T18:39:30.172+09:00  INFO 35596 --- [nowpick] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T18:39:30.178+09:00  INFO 35596 --- [nowpick] [Thread-67] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T18:39:30.178+09:00  INFO 35596 --- [nowpick] [Thread-67] com.zaxxer.hikari.HikariDataSource       : HikariPool-17 - Shutdown initiated...
+2025-06-12T18:39:30.182+09:00  INFO 35596 --- [nowpick] [Thread-67] com.zaxxer.hikari.HikariDataSource       : HikariPool-17 - Shutdown completed.
+2025-06-12T18:39:30.281+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Starting NowpickApplication using Java 17.0.13 with PID 35596 (C:\myWorkspace\JavaProjects\nowpick\build\classes\java\main started by user in C:\myWorkspace\JavaProjects\nowpick)
+2025-06-12T18:39:30.282+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T18:39:30.590+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T18:39:30.590+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T18:39:30.594+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 JPA repository interfaces.
+2025-06-12T18:39:30.598+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-06-12T18:39:30.598+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-06-12T18:39:30.603+09:00  INFO 35596 --- [nowpick] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2025-06-12T18:39:30.712+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-12T18:39:30.713+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T18:39:30.713+09:00  INFO 35596 --- [nowpick] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T18:39:30.748+09:00  INFO 35596 --- [nowpick] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T18:39:30.748+09:00  INFO 35596 --- [nowpick] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 463 ms
+2025-06-12T18:39:30.777+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-18 - Starting...
+2025-06-12T18:39:30.783+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-18 - Added connection com.mysql.cj.jdbc.ConnectionImpl@65929a52
+2025-06-12T18:39:30.783+09:00  INFO 35596 --- [nowpick] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-18 - Start completed.
+2025-06-12T18:39:30.785+09:00  INFO 35596 --- [nowpick] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T18:39:30.792+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T18:39:30.805+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T18:39:30.807+09:00  INFO 35596 --- [nowpick] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-18)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T18:39:30.828+09:00  INFO 35596 --- [nowpick] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T18:39:30.828+09:00  INFO 35596 --- [nowpick] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T18:39:30.848+09:00  WARN 35596 --- [nowpick] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T18:39:30.900+09:00  WARN 35596 --- [nowpick] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 176dd677-93f4-4aa3-83c5-aa783e3da48a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T18:39:30.901+09:00  INFO 35596 --- [nowpick] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T18:39:30.905+09:00  WARN 35596 --- [nowpick] [restartedMain] thorizationManagerRequestMatcherRegistry : One of the patterns in [/, /images/**, /main, static/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-06-12T18:39:31.004+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-12T18:39:31.015+09:00  INFO 35596 --- [nowpick] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-06-12T18:39:31.019+09:00  INFO 35596 --- [nowpick] [restartedMain] com.nowpick.backend.NowpickApplication   : Started NowpickApplication in 0.777 seconds (process running for 15452.115)
+2025-06-12T18:39:31.020+09:00  INFO 35596 --- [nowpick] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
