@@ -7,13 +7,11 @@ import {
     MenuList,
     ViewMoreButton
 } from "../../style/common/StyleMain";
-import HeaderCom from "./HeaderCom";
 
 function MainCom() {
 
     return (
         <MainWrapper>
-            <HeaderCom />
             <MainTitle>Cafe NowPick</MainTitle>
             <MainSubtitle>줄 서지 말고, 미리 주문하세요!</MainSubtitle>
             <MainSubtitle>당신의 시간을 아끼는 카페 서비스</MainSubtitle>
