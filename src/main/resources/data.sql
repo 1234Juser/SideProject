@@ -2,14 +2,14 @@
 INSERT INTO tbl_menu (menu_name, menu_description, menu_price, menu_category, menu_image_url, menu_is_ice_available) VALUES
   ('아메리카노', '산미가 적당한 원두를 사용한 아메리카노', 3500, 'COFFEE', '/images/coffee/iced_americano.png', true),
   ('카페라떼', '부드러운 우유와 에스프레소의 조화', 4000, 'COFFEE', '/images/coffee/iced_cafelatte.png', true),
-  ('바닐라라떼', '바닐라 시럽이 들어간 달콤한 라떼', 4300, 'COFFEE', '/images/coffee/vanilla_latte.jpg', true),
+  ('바닐라라떼', '바닐라 시럽이 들어간 달콤한 라떼', 4300, 'COFFEE', '/images/coffee/vanilla_latte.png', true),
   ('콜드브루', '깊고 진한 풍미의 콜드브루 커피', 4500, 'COFFEE', '/images/coffee/iced_americano.png', true),
   ('카라멜마끼야또', '카라멜 시럽과 에스프레소가 어우러진 달콤한 음료', 4800, 'COFFEE', '/images/coffee/caramelmacchiato.png', true),
   ('카페모카', '초콜릿과 커피가 조화를 이루는 진한 맛', 4700, 'COFFEE', '/images/coffee/cafe_mocha.png', true),
   ('돌체라떼', '우유와 연유의 부드럽고 달콤한 맛', 4900, 'COFFEE', '/images/coffee/dolce_latte.png', true),
   ('바닐라크림콜드브루', '바닐라 크림이 올라간 부드러운 콜드브루', 5000, 'COFFEE', '/images/coffee/vanillacream_coldbrew.png', true),
   ('코코넛라떼', '코코넛의 고소함이 가미된 이색 라떼', 5200, 'COFFEE', '/images/coffee/coconut_latte.png', true),
-  ('아포가토', '바닐라 아이스크림에 에스프레소를 부은 디저트 음료', 5500, 'COFFEE', '/images/coffee/affogato.png', true);
+  ('아포가토', '바닐라 아이스크림에 에스프레소를 부은 디저트 음료', 5500, 'COFFEE', '/images/coffee/affogato.jpg', true);
 
 -- 논커피/티
 INSERT INTO tbl_menu (menu_name, menu_description, menu_price, menu_category, menu_image_url, menu_is_ice_available) VALUES
