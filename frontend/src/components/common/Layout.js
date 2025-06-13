@@ -1,5 +1,5 @@
-import HeaderCom from "./HeaderCom";
 import {useLocation} from "react-router-dom";
+import HeaderCon from "../../containers/common/HeaderCon";
 
 const MainLayout = ({ children }) => {
 
@@ -11,7 +11,7 @@ const MainLayout = ({ children }) => {
 
     return (
         <div>
-            {!hideHeader && <HeaderCom />} {/* 조건부 렌더링 */}
+            {!hideHeader && <HeaderCon />}
             <main style={{ paddingTop: '60px' }}> {/* 헤더 높이만큼 패딩 조정 */}
                 {children}
             </main>

@@ -2,11 +2,16 @@ package com.nowpick.backend.member.service;
 
 
 import com.nowpick.backend.member.domain.MemberEntity;
+import com.nowpick.backend.member.dto.LoginRequestDTO;
+import com.nowpick.backend.member.dto.LoginResponseDTO;
 import com.nowpick.backend.member.dto.MemberResponseDTO;
 import com.nowpick.backend.member.dto.MemberSignupRequestDTO;
 import com.nowpick.backend.member.repo.MemberRepository;
+import com.nowpick.backend.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +24,7 @@ public class MemberService {
     
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
     
     
     // 회원 가입
@@ -56,5 +62,32 @@ public class MemberService {
         // 6. 응답 DTO로 변환하여 반환
         return new MemberResponseDTO(savedMember);
 
+    }
+    
+    
+    // 로그인
+    public LoginResponseDTO login( LoginRequestDTO requestDTO) {
+        
+        MemberEntity member = memberRepository.findByMemberUsername(requestDTO.getMemberUsername())
+                        .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 사용자입니다."));
+        
+        if (!passwordEncoder.matches(requestDTO.getMemberPassword(), member.getMemberPassword())) {
+            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+        }
+        
+        // JWT 토큰 생성
+        String accessToken = jwtUtil.generateToken(
+                                                    member.getMemberUsername(), // memberId (JWT subject)
+                                                    member.getMemberRole(),
+                                                    member.getMemberNickname()
+        );
+        
+        // LoginResponseDTO 객체 생성 및 반환
+        return LoginResponseDTO.builder()
+                           .accessToken(accessToken)
+                           .memberUsername(member.getMemberUsername()) // MemberEntity에서 memberUsername을 memberId로 사용
+                           .memberRole(member.getMemberRole()) // MemberEntity에서 직접 memberRole 가져옴
+                           .memberNickname(member.getMemberNickname())
+                           .build();
     }
 }

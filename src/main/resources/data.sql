@@ -1,3 +1,23 @@
+-- 관리자 계정 (username: admin / password: admin)
+INSERT INTO tbl_member (
+    member_id, member_username, member_password, member_email, member_nickname,
+    member_phone_number, member_role, member_created_at, member_updated_at, member_is_active
+) VALUES (
+             1, 'admin', '$2a$10$qfFdRzHwvQCKUu4KH7ZByOc6zz3bN1BvHAPQjDWfA6BiK9h51sREu',
+             'admin@example.com', '관리자', '010-0000-0000', 'ADMIN', NOW(), NOW(), true
+         );
+
+-- 일반 회원 계정 (username: user / password: user)
+INSERT INTO tbl_member (
+    member_id, member_username, member_password, member_email, member_nickname,
+    member_phone_number, member_role, member_created_at, member_updated_at, member_is_active
+) VALUES (
+             2, 'user', '$2a$10$f5nQUYpI3YjzDG71u3gfX.NWBXnQx5Zz9IbaDC0a6u6/kMY6Sl2vy',
+             'user@example.com', '일반회원', '010-1111-1111', 'USER', NOW(), NOW(), true
+         );
+
+
+
 -- 커피
 INSERT INTO tbl_menu (menu_name, menu_description, menu_price, menu_category, menu_image_url, menu_is_ice_available) VALUES
   ('아메리카노', '산미가 적당한 원두를 사용한 아메리카노', 3500, 'COFFEE', '/images/coffee/iced_americano.png', true),

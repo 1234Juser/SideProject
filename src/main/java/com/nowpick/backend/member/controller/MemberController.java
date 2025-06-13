@@ -1,7 +1,8 @@
 package com.nowpick.backend.member.controller;
 
 
-import com.nowpick.backend.member.domain.MemberEntity;
+import com.nowpick.backend.member.dto.LoginRequestDTO;
+import com.nowpick.backend.member.dto.LoginResponseDTO;
 import com.nowpick.backend.member.dto.MemberResponseDTO;
 import com.nowpick.backend.member.dto.MemberSignupRequestDTO;
 import com.nowpick.backend.member.service.MemberService;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -20,6 +23,7 @@ public class MemberController {
     private final MemberService memberService;
     
     
+    // 회원 가입
     @PostMapping("/signup")
     public ResponseEntity <?> signup( @RequestBody MemberSignupRequestDTO requestDTO) {
         try {
@@ -33,5 +37,26 @@ public class MemberController {
     }
 
 
+    // 로그인
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> login( @RequestBody LoginRequestDTO loginDTO) {
+        try {
+            // memberService.login() 호출 결과가 LoginResponseDTO 가 되도록 변경
+            LoginResponseDTO responseDTO = memberService.login(loginDTO);
+            // Map.of 대신 직접 responseDTO 객체 반환
+            return ResponseEntity.ok().body(responseDTO);
+            
+        } catch (IllegalArgumentException e) {
+            // 오류 발생 시에도 ResponseEntity.status().body() 형태로 Map 반환 유지
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+            LoginResponseDTO.builder()
+                                .accessToken(null)
+                                .memberUsername(null)
+                                .memberRole(null)
+                                .memberNickname(null)
+                                .build());
+            // 또는 오류 메시지를 포함한 별도의 오류 DTO 사용
+        }
+    }
 }
 
