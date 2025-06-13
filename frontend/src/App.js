@@ -5,6 +5,7 @@ import MainLayout from "./components/common/Layout";
 import MenuListPage from "./pages/menu/MenuListPage";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import SignupPage from "./pages/member/SignupPage";
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,10 @@ function App() {
           <div className="main-page-container">
               <MainLayout>
                 <Routes>
+
+                    <Route path="/signup" element={<SignupPage />} />
+                    {/*<Route path="/login" element={<LoginPage />} /> */}
+
                     <Route path="/" element={<MainPage/>} />
                     <Route path="/menu/:category" element={<MenuListPage />} />
                 </Routes>

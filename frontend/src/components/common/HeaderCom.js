@@ -1,5 +1,6 @@
 import NavCom from './NavCom';
 import {HeaderWrapper, Logo, TopButtons, TopRow} from "../../style/common/StyleHeader";
+import {Link} from "react-router-dom";
 
 
 
@@ -8,8 +9,8 @@ const HeaderCom = () => (
         <TopRow>
             <Logo>NowPick</Logo>
             <TopButtons>
-                <button>로그인</button>
-                <button>회원가입</button>
+                <Link to="/login">로그인</Link>
+                <Link to="/signup">회원가입</Link>
             </TopButtons>
         </TopRow>
         <NavCom />
