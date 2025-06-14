@@ -9,9 +9,9 @@ const NavCom = () => {
             <NavWrapper>
                 <CenterMenu>
                     <Link to="/">홈</Link>
-                    <Link to="/menu">커피</Link>
-                    <Link to="/stores">음료</Link>
-                    <Link to="/orders">디저트</Link>
+                    <Link to="/menu/coffee">커피</Link>
+                    <Link to="/menu/non_coffee">음료</Link>
+                    <Link to="/menu/dessert">디저트</Link>
                     <Link to="/cart">장바구니</Link>
                     <Link to="/mypage">마이페이지</Link>
                 </CenterMenu>
