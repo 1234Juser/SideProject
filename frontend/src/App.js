@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import SignupPage from "./pages/member/SignupPage";
 import LoginPage from "./pages/member/LoginPage";
 import {AuthProvider} from "./utils/AuthContext";
+import InquiryPage from "./pages/inquiry/InquiryPage";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,9 @@ function App() {
 
                         <Route path="/" element={<MainPage/>} />
                         <Route path="/menu/:category" element={<MenuListPage />} />
+
+                    {/* 1:1문의 */}
+                        <Route path="/inquiry" element={<InquiryPage />} />
 
                     </Routes>
                   </MainLayout>
