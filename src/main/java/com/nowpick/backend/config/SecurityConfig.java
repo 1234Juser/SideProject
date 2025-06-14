@@ -31,11 +31,11 @@ public class SecurityConfig {
                                             // 메뉴 조회 경로를 인증 없이 허용 (로그인 여부와 상관없이 메뉴는 볼 수 있어야 하므로)
                                             .requestMatchers("/api/menu/**").permitAll() // <--- 이 라인 추가!
                                             // 정적 리소스 및 기본 경로 허용 (기존 설정 유지)
-                                            .requestMatchers("/", "/images/**", "/main", "static/**").permitAll()
-                                            // 나머지 모든 /api/** 경로는 인증 필요 (JWT 필터가 있다면 여기 적용됨)
-                                            // 현재 /api/members/** 가 위에서 이미 permitAll 되었으므로, 필요에 따라 조정
+                                            .requestMatchers("/", "/images/**", "/main", "static/**",
+                                                    "/ws-chat/**").permitAll()
+                                            .requestMatchers( "/chat/sessions/open").hasRole("ADMIN")
                                             // 예: /api/public/** 같은 공개 API는 permitAll(), /api/private/** 는 authenticated()
-                                            .requestMatchers("/api/**").authenticated() // 모든 /api/**에 대해 인증 필요 (로그인/회원가입 제외)
+                                            .requestMatchers("/api/**", "/inquiries/**", "/chat/**").authenticated() // 모든 /api/**에 대해 인증 필요 (로그인/회원가입 제외)
 //                                            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)       //  JWT 토큰 기반 인증을 도입시 필요
                                             .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
         )

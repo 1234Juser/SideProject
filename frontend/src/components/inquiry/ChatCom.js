@@ -59,12 +59,26 @@ function ChatCom() {
                 connectAndSubscribe(sessionData.sessionId);
             } catch (err) {
                 console.error("채팅 세션 로딩 실패:", err);
+
+                // 서버 응답이 있는 경우, 상세 정보 출력
+                if (err.response) {
+                    console.error(">> 응답 상태:", err.response.status);
+                    console.error(">> 응답 데이터:", err.response.data);
+                } else if (err.request) {
+                    // 요청은 이루어졌으나 응답을 받지 못한 경우
+                    console.error(">> 응답 없음:", err.request);
+                } else {
+                    // 요청 설정 중에 에러가 발생한 경우
+                    console.error('>> 요청 설정 오류:', err.message);
+                }
+
                 setError('채팅방에 입장할 수 없습니다. 잠시 후 다시 시도해주세요.');
                 setIsLoading(false);
             }
         };
 
         fetchSession();
+
 
         // 3. WebSocket 연결 및 구독 설정
         const connectAndSubscribe = (sessionId) => {
