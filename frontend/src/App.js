@@ -9,6 +9,7 @@ import SignupPage from "./pages/member/SignupPage";
 import LoginPage from "./pages/member/LoginPage";
 import {AuthProvider} from "./utils/AuthContext";
 import InquiryPage from "./pages/inquiry/InquiryPage";
+import ChatPage from "./pages/inquiry/ChatPage";
 
 const queryClient = new QueryClient();
 
@@ -26,8 +27,9 @@ function App() {
                         <Route path="/" element={<MainPage/>} />
                         <Route path="/menu/:category" element={<MenuListPage />} />
 
-                    {/* 1:1문의 */}
+                        {/* 1:1문의 */}
                         <Route path="/inquiry" element={<InquiryPage />} />
+                        <Route path="/chat-inquiry" element={<ChatPage />} />
 
                     </Routes>
                   </MainLayout>

@@ -31,7 +31,7 @@ CREATE TABLE tbl_inquiry (
                              status VARCHAR(20) NOT NULL DEFAULT 'PENDING' COMMENT '문의 상태 (PENDING, ANSWERED, CLOSED)',
                              created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '문의 작성 시각',
                              CONSTRAINT `PK_inquiry` PRIMARY KEY (`inquiry_id`),
-                             CONSTRAINT `FK_inquiry_member` FOREIGN KEY (`member_id`) REFERENCES `회원`(`member_id`)
+                             CONSTRAINT `FK_inquiry_member` FOREIGN KEY (`member_id`) REFERENCES `tbl_member`(`member_id`)
 );
 
 -- 1:1 문의 답변 테이블
@@ -43,9 +43,10 @@ CREATE TABLE tbl_reply (
                            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '답변 작성 시각',
                            CONSTRAINT `PK_reply` PRIMARY KEY (`reply_id`),
                            CONSTRAINT `FK_reply_inquiry` FOREIGN KEY (`inquiry_id`) REFERENCES tbl_inquiry(`inquiry_id`),
-                           CONSTRAINT `FK_reply_admin` FOREIGN KEY (`admin_id`) REFERENCES `회원`(`member_id`),
+                           CONSTRAINT `FK_reply_admin` FOREIGN KEY (`admin_id`) REFERENCES `tbl_member`(`member_id`),
                            CONSTRAINT `UQ_reply_inquiry` UNIQUE (`inquiry_id`) -- 1:1 관계 보장
 );
+
 
 -- 1:1 문의 채팅 채팅방테이블(채팅의 방 정보)
 CREATE TABLE tbl_chat_session (
@@ -56,8 +57,8 @@ CREATE TABLE tbl_chat_session (
                                   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '세션 시작 시간',
                                   closed_at DATETIME NULL COMMENT '세션 종료 시간',
                                   CONSTRAINT `PK_chat_session` PRIMARY KEY (`session_id`),
-                                  CONSTRAINT `FK_chat_session_member` FOREIGN KEY (`member_id`) REFERENCES `회원`(`member_id`),
-                                  CONSTRAINT `FK_chat_session_admin` FOREIGN KEY (`admin_id`) REFERENCES `회원`(`member_id`)
+                                  CONSTRAINT `FK_chat_session_member` FOREIGN KEY (`member_id`) REFERENCES `tbl_member`(`member_id`),
+                                  CONSTRAINT `FK_chat_session_admin` FOREIGN KEY (`admin_id`) REFERENCES `tbl_member`(`member_id`)
 );
 
 -- 채팅 메시지 테이블(세션 내에서 오간 메시지)
@@ -70,7 +71,7 @@ CREATE TABLE tbl_chat_message (
                                   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '메시지 전송 시각',
                                   CONSTRAINT `PK_chat_message` PRIMARY KEY (`message_id`),
                                   CONSTRAINT `FK_chat_message_session` FOREIGN KEY (`session_id`) REFERENCES tbl_chat_session(`session_id`),
-                                  CONSTRAINT `FK_chat_message_member` FOREIGN KEY (`sender_id`) REFERENCES `회원`(`member_id`),
+                                  CONSTRAINT `FK_chat_message_member` FOREIGN KEY (`sender_id`) REFERENCES `tbl_member`(`member_id`),
                                   CONSTRAINT `CHK_sender_type` CHECK (`sender_type` IN ('USER', 'ADMIN'))
 );
 

@@ -3,6 +3,7 @@ package com.nowpick.backend.inquiry.controller;
 import com.nowpick.backend.inquiry.dto.InquiryDTO;
 import com.nowpick.backend.inquiry.service.InquiryService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/inquiries")
 @RequiredArgsConstructor
+@Slf4j
 public class InquiryController {
 
     private final InquiryService inquiryService;
