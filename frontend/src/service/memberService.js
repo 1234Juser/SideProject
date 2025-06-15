@@ -19,6 +19,7 @@ export const signupMember = async (memberData) => {
 // 로그인
 export const loginMember = async (loginData) => {
     try {
+        // console.log('loginData 확인 : ', loginData)
         const response = await axios.post(`${path}/api/members/login`, loginData);
 
         console.log('응답 확인:', response.data);
