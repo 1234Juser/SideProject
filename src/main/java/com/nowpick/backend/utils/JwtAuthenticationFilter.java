@@ -12,23 +12,62 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     
-    private final JwtUtil jwtUtil; // JWT 유틸리티 주입
+    private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService; // 사용자 정보 로드를 위한 서비스 주입
+    
+    
+    // JWT 필터를 적용하지 않을 경로들을 정의합니다.
+    // SecurityConfig의 permitAll() 경로와 일치시키는 것이 중요합니다.
+    private static final List <String> EXCLUDE_URLS = Arrays.asList(
+    "/api/members/login",
+    "/api/members/signup",
+    "/api/menu/**", // 이 경로를 추가하여 JWT 필터가 동작하지 않도록 합니다.
+    "/",
+    "/images/**",
+    "/main",
+    "static/**",
+    "/ws-chat/**"
+    );
+    
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher(); // 경로 매칭을 위한 객체
+    
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+       /*// 요청된 URI가 EXCLUDE_URLS 목록에 포함되는지 확인합니다.
+        return EXCLUDE_URLS.stream()
+               .anyMatch(pattern -> antPathMatcher.match(pattern, request.getRequestURI()));
+       */
+        String requestUri = request.getRequestURI();
+        boolean shouldExclude = EXCLUDE_URLS.stream()
+                                .anyMatch(pattern -> antPathMatcher.match(pattern, requestUri));
+        
+        log.info("Request URI: '{}', Pattern matched: '{}', Should not filter: {}", requestUri,
+                 EXCLUDE_URLS.stream().filter(p -> antPathMatcher.match(p, requestUri)).findFirst().orElse("N/A"),
+                 shouldExclude); // <-- 이 로그를 통해 확인
+        
+        return shouldExclude;
+    }
+    
     
     
     @Override
     protected void doFilterInternal( HttpServletRequest request,
                                      HttpServletResponse response,
                                      FilterChain filterChain) throws ServletException, IOException {
+        
+        // shouldNotFilter에서 이미 필터링되어 이 코드는 JWT 인증이 필요한 경우에만 실행됩니다.
         final String authHeader = request.getHeader("Authorization"); // Authorization 헤더에서 JWT 추출
         final String jwt;
         final String memberUsername;

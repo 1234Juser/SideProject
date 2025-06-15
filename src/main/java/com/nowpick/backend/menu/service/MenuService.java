@@ -18,7 +18,7 @@ public class MenuService {
     private final MenuRepository menuRepository;
     
     
-    // 모두 메뉴 목록 조회
+    // 모든 메뉴 목록 조회
     public List<MenuDTO> getMenusByCategory (String category ) {
         
         MenuCategory menuCategory = MenuCategory.valueOf(category); // COFFEE → enum
@@ -31,6 +31,17 @@ public class MenuService {
         log.info ("menuList : {}", menuList);
         
         return menuList;
+        
+    }
+    
+    
+    // 메뉴 상세 조회
+    public MenuDTO getMenuById (Long menuId) {
+        
+        MenuEntity menuEntity = menuRepository.findById(menuId)
+                                .orElseThrow(() -> new IllegalArgumentException("해당 메뉴를 찾을 수 없습니다. " + menuId));
+        
+        return new MenuDTO(menuEntity);
         
     }
 }
