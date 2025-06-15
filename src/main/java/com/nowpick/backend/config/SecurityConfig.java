@@ -24,8 +24,8 @@ import java.util.Arrays;
 public class SecurityConfig {
     
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    
-    
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -43,12 +43,15 @@ public class SecurityConfig {
                                                 "/",          // 루트 경로
                                                 "/images/**", // 이미지
                                                 "/main",      // 메인 페이지
-                                                "static/**"   // 정적 리소스
+                                                "static/**",   // 정적 리소스
+                                                "/ws-chat/**" // SockJS의 /info 엔드포인트는 인증 없이 허용 (JWT는 STOMP CONNECT에서 처리)
                                                 ).permitAll()
-                                                // 나머지 모든 /api/** 경로는 인증 필요 (JWT 필터가 있다면 여기 적용됨)
-                                                // 현재 /api/members/** 가 위에서 이미 permitAll 되었으므로, 필요에 따라 조정
-                                                // 예: /api/public/** 같은 공개 API는 permitAll(), /api/private/** 는 authenticated()
-                                                .requestMatchers("/api/**").authenticated() // 모든 /api/**에 대해 인증 필요 (로그인/회원가입 제외)
+                            // [사용자] 채팅 세션 생성/가져오기 (POST /chat/session)는 USER 권한만 허용
+                            .requestMatchers("/chat/session").hasRole("USER") // USER만 접근 가능하도록 추가
+                            // [관리자] 열려있는 모든 채팅 세션 조회는 ADMIN 권한만 허용
+                            .requestMatchers( "/chat/sessions/open").hasRole("ADMIN")
+                            // 예: /api/public/** 같은 공개 API는 permitAll(), /api/private/** 는 authenticated()
+                            .requestMatchers("/api/**", "/inquiries/**", "/chat/**").authenticated() // 모든 /api/**에 대해 인증 필요 (로그인/회원가입 제외)
     //                                            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)       //  JWT 토큰 기반 인증을 도입시 필요
                                                 // 그 외 모든 요청은 인증 필요
                                                 .anyRequest().authenticated()

@@ -1,9 +1,7 @@
 import React, { createContext, useState, useContext } from 'react';
 
-
 // 1. AuthContext 생성: 애플리케이션의 인증 상태를 관리합니다.
 export const AuthContext = createContext(null);
-
 
 // 2. AuthProvider 컴포넌트: AuthContext의 값을 제공합니다.
 export const AuthProvider = ({ children }) => {
