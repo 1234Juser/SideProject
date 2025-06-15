@@ -3,7 +3,7 @@ INSERT INTO tbl_member (
     member_id, member_username, member_password, member_email, member_nickname,
     member_phone_number, member_role, member_created_at, member_updated_at, member_is_active
 ) VALUES (
-             1, 'admin', '$2a$10$qfFdRzHwvQCKUu4KH7ZByOc6zz3bN1BvHAPQjDWfA6BiK9h51sREu',
+             1, 'admin', '$2a$10$Zdi8UL2f9fc0cl/Ud/9sIORqha/UGDHglnGwZHAnguZKiu0VlQIFC',
              'admin@example.com', '관리자', '010-0000-0000', 'ADMIN', NOW(), NOW(), true
          );
 
@@ -12,7 +12,7 @@ INSERT INTO tbl_member (
     member_id, member_username, member_password, member_email, member_nickname,
     member_phone_number, member_role, member_created_at, member_updated_at, member_is_active
 ) VALUES (
-             2, 'user', '$2a$10$f5nQUYpI3YjzDG71u3gfX.NWBXnQx5Zz9IbaDC0a6u6/kMY6Sl2vy',
+             2, 'user', '$2a$10$A3vhjxMwY.WXme1dNmjW3.uQoWgow7GumCaSt3tfeADh3Lu0gN6j6',
              'user@example.com', '일반회원', '010-1111-1111', 'USER', NOW(), NOW(), true
          );
 

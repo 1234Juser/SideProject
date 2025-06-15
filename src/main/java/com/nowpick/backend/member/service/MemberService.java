@@ -68,12 +68,36 @@ public class MemberService {
     // 로그인
     public LoginResponseDTO login( LoginRequestDTO requestDTO) {
         
+        // 1. 요청으로 들어온 사용자 이름과 비밀번호 확인
+        log.info("로그인 시도: username={}, password={}", requestDTO.getMemberUsername(), requestDTO.getMemberPassword());
+        // 여기에 디버그 포인트 1
+        
         MemberEntity member = memberRepository.findByMemberUsername(requestDTO.getMemberUsername())
-                        .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 사용자입니다."));
+//                        .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 사용자입니다."));
+                              .orElseThrow(() -> {
+                                  log.warn("로그인 실패: 사용자 {}를 찾을 수 없습니다.", requestDTO.getMemberUsername());
+                                  // 여기에 디버그 포인트 2 (사용자를 찾지 못했을 때)
+                                  return new UsernameNotFoundException("존재하지 않는 사용자입니다.");
+                              });
+        
+        // 2. 데이터베이스에서 조회된 사용자 정보 확인
+        log.info("데이터베이스에서 조회된 사용자: username={}, role={}, nickname={}",
+                 member.getMemberUsername(), member.getMemberRole(), member.getMemberNickname());
+        log.info("데이터베이스에 저장된 암호화된 비밀번호: {}", member.getMemberPassword());
+        // 여기에 디버그 포인트 3
+        
+        // 3. 비밀번호 일치 여부 확인 직전
+        log.info("비밀번호 일치 여부 확인 중... 입력된 비밀번호: [숨김], DB 비밀번호: {}", member.getMemberPassword());
+        // 여기에 디버그 포인트 4
         
         if (!passwordEncoder.matches(requestDTO.getMemberPassword(), member.getMemberPassword())) {
+            log.warn("로그인 실패: 비밀번호가 일치하지 않습니다. 사용자: {}", requestDTO.getMemberUsername());
+            // 여기에 디버그 포인트 5 (비밀번호 불일치 시)
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
+        
+        log.info("로그인 성공: 사용자 {}", requestDTO.getMemberUsername());
+        // 여기에 디버그 포인트 6 (로그인 성공 시)
         
         // JWT 토큰 생성
         String accessToken = jwtUtil.generateToken(

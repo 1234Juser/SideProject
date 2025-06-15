@@ -22,8 +22,6 @@ function LoginCon() {
 
             alert('✅ 로그인 성공!');
 
-            // 백엔드에서 받은 데이터가 undefined/null인 경우를 대비하여 빈 문자열로 대체하여 전달합니다.
-            // 이렇게 하면 localStorage에 "undefined" 문자열이 저장되는 것을 방지합니다.
             const receivedAccessToken = data.accessToken || '';
             const receivedMemberUsername = data.memberUsername || '';
             const receivedMemberRole = data.memberRole || '';

@@ -7,6 +7,7 @@ import com.nowpick.backend.member.dto.MemberResponseDTO;
 import com.nowpick.backend.member.dto.MemberSignupRequestDTO;
 import com.nowpick.backend.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/api/members")
 @CrossOrigin(origins = "http://localhost:3000")     // React 개발 서버의 CORS 허용 (운영 환경에서는 더 엄격하게 설정 필요)
+@Slf4j
 public class MemberController {
     
     private final MemberService memberService;
@@ -41,12 +43,20 @@ public class MemberController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login( @RequestBody LoginRequestDTO loginDTO) {
         try {
-            // memberService.login() 호출 결과가 LoginResponseDTO 가 되도록 변경
+            
+            // 요청 DTO 로깅
+//            log.info("로그인 요청: username={}, password={}", loginDTO.getMemberUsername(), loginDTO.getMemberPassword());
+            
+            
             LoginResponseDTO responseDTO = memberService.login(loginDTO);
+//            log.info("responseDTO : {}", responseDTO);
+            
             // Map.of 대신 직접 responseDTO 객체 반환
             return ResponseEntity.ok().body(responseDTO);
             
         } catch (IllegalArgumentException e) {
+//            log.warn("로그인 실패 - 잘못된 요청: {}", e.getMessage());
+            
             // 오류 발생 시에도 ResponseEntity.status().body() 형태로 Map 반환 유지
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
             LoginResponseDTO.builder()
