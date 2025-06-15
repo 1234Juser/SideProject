@@ -4,7 +4,7 @@ INSERT INTO tbl_member (
     member_phone_number, member_role, member_created_at, member_updated_at, member_is_active
 ) VALUES (
              1, 'admin', '$2a$10$Zdi8UL2f9fc0cl/Ud/9sIORqha/UGDHglnGwZHAnguZKiu0VlQIFC',
-             'admin@example.com', '관리자', '010-0000-0000', 'ADMIN', NOW(), NOW(), true
+             'admin@example.com', '관리자', '010-0000-0000', 'ROLE_ADMIN', NOW(), NOW(), true
          );
 
 -- 일반 회원 계정 (username: user / password: user)
@@ -13,7 +13,7 @@ INSERT INTO tbl_member (
     member_phone_number, member_role, member_created_at, member_updated_at, member_is_active
 ) VALUES (
              2, 'user', '$2a$10$A3vhjxMwY.WXme1dNmjW3.uQoWgow7GumCaSt3tfeADh3Lu0gN6j6',
-             'user@example.com', '일반회원', '010-1111-1111', 'USER', NOW(), NOW(), true
+             'user@example.com', '일반회원', '010-1111-1111', 'ROLE_USER', NOW(), NOW(), true
          );
 
 

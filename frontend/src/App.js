@@ -9,6 +9,9 @@ import SignupPage from "./pages/member/SignupPage";
 import LoginPage from "./pages/member/LoginPage";
 import {AuthProvider} from "./utils/AuthContext";
 import MyPagePage from "./pages/member/MyPagePage";
+import InquiryPage from "./pages/inquiry/InquiryPage";
+import ChatPage from "./pages/inquiry/ChatPage";
+import MenuDetailPage from "./pages/menu/MenuDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +29,11 @@ function App() {
 
                         <Route path="/" element={<MainPage/>} />
                         <Route path="/menu/:category" element={<MenuListPage />} />
+                        <Route path="/menu/option/:menuId" element={<MenuDetailPage />} />
+
+                        {/* 1:1문의 */}
+                        <Route path="/inquiry" element={<InquiryPage />} />
+                        <Route path="/chat-inquiry" element={<ChatPage />} />
 
                     </Routes>
                   </MainLayout>
