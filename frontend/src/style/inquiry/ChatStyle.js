@@ -4,6 +4,7 @@ export const ChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 85vh; /* 높이 약간 조정 */
+  min-height: 600px; /* 최소 높이 추가: 채팅방이 너무 작아지지 않도록 */
   width: 100%;
   max-width: 800px;
   margin: 30px auto; /* 마진 조정 */
@@ -15,14 +16,15 @@ export const ChatWrapper = styled.div`
 `;
 
 export const ChatHeader = styled.div`
-  background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%); /* 그라데이션 헤더 */
-  color: white;
+  background: #f0f2f5; /* MessageContainer와 동일한 색상 */
+  color: #333; /* 텍스트 색상을 어둡게 조정 */
   padding: 15px 20px;
   font-size: 1.3rem;
   font-weight: bold;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid #eee; /* 옅은 테두리 */
+  position: relative; /* 자식 요소의 절대 위치 지정을 위해 추가 */
 `;
 
 export const MessageContainer = styled.div`
@@ -76,6 +78,10 @@ export const MessageBubble = styled.div.withConfig({
   p {
     margin: 0; /* 단락 마진 제거 */
   }
+  .message-content {
+    white-space: pre-wrap; /* 이 줄을 추가하여 줄바꿈을 유지합니다. */
+    word-break: break-word; /* 긴 단어가 줄바꿈되도록 */
+  }
 `;
 
 export const MessageMeta = styled.div.withConfig({
@@ -85,6 +91,7 @@ export const MessageMeta = styled.div.withConfig({
   color: ${props => props.isUser ? 'rgba(255, 255, 255, 0.7)' : '#999'}; /* 메타데이터 색상 조정 */
   margin-top: 5px;
   text-align: ${props => props.isUser ? 'right' : 'left'};
+  font-weight: bold; /* 닉네임을 진하게 표시 */
 `;
 
 export const ChatForm = styled.form`
@@ -95,19 +102,22 @@ export const ChatForm = styled.form`
   gap: 10px; /* 입력창과 버튼 사이 간격 */
 `;
 
-export const ChatInput = styled.input`
-  flex-grow: 1;
-  padding: 12px 18px; /* 패딩 조정 */
+export const ChatInput = styled.textarea`
+  flex-grow: 1; /* 가용한 공간을 모두 차지하도록 변경 */
+  height: auto; /* 내용에 따라 높이가 늘어나도록 */
+  min-height: 40px; /* 최소 높이 설정 */
+  max-height: 120px; /* 최대 높이 설정 (스크롤 생김) */
+  resize: none; /* 사용자 임의의 크기 조절 방지 (선택 사항) */
+  padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 25px; /* 더 둥근 모서리 */
-  font-size: 1rem;
-  &:focus {
-    outline: none;
-    border-color: #2575fc; /* 포커스 시 색상 변경 */
-    box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2); /* 포커스 시 그림자 */
-  }
-  &::placeholder {
-    color: #b0b0b0;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+  overflow-y: auto; /* 내용이 많아지면 스크롤바 표시 */
+
+  &:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
   }
 `;
 
@@ -120,33 +130,39 @@ export const SendButton = styled.button`
   cursor: pointer;
   font-size: 1rem;
   font-weight: bold;
-  transition: all 0.3s ease; /* 부드러운 전환 효과 */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-
-  &:hover {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-    transform: translateY(-2px); /* 호버 시 약간 위로 이동 */
-  }
   &:disabled {
-    background: #ccc;
+    background: #cccccc;
     cursor: not-allowed;
-    box-shadow: none;
-    transform: none;
   }
 `;
 
 export const StatusMessage = styled.div`
   text-align: center;
-  padding: 30px;
+  padding: 20px;
   font-size: 1.1rem;
   color: #555;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  margin: 20px;
-
   &.error {
-    color: #d32f2f; /* 에러 메시지 빨간색 */
-    background-color: #ffe0e0;
-    border: 1px solid #ef9a9a;
+    color: #d9534f;
+  }
+`;
+
+export const EndChatButton = styled.button`
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #f44336; /* 빨간색 계열 */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  &:hover {
+    background-color: #d32f2f;
+  }
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
   }
 `;
