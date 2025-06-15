@@ -94,7 +94,7 @@ function ChatCom({
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder={isChatClosed ? "종료된 채팅방입니다." : "메시지를 입력하세요..."}
+                    placeholder={isChatClosed ? "종료된 채팅방입니다." : "메시지를 입력하세요...(Shift + Enter엔터로 줄바꿈) "}
                     disabled={!session || !stompClientActive || isChatClosed}
                 />
                 <SendButton
