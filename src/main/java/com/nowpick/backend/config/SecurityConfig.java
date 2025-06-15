@@ -1,12 +1,17 @@
 package com.nowpick.backend.config;
 
+import com.nowpick.backend.utils.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -15,7 +20,11 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+    
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    
     
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -25,24 +34,35 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain( HttpSecurity http) throws Exception {
         http
-        .authorizeHttpRequests(authorize -> authorize
-                                            // 로그인 및 회원가입 경로는 명시적으로 인증 없이 허용
-                                            .requestMatchers("/api/members/login", "/api/members/signup").permitAll()
-                                            // 메뉴 조회 경로를 인증 없이 허용 (로그인 여부와 상관없이 메뉴는 볼 수 있어야 하므로)
-                                            .requestMatchers("/api/menu/**").permitAll() // <--- 이 라인 추가!
-                                            // 정적 리소스 및 기본 경로 허용 (기존 설정 유지)
-                                            .requestMatchers("/", "/images/**", "/main", "static/**").permitAll()
-                                            // 나머지 모든 /api/** 경로는 인증 필요 (JWT 필터가 있다면 여기 적용됨)
-                                            // 현재 /api/members/** 가 위에서 이미 permitAll 되었으므로, 필요에 따라 조정
-                                            // 예: /api/public/** 같은 공개 API는 permitAll(), /api/private/** 는 authenticated()
-                                            .requestMatchers("/api/**").authenticated() // 모든 /api/**에 대해 인증 필요 (로그인/회원가입 제외)
-//                                            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)       //  JWT 토큰 기반 인증을 도입시 필요
-                                            .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
-        )
-        .csrf(csrf -> csrf.disable()) // 개발 중에는 CSRF 비활성화 (권장하지 않음, 프로덕션에서는 활성화해야 함)
-        .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정 적용
-        .httpBasic(httpBasic -> httpBasic.disable()); // Basic 인증 사용 안 함 (필요에 따라)
-        
+            .authorizeHttpRequests(authorize -> authorize
+                                                // 로그인, 회원가입, 메뉴 조회 경로는 인증 없이 무조건 허용
+                                                .requestMatchers(
+                                                "/api/members/login",
+                                                "/api/members/signup",
+                                                "/api/menu/**",
+                                                "/",          // 루트 경로
+                                                "/images/**", // 이미지
+                                                "/main",      // 메인 페이지
+                                                "static/**"   // 정적 리소스
+                                                ).permitAll()
+                                                // 나머지 모든 /api/** 경로는 인증 필요 (JWT 필터가 있다면 여기 적용됨)
+                                                // 현재 /api/members/** 가 위에서 이미 permitAll 되었으므로, 필요에 따라 조정
+                                                // 예: /api/public/** 같은 공개 API는 permitAll(), /api/private/** 는 authenticated()
+                                                .requestMatchers("/api/**").authenticated() // 모든 /api/**에 대해 인증 필요 (로그인/회원가입 제외)
+    //                                            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)       //  JWT 토큰 기반 인증을 도입시 필요
+                                                // 그 외 모든 요청은 인증 필요
+                                                .anyRequest().authenticated()
+            )
+            .csrf(csrf -> csrf.disable()) // 개발 중에는 CSRF 비활성화 (권장하지 않음, 프로덕션에서는 활성화해야 함)
+            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정 적용
+            // 인증되지 않은 사용자가 보호된 리소스에 접근 시 401 Unauthorized 반환
+            .exceptionHandling(exceptions -> exceptions
+                                             .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)) // <--- 이 라인 추가
+            )
+            .httpBasic(httpBasic -> httpBasic.disable()) // Basic 인증 사용 안 함 (필요에 따라)
+            // JWT 필터를 UsernamePasswordAuthenticationFilter 이전에 추가
+            // 이렇게 함으로써 요청 헤더의 JWT를 먼저 검사하고 인증 처리
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         
         return http.build();
     }

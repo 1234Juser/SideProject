@@ -12,8 +12,7 @@ const NavCom = () => {
                     <Link to="/menu/coffee">커피</Link>
                     <Link to="/menu/non_coffee">음료</Link>
                     <Link to="/menu/dessert">디저트</Link>
-                    <Link to="/cart">장바구니</Link>
-                    <Link to="/mypage">마이페이지</Link>
+                    <Link to="/store">매장 찾기</Link>
                 </CenterMenu>
             </NavWrapper>
         );
