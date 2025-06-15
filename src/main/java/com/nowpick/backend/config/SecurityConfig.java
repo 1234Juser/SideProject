@@ -24,8 +24,8 @@ import java.util.Arrays;
 public class SecurityConfig {
     
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    
-    
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -35,6 +35,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain( HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
+                                                // 1. 가장 구체적인 경로에 대한 permitAll() 먼저 적용
                                                 // 로그인, 회원가입, 메뉴 조회 경로는 인증 없이 무조건 허용
                                                 .requestMatchers(
                                                 "/api/members/login",
@@ -43,25 +44,34 @@ public class SecurityConfig {
                                                 "/",          // 루트 경로
                                                 "/images/**", // 이미지
                                                 "/main",      // 메인 페이지
-                                                "static/**"   // 정적 리소스
+                                                "static/**",   // 정적 리소스
+                                                "/ws-chat/**" // SockJS의 /info 엔드포인트는 인증 없이 허용 (JWT는 STOMP CONNECT에서 처리)
                                                 ).permitAll()
-                                                // 나머지 모든 /api/** 경로는 인증 필요 (JWT 필터가 있다면 여기 적용됨)
-                                                // 현재 /api/members/** 가 위에서 이미 permitAll 되었으므로, 필요에 따라 조정
-                                                // 예: /api/public/** 같은 공개 API는 permitAll(), /api/private/** 는 authenticated()
-                                                .requestMatchers("/api/**").authenticated() // 모든 /api/**에 대해 인증 필요 (로그인/회원가입 제외)
-    //                                            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)       //  JWT 토큰 기반 인증을 도입시 필요
-                                                // 그 외 모든 요청은 인증 필요
-                                                .anyRequest().authenticated()
+                                                
+                            // 2. 그 다음 역할 기반 권한 설정
+                            // [사용자] 채팅 세션 생성/가져오기 (POST /chat/session)는 USER 권한만 허용
+                            .requestMatchers("/chat/session").hasRole("USER") // USER만 접근 가능하도록 추가
+                            // [관리자] 열려있는 모든 채팅 세션 조회는 ADMIN 권한만 허용
+                            .requestMatchers( "/chat/sessions/open").hasRole("ADMIN")
+                            
+                           // 3. 마지막으로 인증이 필요한 넓은 범위의 경로 설정
+                            // 예: /api/public/** 같은 공개 API는 permitAll(), /api/private/** 는 authenticated()
+                            .requestMatchers("/api/**", "/inquiries/**", "/chat/**").authenticated() // 모든 /api/**에 대해 인증 필요 (로그인/회원가입 제외)
+                            
+                           // 4. 그 외 모든 요청은 인증 필요 (가장 마지막에 위치)
+                           // 그 외 모든 요청은 인증 필요
+                           .anyRequest().authenticated()
             )
             .csrf(csrf -> csrf.disable()) // 개발 중에는 CSRF 비활성화 (권장하지 않음, 프로덕션에서는 활성화해야 함)
             .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정 적용
+            
             // 인증되지 않은 사용자가 보호된 리소스에 접근 시 401 Unauthorized 반환
             .exceptionHandling(exceptions -> exceptions
                                              .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)) // <--- 이 라인 추가
             )
             .httpBasic(httpBasic -> httpBasic.disable()) // Basic 인증 사용 안 함 (필요에 따라)
-            // JWT 필터를 UsernamePasswordAuthenticationFilter 이전에 추가
-            // 이렇게 함으로써 요청 헤더의 JWT를 먼저 검사하고 인증 처리
+            
+            // 요청 헤더의 JWT를 먼저 검사하고 인증 처리
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         
         return http.build();
