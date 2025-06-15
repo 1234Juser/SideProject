@@ -1,5 +1,12 @@
 import {useLocation} from "react-router-dom";
 import HeaderCon from "../../containers/common/HeaderCon";
+import styled from "styled-components";
+
+const LayoutWrapper = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+`;
 
 const MainLayout = ({ children }) => {
 
@@ -11,9 +18,15 @@ const MainLayout = ({ children }) => {
 
     return (
         <div>
-            {!hideHeader && <HeaderCon />}
-            <main style={{ paddingTop: '60px' }}> {/* 헤더 높이만큼 패딩 조정 */}
-                {children}
+            {!hideHeader && (
+                <LayoutWrapper>
+                    <HeaderCon />
+                </LayoutWrapper>
+            )}
+            <main style={{ paddingTop: '60px' }}>
+                <LayoutWrapper>
+                    {children}
+                </LayoutWrapper>
             </main>
         </div>
     );
