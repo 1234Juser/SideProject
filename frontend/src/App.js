@@ -8,7 +8,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import SignupPage from "./pages/member/SignupPage";
 import LoginPage from "./pages/member/LoginPage";
 import {AuthProvider} from "./utils/AuthContext";
-import MyPagePage from "./pages/member/MyPagePage";
 import InquiryPage from "./pages/inquiry/InquiryPage";
 import ChatPage from "./pages/inquiry/ChatPage";
 import MenuDetailPage from "./pages/menu/MenuDetailPage";
