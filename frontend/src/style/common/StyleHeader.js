@@ -4,10 +4,8 @@ import {Link} from "react-router-dom";
 export const HeaderWrapper = styled.header`
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    //padding: 16px;
+    //width: 100%;
+    padding: 16px;
     border-bottom: 1px solid #ddd;
     background-color: #fff;
 
