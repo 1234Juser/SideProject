@@ -1,7 +1,7 @@
 import './App.css';
 import MainPage from "./pages/common/MainPage";
 import {Route, Routes} from "react-router-dom";
-import MainLayout from "./components/common/Layout";
+import MainLayout from "./layouts/Layout";
 import MenuListPage from "./pages/menu/MenuListPage";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -12,6 +12,8 @@ import MyPagePage from "./pages/member/MyPagePage";
 import InquiryPage from "./pages/inquiry/InquiryPage";
 import ChatPage from "./pages/inquiry/ChatPage";
 import MenuDetailPage from "./pages/menu/MenuDetailPage";
+import AdminMyPagePage from "./pages/admin/AdminMyPagePage";
+import AdminMemberListPage from "./pages/admin/AdminMemberListPage";
 
 const queryClient = new QueryClient();
 
@@ -23,10 +25,14 @@ function App() {
                   <MainLayout>
                     <Routes>
 
+                        {/*멤버 관련*/}
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/mypage" element={<MyPagePage/>}/>
+                        <Route path="/admin/mypage" element={<AdminMyPagePage/>}/>
+                        <Route path="/admin/member-list" element={<AdminMemberListPage/>}/>
 
+                        {/*네비게이션*/}
                         <Route path="/" element={<MainPage/>} />
                         <Route path="/menu/:category" element={<MenuListPage />} />
                         <Route path="/menu/option/:menuId" element={<MenuDetailPage />} />
