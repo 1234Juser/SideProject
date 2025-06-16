@@ -1,3 +1,4 @@
+import { useState } from 'react'; // useState import 추가
 import {
     Card,
     CTAButton,
@@ -6,10 +7,16 @@ import {
     Section,
     SectionTitle, Highlight, CardsWrapper
 } from "../../style/member/StyleMyPage";
-import {Sidebar, SidebarItem} from "../../style/member/StyleMyPageSidebar";
+import {Sidebar, SidebarItem, DropdownItem} from "../../style/member/StyleMyPageSidebar"; // DropdownItem import 추가
 
 
 const MyPageSidebar = () => {
+    const [showInquiryDropdown, setShowInquiryDropdown] = useState(false); // 드롭다운 상태 추가
+
+    const handleInquiryClick = () => {
+        setShowInquiryDropdown(!showInquiryDropdown); // 드롭다운 토글
+    };
+
     return (
         <Sidebar>
             <SidebarItem>
@@ -27,6 +34,19 @@ const MyPageSidebar = () => {
             <SidebarItem>
                 내 정보
             </SidebarItem>
+            <SidebarItem onClick={handleInquiryClick}> {/* 클릭 이벤트 추가 */}
+                1:1문의
+            </SidebarItem>
+            {showInquiryDropdown && (
+                <>
+                <DropdownItem>
+                1:1일반문의
+                </DropdownItem>
+                <DropdownItem>
+                1:1채팅문의
+                </DropdownItem>
+                </>
+                )}
         </Sidebar>
     );
 };

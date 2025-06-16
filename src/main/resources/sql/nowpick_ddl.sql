@@ -1,25 +1,25 @@
--- 찜
+-- 찜 테이블
 CREATE TABLE tbl_wishlist (
-                          wishlist_id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '찜 목록 고유 ID',
-                          member_id BIGINT NOT NULL COMMENT '찜한 회원의 ID (FK)',
-                          product_id BIGINT NOT NULL COMMENT '찜한 상품의 ID (FK)',
-                          created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '찜한 날짜',
-                          CONSTRAINT fk_wishlist_member FOREIGN KEY (member_id) REFERENCES member(id),
-                          CONSTRAINT fk_wishlist_product FOREIGN KEY (product_id) REFERENCES product(id),
-                          CONSTRAINT uq_member_product UNIQUE (member_id, product_id) -- 중복 찜 방지
+                              wishlist_id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '찜 목록 고유 ID',
+                              member_id BIGINT NOT NULL COMMENT '찜한 회원의 ID (FK)',
+                              menu_id BIGINT NOT NULL COMMENT '찜한 메뉴의 ID (FK)',
+                              created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '찜한 날짜',
+                              CONSTRAINT fk_wishlist_member FOREIGN KEY (member_id) REFERENCES tbl_member(member_id),
+                              CONSTRAINT fk_wishlist_menu FOREIGN KEY (menu_id) REFERENCES tbl_menu(menu_id),
+                              CONSTRAINT uq_member_menu UNIQUE (member_id, menu_id) -- 한 사용자가 같은 메뉴 중복 찜 방지
 )ENGINE=INNODB;
 
 -- 장바구니 테이블
 CREATE TABLE tbl_cart_item (
-                           cart_item_id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '장바구니 항목 고유 ID',
-                           member_id BIGINT NOT NULL COMMENT '회원의 ID (FK)',
-                           product_id BIGINT NOT NULL COMMENT '담은 상품의 ID (FK)',
-                           quantity INT NOT NULL DEFAULT 1 COMMENT '담은 상품의 수량',
-                           created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '장바구니에 추가한 날짜',
-                           updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수량 등 정보 수정 날짜',
-                           CONSTRAINT fk_cart_member FOREIGN KEY (member_id) REFERENCES member(id),
-                           CONSTRAINT fk_cart_product FOREIGN KEY (product_id) REFERENCES product(id),
-                           CONSTRAINT uq_cart_member_product UNIQUE (member_id, product_id) -- 같은 상품 중복 담기 방지
+                               cart_item_id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '장바구니 항목 고유 ID',
+                               member_id BIGINT NOT NULL COMMENT '회원의 ID (FK)',
+                               menu_id BIGINT NOT NULL COMMENT '담은 메뉴의 ID (FK)',
+                               quantity INT NOT NULL DEFAULT 1 COMMENT '담은 메뉴의 수량',
+                               created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                               updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                               CONSTRAINT fk_cart_member FOREIGN KEY (member_id) REFERENCES tbl_member(member_id),
+                               CONSTRAINT fk_cart_menu FOREIGN KEY (menu_id) REFERENCES tbl_menu(menu_id),
+                               CONSTRAINT uq_cart_member_menu UNIQUE (member_id, menu_id) -- 같은 메뉴 중복 담기 방지 (수량으로 조절)
 )ENGINE=INNODB;
 
 -- 1:1 문의 테이블
@@ -30,8 +30,8 @@ CREATE TABLE tbl_inquiry (
                              content TEXT NOT NULL COMMENT '문의 내용',
                              status VARCHAR(20) NOT NULL DEFAULT 'PENDING' COMMENT '문의 상태 (PENDING, ANSWERED, CLOSED)',
                              created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '문의 작성 시각',
-                             CONSTRAINT `PK_inquiry` PRIMARY KEY (`inquiry_id`),
-                             CONSTRAINT `FK_inquiry_member` FOREIGN KEY (`member_id`) REFERENCES `tbl_member`(`member_id`)
+                             CONSTRAINT `PK_inquiry` PRIMARY KEY (inquiry_id),
+                             CONSTRAINT `FK_inquiry_member` FOREIGN KEY (member_id) REFERENCES tbl_member(member_id)
 )ENGINE=INNODB;
 
 -- 1:1 문의 답변 테이블
@@ -41,10 +41,10 @@ CREATE TABLE tbl_reply (
                            admin_id BIGINT NOT NULL COMMENT '답변한 관리자 ID (회원 테이블 참조)',
                            content TEXT NOT NULL COMMENT '답변 내용',
                            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '답변 작성 시각',
-                           CONSTRAINT `PK_reply` PRIMARY KEY (`reply_id`),
-                           CONSTRAINT `FK_reply_inquiry` FOREIGN KEY (`inquiry_id`) REFERENCES tbl_inquiry(`inquiry_id`),
-                           CONSTRAINT `FK_reply_admin` FOREIGN KEY (`admin_id`) REFERENCES `tbl_member`(`member_id`),
-                           CONSTRAINT `UQ_reply_inquiry` UNIQUE (`inquiry_id`) -- 1:1 관계 보장
+                           CONSTRAINT `PK_reply` PRIMARY KEY (reply_id),
+                           CONSTRAINT `FK_reply_inquiry` FOREIGN KEY (inquiry_id) REFERENCES tbl_inquiry(inquiry_id),
+                           CONSTRAINT `FK_reply_admin` FOREIGN KEY (admin_id) REFERENCES tbl_member(member_id),
+                           CONSTRAINT `UQ_reply_inquiry` UNIQUE (inquiry_id) -- 1:1 관계 보장
 )ENGINE=INNODB;
 
 
@@ -56,9 +56,9 @@ CREATE TABLE tbl_chat_session (
                                   status VARCHAR(20) NOT NULL DEFAULT 'OPEN' COMMENT '세션 상태 (OPEN, CLOSED)',
                                   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '세션 시작 시간',
                                   closed_at DATETIME NULL COMMENT '세션 종료 시간',
-                                  CONSTRAINT `PK_chat_session` PRIMARY KEY (`session_id`),
-                                  CONSTRAINT `FK_chat_session_member` FOREIGN KEY (`member_id`) REFERENCES `tbl_member`(`member_id`),
-                                  CONSTRAINT `FK_chat_session_admin` FOREIGN KEY (`admin_id`) REFERENCES `tbl_member`(`member_id`)
+                                  CONSTRAINT `PK_chat_session` PRIMARY KEY (session_id),
+                                  CONSTRAINT `FK_chat_session_member` FOREIGN KEY (member_id) REFERENCES tbl_member(member_id),
+                                  CONSTRAINT `FK_chat_session_admin` FOREIGN KEY (admin_id) REFERENCES tbl_member(member_id)
 )ENGINE=INNODB;
 
 -- 채팅 메시지 테이블(세션 내에서 오간 메시지)
@@ -69,9 +69,54 @@ CREATE TABLE tbl_chat_message (
                                   sender_id BIGINT NOT NULL COMMENT '발신자 ID (회원 테이블 참조)',
                                   message TEXT NOT NULL COMMENT '메시지 내용',
                                   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '메시지 전송 시각',
-                                  CONSTRAINT `PK_chat_message` PRIMARY KEY (`message_id`),
-                                  CONSTRAINT `FK_chat_message_session` FOREIGN KEY (`session_id`) REFERENCES tbl_chat_session(`session_id`),
-                                  CONSTRAINT `FK_chat_message_member` FOREIGN KEY (`sender_id`) REFERENCES `tbl_member`(`member_id`),
-                                  CONSTRAINT `CHK_sender_type` CHECK (`sender_type` IN ('USER', 'ADMIN'))
+                                  CONSTRAINT PK_chat_message PRIMARY KEY (message_id),
+                                  CONSTRAINT FK_chat_message_session FOREIGN KEY (session_id) REFERENCES tbl_chat_session(session_id),
+                                  CONSTRAINT FK_chat_message_member FOREIGN KEY (sender_id) REFERENCES tbl_member(member_id),
+                                  CONSTRAINT CHK_sender_type CHECK (sender_type IN ('USER', 'ADMIN'))
 )ENGINE=INNODB;
+
+-- 주문 테이블
+CREATE TABLE tbl_order (
+                           order_id BIGINT NOT NULL AUTO_INCREMENT COMMENT '주문 고유 ID',
+                           member_id BIGINT NOT NULL COMMENT '주문한 사용자 ID (FK)',
+                           merchant_uid VARCHAR(100) NOT NULL UNIQUE COMMENT '가맹점 주문 번호 (아임포트 연동용)',
+                           order_total_amount DECIMAL(10, 2) NOT NULL COMMENT '주문 총 금액 (결제 검증용)',
+                           order_status VARCHAR(20) NOT NULL DEFAULT 'PENDING' COMMENT '주문 상태 (PENDING, PAID, FAILED, CANCELLED)',
+                           pickup_at DATETIME NULL COMMENT '테이크아웃 예약 시간',
+                           created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '주문 생성일시',
+                           updated_at DATETIME(6) NULL ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '주문 수정일시',
+                           PRIMARY KEY (order_id),
+                           FOREIGN KEY (member_id) REFERENCES tbl_member (member_id)
+)ENGINE=INNODB COMMENT '주문 정보';
+
+-- 주문 상세 테이블 (한 주문에 어떤 메뉴가 몇 개씩 들어갔는지 기록)
+CREATE TABLE tbl_order_item (
+                                  order_item_id BIGINT NOT NULL AUTO_INCREMENT COMMENT '주문 항목 ID',
+                                  order_id BIGINT NOT NULL COMMENT '주문 ID (FK)',
+                                  menu_id BIGINT NOT NULL COMMENT '주문된 메뉴 ID (FK)',
+                                  quantity INT NOT NULL COMMENT '수량',
+                                  price_at_purchase INT NOT NULL COMMENT '주문 시점의 메뉴 가격 (메뉴 가격 변경에 대비)',
+                                  PRIMARY KEY (order_item_id),
+                                  FOREIGN KEY (order_id) REFERENCES tbl_order (order_id),
+                                  FOREIGN KEY (menu_id) REFERENCES tbl_menu (menu_id)
+)ENGINE=INNODB COMMENT '주문 상세 항목';
+
+
+-- 결제 정보 테이블
+CREATE TABLE tbl_payment (
+                               payment_id BIGINT NOT NULL AUTO_INCREMENT COMMENT '결제 고유 ID',
+                               order_id BIGINT NOT NULL UNIQUE COMMENT '연결된 주문 ID (FK)',
+                               imp_uid VARCHAR(100) NOT NULL UNIQUE COMMENT '아임포트 거래 고유 번호',
+                               payment_amount DECIMAL(10, 2) NOT NULL COMMENT '실제 결제된 금액 (주문 금액과 검증 필요)',
+                               payment_status VARCHAR(20) NOT NULL COMMENT '결제 상태 (paid, failed, cancelled)',
+                               payment_method VARCHAR(50) NULL COMMENT '결제 수단 (e.g., card, vbank)',
+                               receipt_url VARCHAR(255) NULL COMMENT '카드 결제 영수증 URL',
+                               paid_at DATETIME(6) NULL COMMENT '결제 완료 일시',
+                               failed_at DATETIME(6) NULL COMMENT '결제 실패 일시',
+                               failure_reason TEXT NULL COMMENT '결제 실패 사유',
+                               created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) COMMENT '레코드 생성일시',
+                               PRIMARY KEY (payment_id),
+                               FOREIGN KEY (order_id) REFERENCES tbl_order (order_id)
+)ENGINE=INNODB COMMENT '결제 정보';
+
 

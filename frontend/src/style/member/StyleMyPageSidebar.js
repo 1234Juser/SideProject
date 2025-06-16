@@ -27,3 +27,14 @@ export const SidebarItem = styled.div`
         background-color: #f0f0f0;
     }
 `;
+
+// 드롭다운 아이템을 위한 새로운 스타일 컴포넌트 추가
+export const DropdownItem = styled(SidebarItem)`
+    padding-left: 2.5rem; /* 서브 메뉴처럼 보이도록 들여쓰기 */
+    font-size: 0.95rem; /* 글씨 크기 약간 줄이기 */
+    margin-bottom: 0.5rem; /* 하단 마진 줄이기 */
+    border-left: 4px solid transparent; /* 기본 보더 제거 또는 변경 */
+    &:hover {
+        background-color: #e0e0e0; /* 호버 시 배경색 변경 */
+    }
+`;
