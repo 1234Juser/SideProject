@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useCallback } from 'react'; // useCallback import 추가
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../utils/AuthContext';
-import AdminInquiryDetailCom from '../../components/inquiry/AdminInquiryDetailCom'; // 경로 확인
+import AdminInquiryDetailCom from '../../components/inquiry/AdminInquiryDetailCom';
 
 function AdminInquiryDetailCon() {
     const { inquiryId } = useParams(); // URL에서 inquiryId 추출
@@ -34,7 +34,6 @@ function AdminInquiryDetailCon() {
                 setReplyContent(''); // 답변이 없으면 입력 필드를 비웁니다.
             }
         } catch (err) {
-            console.error("Failed to fetch inquiry detail:", err);
             if (err.response) {
                 setError(err.response.data?.message || '문의 상세 정보를 불러오는데 실패했습니다.');
                 if (err.response.status === 403) {
@@ -76,11 +75,10 @@ function AdminInquiryDetailCon() {
             setSuccess('답변이 성공적으로 등록/수정되었습니다.');
             await fetchInquiryDetail(); // 최신 상태를 다시 불러와 UI 업데이트 (답변 내용도 최신화됩니다)
         } catch (err) {
-            console.error("Failed to submit reply:", err);
             if (err.response) {
                 if (err.response.status === 403) {
                     setError('답변을 작성/수정할 권한이 없거나, 다른 관리자가 작성한 답변입니다.');
-                } else if (err.response.status === 400 || err.response.status === 409) { // 409 Conflict for IllegalStateException
+                } else if (err.response.status === 400 || err.response.status === 409) {
                     setError(err.response.data?.message || '답변 처리 중 오류가 발생했습니다.');
                 } else {
                     setError(err.response.data?.message || '답변 등록/수정에 실패했습니다.');
@@ -109,7 +107,7 @@ function AdminInquiryDetailCon() {
             setReplyContent(''); // 답변 내용 초기화
             await fetchInquiryDetail(); // 최신 상태를 다시 불러와 UI 업데이트 (답변이 없어지고, 문의 상태가 PENDING으로 변경됨)
         } catch (err) {
-            console.error("Failed to delete reply:", err);
+            // console.error("Failed to delete reply:", err);
             if (err.response) {
                 if (err.response.status === 403) {
                     setError('답변을 삭제할 권한이 없거나, 다른 관리자가 작성한 답변입니다.');

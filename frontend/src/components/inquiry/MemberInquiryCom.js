@@ -3,6 +3,7 @@ import {
     InquiryContainer, Title, InquiryTable, TableHeader, TableRow, TableCell,
     StatusBadge, PaginationContainer, PageButton, InfoText, Checkbox, Message, CloseButton
 } from '../../style/inquiry/MemberInquiryStyle';
+import {useNavigate} from "react-router-dom";
 
 
 function MemberInquiryCom({
@@ -11,6 +12,7 @@ function MemberInquiryCom({
                               selectedInquiryIds, onPageChange,
                               onCheckboxChange, onCloseInquiries
                           }) {
+    const navigate = useNavigate(); // useNavigate 훅 사용
 
     if (isLoading) {
         return <InfoText>문의 목록을 불러오는 중...</InfoText>;
@@ -24,6 +26,12 @@ function MemberInquiryCom({
         console.error("문의 데이터가 올바른 배열 형식이 아닙니다:", inquiries);
         return <Message type="error">문의 데이터를 불러오는데 문제가 발생했습니다.</Message>;
     }
+
+    // 문의 상세 페이지로 이동하는 핸들러
+    const handleRowClick = (inquiryId) => {
+        navigate(`/member/inquiries/${inquiryId}`);
+    };
+
 
     return (
         <InquiryContainer>
@@ -46,14 +54,14 @@ function MemberInquiryCom({
                         </thead>
                         <tbody>
                         {inquiries.map((inquiry) => (
-                            <TableRow key={inquiry.id}>
-                                <TableCell>
+                            <TableRow key={inquiry.id} onClick={() => handleRowClick(inquiry.id)}>
+                                <TableCell onClick={(e) => e.stopPropagation()}> {/* 체크박스 클릭 시 행 클릭 이벤트 방지 */}
                                     {/* 문의가 이미 종료되었으면 체크박스 비활성화 */}
                                     <Checkbox
                                         type="checkbox"
                                         checked={selectedInquiryIds.has(inquiry.id)}
                                         onChange={() => onCheckboxChange(inquiry.id)}
-                                        disabled={inquiry.status === 'CLOSED'} // Disable if already closed
+                                        disabled={inquiry.status === 'CLOSED'}
                                     />
                                 </TableCell>
                                 <TableCell>{inquiry.id}</TableCell>

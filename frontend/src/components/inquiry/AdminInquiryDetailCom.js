@@ -17,7 +17,7 @@ import {
     InfoText,
     ErrorText,
     SuccessText,
-    ReplyActionButton // ReplyActionButton 추가
+    ReplyActionButton
 } from '../../style/inquiry/AdminInquiryDetailStyle';
 
 function AdminInquiryDetailCom({
@@ -25,11 +25,11 @@ function AdminInquiryDetailCom({
                                    replyContent,
                                    setReplyContent,
                                    handleSubmitReply,
-                                   handleDeleteReply, // 새로운 prop 받기
+                                   handleDeleteReply,
                                    isLoading,
                                    error,
                                    success,
-                                   loggedInAdminUsername // 새로운 prop 받기
+                                   loggedInAdminUsername
                                }) {
     if (isLoading) {
         return <InfoText>문의 상세 정보를 불러오는 중...</InfoText>;
@@ -47,17 +47,6 @@ function AdminInquiryDetailCom({
     const isClosed = inquiry.status === 'CLOSED';
     // 현재 로그인한 관리자가 답변 작성자인지 확인
     const isReplyOwner = inquiry.reply && inquiry.reply.admin && inquiry.reply.admin.memberUsername === loggedInAdminUsername;
-
-    // --- 디버깅을 위한 console.log 추가 ---
-    console.log("inquiry.reply:", inquiry.reply);
-    if (inquiry.reply && inquiry.reply.admin) {
-        console.log("inquiry.reply.admin.memberUsername:", `'${inquiry.reply.admin.memberUsername}'`);
-    } else {
-        console.log("inquiry.reply.admin is undefined or null.");
-    }
-    console.log("loggedInAdminUsername:", `'${loggedInAdminUsername}'`);
-    console.log("isReplyOwner:", isReplyOwner);
-    // --- console.log 추가 끝 ---
 
     return (
         <DetailContainer>
@@ -79,54 +68,54 @@ function AdminInquiryDetailCom({
 
             <Section>
                 <ReplyTitle>답변</ReplyTitle>
-                {/* 문의가 종료되었는지 확인 */}
-                {isClosed ? (
-                    <InfoText>종료된 문의에는 답변을 작성하거나 수정할 수 없습니다.</InfoText>
-                ) : (
-                    // 문의가 종료되지 않은 경우
-                    <>
-                        {inquiry.reply ? (
-                            // 기존 답변이 있는 경우
-                            <ExistingReply>
-                                {/* inquiry.reply.admin이 존재할 때만 ReplyMeta를 렌더링합니다. */}
-                                {inquiry.reply.admin && (
-                                    <ReplyMeta>
-                                        답변자: {inquiry.reply.admin.memberUsername} | 답변일: {new Date(inquiry.reply.createdAt).toLocaleString()}
-                                    </ReplyMeta>
-                                )}
-                                {/* 답변자가 현재 로그인한 관리자인 경우 수정 가능한 입력창 */}
-                                {isReplyOwner ? (
-                                    <form onSubmit={handleSubmitReply}>
-                                        <ReplyTextArea
-                                            value={replyContent}
-                                            onChange={(e) => setReplyContent(e.target.value)}
-                                            placeholder="답변 내용을 입력하세요..."
-                                            rows="5"
-                                        />
-                                        <ReplySubmitButton type="submit">답변 수정</ReplySubmitButton>
-                                        <ReplyActionButton type="button" onClick={handleDeleteReply}>답변 삭제</ReplyActionButton>
-                                    </form>
-                                ) : (
-                                    // 답변자가 다른 관리자인 경우 읽기 전용으로 표시
-                                    <>
-                                        <InquiryContent>{inquiry.reply.content}</InquiryContent>
-                                        <InfoText>이 답변은 다른 관리자가 작성했습니다. 수정/삭제할 수 없습니다.</InfoText>
-                                    </>
-                                )}
-                            </ExistingReply>
-                        ) : (
-                            // 기존 답변이 없는 경우 새로운 답변 작성 폼
-                            <ReplyForm onSubmit={handleSubmitReply}>
-                                <ReplyTextArea
-                                    value={replyContent}
-                                    onChange={(e) => setReplyContent(e.target.value)}
-                                    placeholder="답변 내용을 입력하세요..."
-                                    rows="5"
-                                />
-                                <ReplySubmitButton type="submit">답변 등록</ReplySubmitButton>
-                            </ReplyForm>
+                {inquiry.reply ? (
+                    // 답변이 존재하는 경우 (문의 상태와 상관없이 항상 답변 내용을 표시)
+                    <ExistingReply>
+                        {inquiry.reply.admin && (
+                            <ReplyMeta>
+                                답변자: {inquiry.reply.admin.memberUsername} | 답변일: {new Date(inquiry.reply.createdAt).toLocaleString()}
+                            </ReplyMeta>
                         )}
-                    </>
+                        <InquiryContent>{inquiry.reply.content}</InquiryContent>
+
+                        {/* 문의가 종료되지 않았을 때만 답변 수정/삭제 관련 UI 표시 */}
+                        {!isClosed ? (
+                            isReplyOwner ? (
+                                <form onSubmit={handleSubmitReply}>
+                                    <ReplyTextArea
+                                        value={replyContent}
+                                        onChange={(e) => setReplyContent(e.target.value)}
+                                        placeholder="답변 내용을 수정하세요..."
+                                        rows="5"
+                                    />
+                                    <ReplySubmitButton type="submit">답변 수정</ReplySubmitButton>
+                                    <ReplyActionButton type="button" onClick={handleDeleteReply}>답변 삭제</ReplyActionButton>
+                                </form>
+                            ) : (
+                                <InfoText>이 답변은 다른 관리자가 작성했습니다. 수정/삭제할 수 없습니다.</InfoText>
+                            )
+                        ) : (
+                            // 문의가 종료되었을 때 (답변 내용만 보이고 수정/삭제 불가 메시지 표시)
+                            <InfoText>이 문의는 종료되었으므로 답변을 수정하거나 삭제할 수 없습니다.</InfoText>
+                        )}
+                    </ExistingReply>
+                ) : (
+                    // 답변이 존재하지 않는 경우
+                    !isClosed ? (
+                        // 문의가 종료되지 않았을 때만 새로운 답변 작성 폼 표시
+                        <ReplyForm onSubmit={handleSubmitReply}>
+                            <ReplyTextArea
+                                value={replyContent}
+                                onChange={(e) => setReplyContent(e.target.value)}
+                                placeholder="답변 내용을 입력하세요..."
+                                rows="5"
+                            />
+                            <ReplySubmitButton type="submit">답변 등록</ReplySubmitButton>
+                        </ReplyForm>
+                    ) : (
+                        // 답변이 없고 문의가 종료되었을 때
+                        <InfoText>아직 답변이 등록되지 않았습니다. 종료된 문의에는 답변을 작성할 수 없습니다.</InfoText>
+                    )
                 )}
             </Section>
         </DetailContainer>

@@ -145,6 +145,7 @@ export const Message = styled.div`
   `}
 `;
 
+
 // 문의 종료 버튼 스타일
 export const CloseButton = styled.button`
     padding: 10px 15px;

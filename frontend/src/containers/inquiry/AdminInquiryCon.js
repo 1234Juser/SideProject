@@ -18,8 +18,8 @@ function AdminInquiryCon() {
     const fetchInquiries = useCallback(async (page) => {
         setIsLoading(true);
         setError(null);
-        console.log("fetchInquiries 호출됨. 현재 페이지:", page);
-        console.log("현재 auth.accessToken:", auth.accessToken ? "존재함" : "없음");
+        // console.log("fetchInquiries 호출됨. 현재 페이지:", page);
+        // console.log("현재 auth.accessToken:", auth.accessToken ? "존재함" : "없음");
 
         try {
             const response = await axios.get(`/inquiries?page=${page}&size=5&sort=createdAt,desc`, {
@@ -27,16 +27,16 @@ function AdminInquiryCon() {
                     'Authorization': `Bearer ${auth.accessToken}`
                 }
             });
-            console.log("API 응답 데이터:", response.data);
+            // console.log("API 응답 데이터:", response.data);
             setInquiries(response.data.content);
             setTotalPages(response.data.totalPages);
-            console.log("문의 목록 업데이트 완료:", response.data.content);
-            console.log("총 페이지 수 업데이트 완료:", response.data.totalPages);
+            // console.log("문의 목록 업데이트 완료:", response.data.content);
+            // console.log("총 페이지 수 업데이트 완료:", response.data.totalPages);
         } catch (err) {
-            console.error("Failed to fetch inquiries:", err);
+            // console.error("Failed to fetch inquiries:", err);
             if (err.response) {
-                console.error("API 응답 에러 상태 코드:", err.response.status);
-                console.error("API 응답 에러 데이터:", err.response.data);
+                // console.error("API 응답 에러 상태 코드:", err.response.status);
+                // console.error("API 응답 에러 데이터:", err.response.data);
                 if (err.response.status === 401 || err.response.status === 403) {
                     setError('인증 실패 또는 권한이 없습니다. 다시 로그인 해주세요.');
                     navigate('/login');
@@ -48,7 +48,7 @@ function AdminInquiryCon() {
             }
         } finally {
             setIsLoading(false);
-            console.log("로딩 상태 종료 (isLoading = false)");
+            // console.log("로딩 상태 종료 (isLoading = false)");
         }
     }, [auth.accessToken, navigate]);
 

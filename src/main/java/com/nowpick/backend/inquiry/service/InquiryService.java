@@ -68,11 +68,11 @@ public class InquiryService {
         if ("ROLE_ADMIN".equals(currentMember.getMemberRole())) {
             // 관리자인 경우: 모든 문의 조회
             inquiriesPage = inquiryRepository.findAll(pageable); // 여기가 중요합니다.
-            log.info("관리자 '{}'가 모든 문의를 조회합니다.", memberUsername);
+//            log.info("관리자 '{}'가 모든 문의를 조회합니다.", memberUsername);
         } else {
             // 일반 사용자인 경우: 자신의 문의만 조회
             inquiriesPage = inquiryRepository.findByMember(currentMember, pageable);
-            log.info("사용자 '{}'가 자신의 문의를 조회합니다.", memberUsername);
+//            log.info("사용자 '{}'가 자신의 문의를 조회합니다.", memberUsername);
         }
 
         // InquiryEntity Page를 InquiryDTO.InquiryListResponse Page로 변환
@@ -220,7 +220,6 @@ public class InquiryService {
             // PENDING, ANSWERED 상태만 CLOSED로 변경 가능하도록 제한
             if (inquiry.getStatus() == InquiryStatus.PENDING || inquiry.getStatus() == InquiryStatus.ANSWERED) {
                 inquiry.setStatus(InquiryStatus.CLOSED);
-                // inquiryRepository.save(inquiry); // @Transactional이므로 명시적 저장은 필수는 아니지만, 명확성을 위해 유지할 수 있습니다.
                 log.info("문의 ID '{}'의 상태가 '{}'로 변경되었습니다. 요청 사용자: '{}'", inquiry.getId(), InquiryStatus.CLOSED, memberUsername);
             } else {
                 log.info("문의 ID '{}'는 이미 '{}' 상태이므로 변경하지 않습니다.", inquiry.getId(), inquiry.getStatus());

@@ -19,6 +19,7 @@ import MyPagePage from "./pages/member/MyPagePage";
 import AdminInquiryPage from "./pages/inquiry/AdminInquiryPage";
 import AdminInquiryDetailPage from "./pages/inquiry/AdminInquiryDetailPage";
 import MemberInquiryPage from "./pages/inquiry/MemberInquiryPage";
+import MemberInquiryDetailPage from "./pages/inquiry/MemberInquiryDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ function App() {
                         <Route path="/admin/inquiries" element={<AdminInquiryPage />} />
                         <Route path="/admin/inquiries/:inquiryId" element={<AdminInquiryDetailPage />} />
                         <Route path="/member/inquiries" element={<MemberInquiryPage />} />
+                        <Route path="/member/inquiries/:inquiryId" element={<MemberInquiryDetailPage />} />
 
 
                     </Routes>

@@ -208,3 +208,28 @@ export const Message = styled.p`
         border: 1px solid #c3e6cb;
     `}
 `;
+
+export const Checkbox = styled.input`
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin-right: 8px; /* 체크박스와 내용 사이의 간격 */
+`;
+
+export const DeleteButton = styled.button`
+    padding: 10px 20px;
+    background-color: #dc3545; /* Bootstrap danger color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    &:hover {
+        background-color: #c82333;
+    }
+    &:disabled {
+        background-color: #e0e0e0;
+        cursor: not-allowed;
+    }
+`;

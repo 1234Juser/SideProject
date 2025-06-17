@@ -40,7 +40,6 @@ function MemberInquiryCon() {
             setTotalPages(response.data.totalPages);
             setSelectedInquiryIds(new Set()); // 페이지 변경 또는 새로고침 시 선택 초기화
         } catch (err) {
-            console.error("Failed to fetch inquiries:", err);
             if (err.response) {
                 setError(`문의 목록 불러오기 실패: ${err.response.data.message || err.message}`);
                 if (err.response.status === 401 || err.response.status === 403) {
@@ -100,7 +99,6 @@ function MemberInquiryCon() {
             setSelectedInquiryIds(new Set()); // 선택 초기화
             fetchInquiries(currentPage); // 목록 새로고침
         } catch (err) {
-            console.error("Failed to close inquiries:", err);
             if (err.response) {
                 setError(`문의 종료 실패: ${err.response.data.message || err.message}`);
             } else {
