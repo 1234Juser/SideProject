@@ -55,11 +55,11 @@ public class ChatService {
                 .orElseThrow(() -> new IllegalArgumentException("채팅 세션을 찾을 수 없습니다."));
 
         // 관리자가 아니면서, 자신의 채팅방이 아닌 경우 접근 거부
-        if (!"ADMIN".equals(sender.getMemberRole()) && !session.getMember().equals(sender)) {
+        if (!"ROLE_ADMIN".equals(sender.getMemberRole()) && !session.getMember().equals(sender)) {
             throw new AccessDeniedException("자신의 채팅방에만 메시지를 보낼 수 있습니다.");
         }
 
-        SenderType senderType = "ADMIN".equals(sender.getMemberRole()) ? SenderType.ADMIN : SenderType.USER;
+        SenderType senderType = "ROLE_ADMIN".equals(sender.getMemberRole()) ? SenderType.ADMIN : SenderType.USER;
 
         ChatMessageEntity messageEntity = ChatMessageEntity.builder()
                 .chatSession(session)
@@ -77,13 +77,30 @@ public class ChatService {
         MemberEntity admin = memberRepository.findByMemberUsername(adminUsername)
                 .orElseThrow(() -> new IllegalArgumentException("관리자 계정을 찾을 수 없습니다."));
 
-        if (!"ADMIN".equals(admin.getMemberRole())) {
+        if (!"ROLE_ADMIN".equals(admin.getMemberRole())) {
             throw new AccessDeniedException("접근 권한이 없습니다.");
         }
 
         List<ChatSessionEntity> openSessions = chatSessionRepository.findByStatusWithMessages(ChatSessionStatus.OPEN);
         return openSessions.stream().map(ChatDTO.SessionResponse::from).collect(Collectors.toList());
     }
+
+    // [관리자] 특정 채팅 세션 상세 조회
+    @Transactional(readOnly = true)
+    public ChatDTO.SessionResponse getChatSessionByIdForAdmin(Long sessionId, String adminUsername) throws AccessDeniedException {
+        MemberEntity admin = memberRepository.findByMemberUsername(adminUsername)
+                .orElseThrow(() -> new IllegalArgumentException("관리자 계정을 찾을 수 없습니다."));
+
+        if (!"ROLE_ADMIN".equals(admin.getMemberRole())) {
+            throw new AccessDeniedException("접근 권한이 없습니다.");
+        }
+
+        ChatSessionEntity session = chatSessionRepository.findByIdWithMessages(sessionId) // 모든 메시지를 함께 가져오도록 변경 필요
+                .orElseThrow(() -> new IllegalArgumentException("채팅 세션을 찾을 수 없습니다."));
+
+        return ChatDTO.SessionResponse.from(session);
+    }
+
 
     // 채팅 세션 종료
     public void closeChatSession(Long sessionId, String memberUsername) throws AccessDeniedException {
@@ -94,7 +111,7 @@ public class ChatService {
                 .orElseThrow(() -> new IllegalArgumentException("채팅 세션을 찾을 수 없습니다."));
 
         // 관리자 또는 채팅방 주인만 세션을 닫을 수 있음
-        if (!"ADMIN".equals(member.getMemberRole()) && !session.getMember().equals(member)) {
+        if (!"ROLE_ADMIN".equals(member.getMemberRole()) && !session.getMember().equals(member)) {
             throw new AccessDeniedException("세션을 닫을 권한이 없습니다.");
         }
 

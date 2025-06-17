@@ -42,6 +42,12 @@ public class ChatSessionController {
         return ResponseEntity.ok(sessions);
     }
 
+    // [관리자] 특정 채팅 세션 상세 조회
+    @GetMapping("/session/{sessionId}")
+    public ResponseEntity<ChatDTO.SessionResponse> getSessionDetails(@PathVariable Long sessionId, Principal principal) throws AccessDeniedException {
+        return ResponseEntity.ok(chatService.getChatSessionByIdForAdmin(sessionId, principal.getName()));
+    }
+
     // 채팅 세션 닫기
     @PatchMapping("/session/{sessionId}/close")
     public ResponseEntity<Void> closeSession(@PathVariable Long sessionId, Principal principal) throws AccessDeniedException {

@@ -33,5 +33,20 @@ public interface ChatSessionRepository extends JpaRepository<ChatSessionEntity, 
             "WHERE cs.status = :status")
     List<ChatSessionEntity> findByStatusWithMessages(@Param("status") ChatSessionStatus status);
 
+    @Query("SELECT cs FROM ChatSessionEntity cs LEFT JOIN FETCH cs.messages m WHERE cs.id = :sessionId")
+    Optional<ChatSessionEntity> findByIdWithMessages(@Param("sessionId") Long sessionId);
+
+    /**
+     * 관리자 페이지에서 조회할 활성 채팅 세션 (OPEN 또는 CLOSED 상태) 목록을 가져옵니다.
+     * ARCHIVED 상태는 제외합니다.
+     */
+    @Query("SELECT cs FROM ChatSessionEntity cs " +
+            "LEFT JOIN FETCH cs.member " +
+            "LEFT JOIN FETCH cs.messages m " +
+            "LEFT JOIN FETCH m.sender " +
+            "WHERE cs.status IN (:statuses)")
+    List<ChatSessionEntity> findByStatusesWithMessages(@Param("statuses") List<ChatSessionStatus> statuses);
+
+
 }
 
