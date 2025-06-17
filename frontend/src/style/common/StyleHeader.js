@@ -8,6 +8,7 @@ export const HeaderWrapper = styled.header`
     padding: 16px;
     border-bottom: 1px solid #ddd;
     background-color: #fff;
+    border: 1px solid blue;
 
     @media (min-width: 768px) {
         //padding: 24px 40px;
