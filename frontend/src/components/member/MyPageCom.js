@@ -7,7 +7,8 @@ import {
     Section,
     SectionTitle, Highlight, CardsWrapper
 } from "../../style/member/StyleMyPage";
-import {Sidebar, SidebarItem, DropdownItem} from "../../style/member/StyleMyPageSidebar"; // DropdownItem import 추가
+import {Sidebar, SidebarItem, DropdownItem} from "../../style/member/StyleMyPageSidebar";
+import {Link} from "react-router-dom"; // DropdownItem import 추가
 
 
 const MyPageSidebar = () => {
@@ -40,10 +41,14 @@ const MyPageSidebar = () => {
             {showInquiryDropdown && (
                 <>
                 <DropdownItem>
-                1:1일반문의
+                    <Link to="/member/inquiries">
+                        1:1일반문의
+                    </Link>
                 </DropdownItem>
                 <DropdownItem>
-                1:1채팅문의
+                    <Link to="/member/chat-inquiries">
+                        1:1채팅문의
+                    </Link>
                 </DropdownItem>
                 </>
                 )}

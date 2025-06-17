@@ -55,25 +55,29 @@ public class InquiryService {
      * 문의 목록을 페이징 처리하여 조회하는 메소드
      * 관리자는 모든 문의를, 일반 회원은 자신의 문의만 조회할 수 있습니다.
      */
-    @Transactional(readOnly = true) // 데이터 변경이 없는 읽기 전용 트랜잭션으로 설정하여 성능을 최적화합니다.
+    @Transactional(readOnly = true)
     public Page<InquiryDTO.InquiryListResponse> getInquiries(Pageable pageable, String memberUsername) {
-        // 1. 사용자 이름을 기반으로 회원 정보를 조회합니다.
-        MemberEntity member = memberRepository.findByMemberUsername(memberUsername)
-                .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
+        // 현재 로그인한 사용자 정보 조회
+        MemberEntity currentMember = memberRepository.findByMemberUsername(memberUsername)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + memberUsername));
 
-        Page<InquiryEntity> inquiries;
-        // 2. 회원의 역할(Role)에 따라 다른 조회 로직을 수행합니다.
-        if ("ADMIN".equals(member.getMemberRole())) {
-            // 관리자(ADMIN)일 경우, 모든 문의 목록을 조회합니다.
-            inquiries = inquiryRepository.findAll(pageable);
+        Page<InquiryEntity> inquiriesPage;
+
+        // 사용자의 역할이 'ROLE_ADMIN'인지 확인
+        if ("ROLE_ADMIN".equals(currentMember.getMemberRole())) {
+            // 관리자인 경우: 모든 문의 조회
+            inquiriesPage = inquiryRepository.findAll(pageable); // 여기가 중요합니다.
+            log.info("관리자 '{}'가 모든 문의를 조회합니다.", memberUsername);
         } else {
-            // 일반 회원일 경우, 자신이 작성한 문의 목록만 조회합니다.
-            inquiries = inquiryRepository.findByMember(member, pageable);
+            // 일반 사용자인 경우: 자신의 문의만 조회
+            inquiriesPage = inquiryRepository.findByMember(currentMember, pageable);
+            log.info("사용자 '{}'가 자신의 문의를 조회합니다.", memberUsername);
         }
 
-        // 3. 조회된 엔티티 페이지를 응답 DTO 페이지로 변환하여 반환합니다.
-        return inquiries.map(InquiryDTO.InquiryListResponse::from);
+        // InquiryEntity Page를 InquiryDTO.InquiryListResponse Page로 변환
+        return inquiriesPage.map(InquiryDTO.InquiryListResponse::from);
     }
+
 
     /**
      * 특정 ID의 문의를 상세 조회하는 메소드
@@ -90,7 +94,7 @@ public class InquiryService {
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
 
         // 3. 접근 권한을 확인합니다. 관리자가 아니고, 문의 작성자 본인도 아닐 경우 접근을 거부합니다.
-        if (!"ADMIN".equals(member.getMemberRole()) && !inquiry.getMember().getMemberUsername().equals(memberUsername)) {
+        if (!"ROLE_ADMIN".equals(member.getMemberRole()) && !inquiry.getMember().getMemberUsername().equals(memberUsername)) {
             throw new AccessDeniedException("접근 권한이 없습니다.");
         }
 
@@ -107,7 +111,7 @@ public class InquiryService {
                 .orElseThrow(() -> new IllegalArgumentException("관리자 계정을 찾을 수 없습니다."));
 
         // 2. 관리자(ADMIN) 역할이 아닐 경우, 예외를 발생시켜 작업을 중단합니다.
-        if (!"ADMIN".equals(admin.getMemberRole())) {
+        if (!"ROLE_ADMIN".equals(admin.getMemberRole())) {
             throw new AccessDeniedException("답변을 작성할 권한이 없습니다.");
         }
 

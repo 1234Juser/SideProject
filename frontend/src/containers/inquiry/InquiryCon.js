@@ -22,7 +22,7 @@ function InquiryCon() {
         }
     }, [auth.isAuthenticated, navigate]);
 
-    // 2. 문의 등록 성공 후의 리디렉션을 처리하는 useEffect
+    // 2. 문의 등록 성공 후의 리다이렉션을 처리하는 useEffect
     useEffect(() => {
         let timer;
         if (success) {

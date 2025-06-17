@@ -4,7 +4,7 @@ import {Route, Routes} from "react-router-dom";
 import MainLayout from "./layouts/Layout";
 import MenuListPage from "./pages/menu/MenuListPage";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 import SignupPage from "./pages/member/SignupPage";
 import LoginPage from "./pages/member/LoginPage";
 import {AuthProvider} from "./utils/AuthContext";
@@ -13,6 +13,10 @@ import ChatPage from "./pages/inquiry/ChatPage";
 import MenuDetailPage from "./pages/menu/MenuDetailPage";
 import AdminMyPagePage from "./pages/admin/AdminMyPagePage";
 import AdminMemberListPage from "./pages/admin/AdminMemberListPage";
+import MyPagePage from "./pages/member/MyPagePage";
+import AdminInquiryPage from "./pages/inquiry/AdminInquiryPage";
+import AdminInquiryDetailPage from "./pages/inquiry/AdminInquiryDetailPage";
+import MemberInquiryPage from "./pages/inquiry/MemberInquiryPage";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +43,10 @@ function App() {
                         {/* 1:1문의 */}
                         <Route path="/inquiry" element={<InquiryPage />} />
                         <Route path="/chat-inquiry" element={<ChatPage />} />
+                        <Route path="/admin/inquiries" element={<AdminInquiryPage />} />
+                        <Route path="/admin/inquiries/:inquiryId" element={<AdminInquiryDetailPage />} />
+                        <Route path="/member/inquiries" element={<MemberInquiryPage />} />
+
 
                     </Routes>
                   </MainLayout>
