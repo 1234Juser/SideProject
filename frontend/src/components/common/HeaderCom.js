@@ -1,4 +1,3 @@
-import NavCom from './NavCom';
 import {
     HeaderWrapper,
     Logo,
@@ -12,6 +11,18 @@ import {
 
 const HeaderCom = ({handleLogout, auth}) => {
 
+    const getMyPagePath = () => {
+        if (auth.isAuthenticated && auth.memberRole === "ROLE_ADMIN") {
+            console.log("Admin role detected, path: /admin/mypage"); // 디버깅용
+            return "/admin/mypage";
+        } else {
+            console.log("User role detected, path: /mypage"); // 디버깅용
+            return "/mypage";
+        }
+    };
+
+
+
     return (
             <HeaderWrapper>
                 <TopRow>
@@ -21,7 +32,7 @@ const HeaderCom = ({handleLogout, auth}) => {
                             <>
                                 <UserInfoContainer>
                                     <NicknameSpan>환영합니다, {auth.memberNickname}님!</NicknameSpan>
-                                    <StyledLink to="/mypage">
+                                    <StyledLink to={getMyPagePath()}>
                                         마이페이지
                                     </StyledLink>
                                     <StyledLink to="/" onClick={handleLogout}>
@@ -37,7 +48,6 @@ const HeaderCom = ({handleLogout, auth}) => {
                         )}
                     </TopButtons>
                 </TopRow>
-                <NavCom/>
             </HeaderWrapper>
     )
 };
