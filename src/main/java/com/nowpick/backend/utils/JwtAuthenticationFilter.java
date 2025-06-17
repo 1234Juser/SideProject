@@ -70,7 +70,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // shouldNotFilter에서 이미 필터링되어 이 코드는 JWT 인증이 필요한 경우에만 실행됩니다.
         final String authHeader = request.getHeader("Authorization"); // Authorization 헤더에서 JWT 추출
         final String jwt;
-        final String memberUsername;
+        final String memberUsername;    // 실제 사용자 이름을 저장할 변수
         
         // 1. Authorization 헤더가 없거나 "Bearer "로 시작하지 않으면 다음 필터로 진행
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -84,6 +84,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         
         try {
             // 3. JWT에서 사용자 이름(subject) 추출
+            // 여기를 수정: 토큰에서 실제 memberUsername 클레임을 추출하도록 변경
             memberUsername = jwtUtil.getMemberUsernameFromToken(jwt); // JwtUtil을 사용하여 사용자 이름 추출
             
             // 4. 사용자 이름이 존재하고, 현재 SecurityContext에 인증 정보가 없는 경우

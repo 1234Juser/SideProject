@@ -2,19 +2,21 @@ package com.nowpick.backend.member.service;
 
 
 import com.nowpick.backend.member.domain.MemberEntity;
-import com.nowpick.backend.member.dto.LoginRequestDTO;
-import com.nowpick.backend.member.dto.LoginResponseDTO;
-import com.nowpick.backend.member.dto.MemberResponseDTO;
-import com.nowpick.backend.member.dto.MemberSignupRequestDTO;
+import com.nowpick.backend.member.dto.*;
 import com.nowpick.backend.member.repo.MemberRepository;
 import com.nowpick.backend.utils.JwtUtil;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -101,7 +103,8 @@ public class MemberService {
         
         // JWT 토큰 생성
         String accessToken = jwtUtil.generateToken(
-                                                    member.getMemberUsername(), // memberId (JWT subject)
+                                                    member.getMemberId(),
+                                                    member.getMemberUsername(),
                                                     member.getMemberRole(),
                                                     member.getMemberNickname()
         );
@@ -109,9 +112,72 @@ public class MemberService {
         // LoginResponseDTO 객체 생성 및 반환
         return LoginResponseDTO.builder()
                            .accessToken(accessToken)
+                           .memberId(member.getMemberId())
                            .memberUsername(member.getMemberUsername()) // MemberEntity에서 memberUsername을 memberId로 사용
                            .memberRole(member.getMemberRole()) // MemberEntity에서 직접 memberRole 가져옴
                            .memberNickname(member.getMemberNickname())
                            .build();
     }
+    
+    
+    // 회원 정보 조회
+    public MemberEntity getMemberInfo( String username ) {
+        
+        log.debug("username 확인 : ", username);
+        
+        return  memberRepository.findByMemberUsername(username)
+                                    .orElseThrow(() -> new IllegalArgumentException("일치하는 회원을 찾을 수 없습니다." + username));
+    }
+    
+    
+    
+    // 회원 정보 수정
+    public MemberEntity updateMember( String memberUsername, MemberUpdateRequestDTO requestDTO ) {
+        
+        MemberEntity memberEntity = memberRepository.findByMemberUsername(memberUsername)
+                                    .orElseThrow(() -> new EntityNotFoundException("회원 정보를 찾을 수 없습니다."));
+        
+        memberEntity.setMemberEmail(requestDTO.getMemberEmail());
+        
+        // 닉네임 업데이트
+        if (requestDTO.getMemberNickname() != null && !requestDTO.getMemberNickname().isEmpty()) {
+            // 닉네임 중복 검사 (선택 사항이지만, 요구사항에 따라 필요할 수 있음)
+            // if (memberRepository.findByMemberNickname(requestDto.getMemberNickname()).isPresent()) {
+            //     throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
+            // }
+            memberEntity.setMemberNickname(requestDTO.getMemberNickname());
+        }
+        
+        // 전화번호 업데이트
+        if (requestDTO.getMemberPhoneNumber() != null && !requestDTO.getMemberPhoneNumber().isEmpty()) {
+            memberEntity.setMemberPhoneNumber(requestDTO.getMemberPhoneNumber());
+        }
+        
+        // 비밀번호 업데이트 (비밀번호 관련 필드가 모두 제공되었을 때만 처리)
+        if (requestDTO.getCurrentPassword() != null && !requestDTO.getCurrentPassword().isEmpty() &&
+            requestDTO.getNewPassword() != null && !requestDTO.getNewPassword().isEmpty()) {
+            
+            // 현재 비밀번호 확인 requestDTO
+            if (!passwordEncoder.matches(requestDTO.getCurrentPassword(), memberEntity.getMemberPassword())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "현재 비밀번호가 일치하지 않습니다.");
+            }
+            
+            // 새 비밀번호 암호화 및 설정
+            memberEntity.setMemberPassword(passwordEncoder.encode(requestDTO.getNewPassword()));
+        }
+        
+        // 업데이트 시간 반영
+        memberEntity.setMemberUpdatedAt(LocalDateTime.now());
+        
+        log.debug("변경된 엔티티 확인 : ", memberEntity);
+        
+        // 변경된 엔티티 저장
+        memberRepository.save(memberEntity);
+        
+        
+        return memberEntity;
+    }
+    
+    
+    
 }

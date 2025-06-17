@@ -23,6 +23,7 @@ function LoginCon() {
             alert('✅ 로그인 성공!');
 
             const receivedAccessToken = data.accessToken || '';
+            const receivedMemberId = data.memberId || '';
             const receivedMemberUsername = data.memberUsername || '';
             const receivedMemberRole = data.memberRole || '';
             const receivedMemberNickname = data.memberNickname || '';
@@ -30,14 +31,14 @@ function LoginCon() {
 
             // 로컬 스토리지에 토큰 및 사용자 정보 저장 (AuthContext에서 처리)
             // AuthContext의 login 함수를 호출하여 전역 상태 및 로컬 스토리지 업데이트
-            login(receivedAccessToken, receivedMemberUsername, receivedMemberRole, receivedMemberNickname);
+            login(receivedAccessToken, receivedMemberId, receivedMemberUsername, receivedMemberRole, receivedMemberNickname);
 
-            dispatch({ type: 'SET_MESSAGE', payload: '' });
+            dispatch({ type: 'SET_SUCCESS_MESSAGE', payload: '' });
             navigate('/');
         },
         onError: (error) => {
             console.error('LoginCon: Login failed error:', error);
-            dispatch({ type: 'SET_MESSAGE', payload: '❌ 로그인 실패: ' + error.message });
+            dispatch({ type: 'SET_SUCCESS_MESSAGE', payload: '❌ 로그인 실패: ' + error.message });
         }
     });
 
