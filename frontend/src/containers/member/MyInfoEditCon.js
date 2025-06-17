@@ -89,6 +89,25 @@ function MyInfoEditCon() {
         e.preventDefault();
         dispatch({ type: 'SET_SUCCESS_MESSAGE', payload: null }); // 이전 성공 메시지 초기화
 
+/*
+        // 비밀번호 필드가 비어있으면 유효성 검사에서 제외
+        let formIsValid = true;
+        if (currentPassword || newPassword || confirmNewPassword) {
+            formIsValid = validateForm();
+        } else {
+            // 비밀번호 필드가 비어있다면, 닉네임/전화번호만 유효성 검사
+            const errors = {};
+            if (!memberNickname || memberNickname.trim().length < 2) {
+                errors.memberNickname = "닉네임은 2자 이상이어야 합니다.";
+            }
+            if (!memberPhoneNumber || !/^\d{2,3}-\d{3,4}-\d{4}$/.test(memberPhoneNumber)) {
+                errors.memberPhoneNumber = "유효한 전화번호 형식이 아닙니다 (예: 010-1234-5678).";
+            }
+            dispatch({ type: 'SET_FORM_ERRORS', payload: errors });
+            formIsValid = Object.keys(errors).length === 0;
+        }
+        */
+
         if (!validateForm()) {
             return;
         }
@@ -100,8 +119,11 @@ function MyInfoEditCon() {
             const updatePayload = {
                 memberNickname: memberNickname,
                 memberPhoneNumber: memberPhoneNumber,
-                currentPassword: currentPassword, // 비밀번호 필드 항상 포함
-                newPassword: newPassword,         // 비밀번호 필드 항상 포함
+/*                currentPassword: currentPassword, // 비밀번호 필드 항상 포함
+                newPassword: newPassword,         // 비밀번호 필드 항상 포함*/
+                // 비밀번호 필드는 값이 있을 때만 포함
+                ...(currentPassword && { currentPassword: currentPassword }),
+                ...(newPassword && { newPassword: newPassword }),
 
             };
 
@@ -109,8 +131,9 @@ function MyInfoEditCon() {
             dispatch({ type: 'SET_SUCCESS_MESSAGE', payload: message || "회원 정보가 성공적으로 수정되었습니다." });
 
             // 비밀번호 변경 성공 시 비밀번호 필드 초기화
+            if (newPassword) { // 새 비밀번호가 입력된 경우에만 초기화
                 dispatch({ type: 'RESET_PASSWORD_FIELDS' });
-
+            }
 
         } catch (err) {
             console.error("Failed to update member info:", err);
@@ -141,8 +164,10 @@ function MyInfoEditCon() {
     };
 
 
-    // 초기 로딩 상태 감지
-    if (loading && Object.keys(state.formErrors).length === 0 && !successMessage && !error && state.memberNickname === '') {
+    // 렌더링 조건은 하나로 통합합니다.
+    // loading이 true이고 memberNickname이 아직 초기값이라면 로딩 메시지 표시
+    // 이 조건이 false가 되면 MyInfoEditCom을 렌더링합니다.
+    if (loading && memberNickname === '') {
         return (
             <div>
                 <p>현재 정보를 불러오는 중...</p>
@@ -150,6 +175,8 @@ function MyInfoEditCon() {
         );
     }
 
+    // 이외의 경우에는 MyInfoEditCom을 렌더링합니다.
+    // MyInfoEditCom의 props에 기본값을 설정했으므로, 여기서는 추가 방어 로직이 필요 없습니다.
     return (
         <MyInfoEditCom {...MyInfoEditComProps} />
     )

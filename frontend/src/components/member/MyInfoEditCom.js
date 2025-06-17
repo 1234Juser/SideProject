@@ -11,8 +11,21 @@ import {
 import React from "react";
 
 
-function MyInfoEditCom({handleChange, handleSubmit, formData, formErrors, loading, error, successMessage,
-                           changePassword}) {
+// function MyInfoEditCom({handleChange, handleSubmit, formData = {}, formErrors, loading, error, successMessage,
+//                            changePassword}) {
+
+    // 모든 props에 기본값을 설정하여, 부모로부터 undefined가 넘어와도 안전하게 처리합니다.
+    function MyInfoEditCom({
+                               handleChange = () => {}, // 함수 기본값
+                               handleSubmit = () => {}, // 함수 기본값
+                               formData = {},            // 객체 기본값
+                               formErrors = {},          // 객체 기본값
+                               loading = false,          // boolean 기본값
+                               error = null,             // null 기본값
+                               successMessage = null,    // null 기본값
+                               changePassword = false    // boolean 기본값 (만약 이 prop이 사용된다면)
+                           }) {
+
 
 
     return (
@@ -26,7 +39,7 @@ function MyInfoEditCom({handleChange, handleSubmit, formData, formErrors, loadin
                                 type="text"
                                 id="memberNickname"
                                 name="memberNickname"
-                                value={formData.memberNickname}
+                                value={formData.memberNickname || ''}
                                 onChange={handleChange}
                                 placeholder="닉네임을 입력하세요"
                             />
@@ -36,10 +49,10 @@ function MyInfoEditCom({handleChange, handleSubmit, formData, formErrors, loadin
                         <FormGroup>
                             <Label htmlFor="memberPhoneNumber">전화번호</Label>
                             <Input
-                                type="tel" // tel 타입으로 변경
+                                type="tel"
                                 id="memberPhoneNumber"
                                 name="memberPhoneNumber"
-                                value={formData.memberPhoneNumber}
+                                value={formData.memberPhoneNumber || ''}
                                 onChange={handleChange}
                                 placeholder="010-1234-5678"
                             />
@@ -63,7 +76,7 @@ function MyInfoEditCom({handleChange, handleSubmit, formData, formErrors, loadin
                                         type="password"
                                         id="currentPassword"
                                         name="currentPassword"
-                                        value={formData.currentPassword}
+                                        value={formData.currentPassword || ''}
                                         onChange={handleChange}
                                         placeholder="현재 비밀번호를 입력하세요"
                                     />
@@ -76,7 +89,7 @@ function MyInfoEditCom({handleChange, handleSubmit, formData, formErrors, loadin
                                         type="password"
                                         id="newPassword"
                                         name="newPassword"
-                                        value={formData.newPassword}
+                                        value={formData.newPassword || ''}
                                         onChange={handleChange}
                                         placeholder="새 비밀번호 (8자 이상)"
                                     />
@@ -89,7 +102,7 @@ function MyInfoEditCom({handleChange, handleSubmit, formData, formErrors, loadin
                                         type="password"
                                         id="confirmNewPassword"
                                         name="confirmNewPassword"
-                                        value={formData.confirmNewPassword}
+                                        value={formData.confirmNewPassword || ''}
                                         onChange={handleChange}
                                         placeholder="새 비밀번호를 다시 입력하세요"
                                     />
