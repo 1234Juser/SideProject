@@ -1,19 +1,35 @@
--- 관리자 계정 (username: admin / password: admin)
+-- 관리자 계정 (username: admin01-03 / password: admin01-03)
 INSERT INTO tbl_member (
     member_id, member_username, member_password, member_email, member_nickname,
     member_phone_number, member_role, member_created_at, member_updated_at, member_is_active
 ) VALUES (
-             1, 'admin', '$2a$10$Zdi8UL2f9fc0cl/Ud/9sIORqha/UGDHglnGwZHAnguZKiu0VlQIFC',
-             'admin@example.com', '관리자', '010-0000-0000', 'ROLE_ADMIN', NOW(), NOW(), true
+             1, 'admin01', '$2a$10$Z6g4xzLkxkGe.xa/syVUZuvhlpg1lz73odcpOu5qyBR2Ys5ZRPaUq',
+             'admin01@example.com', '관리자1', '010-0000-0001', 'ROLE_ADMIN', NOW(), NOW(), true
+         ),
+         (
+             2, 'admin02', '$2a$10$YetaCRCxpRWrhgFHAze/8.UseG6IsLe6/1zajVjtb/NtKz8SlVnea',
+             'admin02@example.com', '관리자2', '010-0000-0002', 'ROLE_ADMIN', NOW(), NOW(), true
+         ),
+         (
+             3, 'admin03', '$2a$10$HdyuasLjb8NLSwOE/Db0DO61T9JlzYDpwX/IGnl2N3PIN1tFfQ30S',
+             'admin03@example.com', '관리자3', '010-0000-0003', 'ROLE_ADMIN', NOW(), NOW(), true
          );
 
--- 일반 회원 계정 (username: user / password: user)
+-- 일반 회원 계정 (username: user01-03 / password: user01-03)
 INSERT INTO tbl_member (
     member_id, member_username, member_password, member_email, member_nickname,
     member_phone_number, member_role, member_created_at, member_updated_at, member_is_active
 ) VALUES (
-             2, 'user', '$2a$10$A3vhjxMwY.WXme1dNmjW3.uQoWgow7GumCaSt3tfeADh3Lu0gN6j6',
-             'user@example.com', '일반회원', '010-1111-1111', 'ROLE_USER', NOW(), NOW(), true
+             4, 'user01', '$2a$10$m/HlmBg2GhagO5syMZ9cRuDX7x5enQuCsTnFfcl70E/pT0pcDHgny',
+             'user01@example.com', '일반회원1', '010-1111-1111', 'ROLE_USER', NOW(), NOW(), true
+         ),
+         (
+             5, 'user02', '$2a$10$rRoAUJUqXopCb7PH7qMV9.bXsBFx4XaszXwKZyza66G8TGiCKf7DO',
+             'user02@example.com', '일반회원2', '010-1111-1112', 'ROLE_USER', NOW(), NOW(), true
+         ),
+         (
+             6, 'user03', '$2a$10$rBbtfvwJ44SDMrnqj9p.Iuc.NE6.mcaIlmz3r1FdD0ybOCNZ/saZa',
+             'user03@example.com', '일반회원3', '010-1111-1113', 'ROLE_USER', NOW(), NOW(), true
          );
 
 

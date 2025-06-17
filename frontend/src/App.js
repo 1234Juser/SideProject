@@ -13,6 +13,9 @@ import ChatPage from "./pages/inquiry/ChatPage";
 import MenuDetailPage from "./pages/menu/MenuDetailPage";
 import AdminMyPagePage from "./pages/admin/AdminMyPagePage";
 import AdminMemberListPage from "./pages/admin/AdminMemberListPage";
+import MyPagePage from "./pages/member/MyPagePage";
+import MyInfoPage from "./pages/member/MyInfoPage";
+import MyInfoEditPage from "./pages/member/MyInfoEditPage";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +31,10 @@ function App() {
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/mypage" element={<MyPagePage/>}/>
+                        <Route path="/mypage/my-info" element={<MyInfoPage/>}/>
+                        <Route path="/mypage/my-info-edit" element={<MyInfoEditPage/>}/>
+
+                        {/*관리자 관련*/}
                         <Route path="/admin/mypage" element={<AdminMyPagePage/>}/>
                         <Route path="/admin/member-list" element={<AdminMemberListPage/>}/>
 
