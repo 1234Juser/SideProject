@@ -11,19 +11,21 @@ function AdminChatCon() {
     const [successMessage, setSuccessMessage] = useState(null);
     const [selectedSessionIds, setSelectedSessionIds] = useState(new Set());
 
-    const fetchOpenSessions = useCallback(async () => {
+    // 'OPEN'과 'CLOSED' 상태의 세션을 모두 가져오는 함수
+    const fetchActiveSessions = useCallback(async () => {
         setIsLoading(true);
         setError(null);
         setSuccessMessage(null);
         try {
-            const response = await axios.get('/chat/sessions/open', {
+            // API 엔드포인트를 /sessions/admin으로 변경
+            const response = await axios.get('/chat/sessions/admin', {
                 headers: {
                     Authorization: `Bearer ${auth.accessToken}`
                 }
             });
             setSessions(response.data);
         } catch (err) {
-            console.error("채팅 세션 목록 조회 실패:", err);
+            console.error("활성 채팅 세션 목록 조회 실패:", err);
             setError('채팅 세션 목록을 불러오는데 실패했습니다.');
         } finally {
             setIsLoading(false);
@@ -31,8 +33,8 @@ function AdminChatCon() {
     }, [auth.accessToken]);
 
     useEffect(() => {
-        fetchOpenSessions();
-    }, [fetchOpenSessions]);
+        fetchActiveSessions();
+    }, [fetchActiveSessions]);
 
     const handleCheckboxChange = useCallback((sessionId) => {
         setSelectedSessionIds(prev => {
@@ -46,10 +48,15 @@ function AdminChatCon() {
         });
     }, []);
 
-    const onCloseSelectedSessions = useCallback(async () => {
+    // 선택된 채팅방을 '보관(archive)' 처리하는 함수
+    const onArchiveSelectedSessions = useCallback(async () => {
         if (selectedSessionIds.size === 0) {
             setSuccessMessage(null);
             setError('선택된 채팅방이 없습니다.');
+            return;
+        }
+
+        if (!window.confirm(`선택된 ${selectedSessionIds.size}개의 채팅방을 보관(삭제)처리 하시겠습니까? 이 작업은 되돌릴 수 없습니다.`)) {
             return;
         }
 
@@ -57,24 +64,25 @@ function AdminChatCon() {
         setError(null);
         setSuccessMessage(null);
         try {
-            const closePromises = Array.from(selectedSessionIds).map(sessionId =>
-                axios.patch(`/chat/session/${sessionId}/close`, {}, { // 빈 객체 전달 또는 요청 본문이 필요 없는 경우 생략
+            // API 엔드포인트를 /archive로 변경
+            const archivePromises = Array.from(selectedSessionIds).map(sessionId =>
+                axios.patch(`/chat/session/${sessionId}/archive`, {}, {
                     headers: {
                         Authorization: `Bearer ${auth.accessToken}`
                     }
                 })
             );
-            await Promise.all(closePromises);
-            setSuccessMessage('선택된 채팅방이 성공적으로 종료되었습니다.');
+            await Promise.all(archivePromises);
+            setSuccessMessage('선택된 채팅방이 성공적으로 보관(삭제)되었습니다.');
             setSelectedSessionIds(new Set()); // 선택된 항목 초기화
-            fetchOpenSessions(); // 목록 새로고침
+            fetchActiveSessions(); // 목록 새로고침
         } catch (err) {
-            console.error("채팅방 종료 실패:", err);
-            setError('채팅방 종료에 실패했습니다.');
+            console.error("채팅방 보관 실패:", err);
+            setError('채팅방 보관 처리에 실패했습니다.');
         } finally {
             setIsLoading(false);
         }
-    }, [selectedSessionIds, auth.accessToken, fetchOpenSessions]);
+    }, [selectedSessionIds, auth.accessToken, fetchActiveSessions]);
 
     return (
         <AdminChatCom
@@ -84,7 +92,7 @@ function AdminChatCon() {
             successMessage={successMessage}
             selectedSessionIds={selectedSessionIds}
             onCheckboxChange={handleCheckboxChange}
-            onCloseSelectedSessions={onCloseSelectedSessions}
+            onArchiveSelectedSessions={onArchiveSelectedSessions} // props 이름 변경
         />
     );
 }

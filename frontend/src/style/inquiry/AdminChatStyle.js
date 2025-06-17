@@ -72,15 +72,15 @@ export const StatusBadge = styled.span`
     font-size: 13px;
     color: white;
     background-color: ${props => {
-    switch (props.$status) {
-        case 'OPEN':
-            return '#28a745'; // Green
-        case 'CLOSED':
-            return '#dc3545'; // Red
-        default:
-            return '#6c757d'; // Grey
-    }
-}};
+        switch (props.$status) {
+            case 'OPEN':
+                return '#28a745'; // Green
+            case 'CLOSED':
+                return '#dc3545'; // Red
+            default:
+                return '#6c757d'; // Grey
+        }
+    }};
 `;
 
 export const Checkbox = styled.input`
@@ -97,7 +97,7 @@ export const ActionButtonsContainer = styled.div`
     padding: 10px;
 `;
 
-export const CloseButton = styled.button`
+export const ActionButton = styled.button` /* CloseButton을 ActionButton으로 변경 */
     background-color: #dc3545; /* Red for closing */
     color: white;
     padding: 10px 20px;

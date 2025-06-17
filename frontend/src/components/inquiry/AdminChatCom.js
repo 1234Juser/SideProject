@@ -1,8 +1,8 @@
 import React from 'react';
 import {
     ChatListContainer, Title, ChatTable, TableHeader, TableRow, TableCell,
-    StatusBadge, Checkbox, ActionButtonsContainer, CloseButton, InfoText, Message
-} from '../../style/inquiry/AdminChatStyle';
+    StatusBadge, Checkbox, ActionButtonsContainer, ActionButton, InfoText, Message // ActionButton으로 변경
+} from '../../style/inquiry/AdminChatStyle'; // CloseButton -> ActionButton
 import { useNavigate } from 'react-router-dom';
 
 function AdminChatCom({
@@ -12,7 +12,7 @@ function AdminChatCom({
                           successMessage,
                           selectedSessionIds,
                           onCheckboxChange,
-                          onCloseSelectedSessions
+                          onArchiveSelectedSessions // props 이름 변경
                       }) {
     const navigate = useNavigate();
 
@@ -29,7 +29,6 @@ function AdminChatCom({
         return <Message className="error">채팅 데이터를 불러오는데 문제가 발생했습니다.</Message>;
     }
 
-    // 채팅 상세 페이지로 이동하는 핸들러 (세션 ID를 파라미터로 전달)
     const handleRowClick = (sessionId) => {
         navigate(`/admin/chat-inquiries/${sessionId}`);
     };
@@ -40,24 +39,30 @@ function AdminChatCom({
             {successMessage && <Message className="success">{successMessage}</Message>}
 
             {sessions.length === 0 ? (
-                <InfoText>현재 열려있는 채팅 세션이 없습니다.</InfoText>
+                <InfoText>현재 관리할 채팅 세션이 없습니다.</InfoText>
             ) : (
                 <>
                     <ChatTable>
                         <thead>
                         <tr>
-                            <TableHeader style={{ width: '5%' }}></TableHeader><TableHeader style={{ width: '10%' }}>세션 ID</TableHeader><TableHeader style={{ width: '30%' }}>사용자 닉네임</TableHeader><TableHeader style={{ width: '20%' }}>상태</TableHeader><TableHeader style={{ width: '35%' }}>생성일</TableHeader>
+                            <TableHeader style={{ width: '5%' }}></TableHeader>
+                            <TableHeader style={{ width: '10%' }}>세션 ID</TableHeader>
+                            <TableHeader style={{ width: '30%' }}>사용자 닉네임</TableHeader>
+                            <TableHeader style={{ width: '20%' }}>상태</TableHeader>
+                            <TableHeader style={{ width: '35%' }}>생성일</TableHeader>
                         </tr>
                         </thead>
                         <tbody>
                         {sessions.map((session) => (
                             <TableRow key={session.sessionId} onClick={() => handleRowClick(session.sessionId)}>
-                                <TableCell onClick={(e) => e.stopPropagation()}> {/* 체크박스 클릭 시 행 클릭 이벤트 방지 */}
+                                <TableCell onClick={(e) => e.stopPropagation()}>
                                     <Checkbox
                                         type="checkbox"
                                         checked={selectedSessionIds.has(session.sessionId)}
                                         onChange={() => onCheckboxChange(session.sessionId)}
-                                        disabled={session.status === 'CLOSED'} // 이미 닫힌 세션은 선택 불가
+                                        // 'CLOSED' 상태인 세션만 선택하여 보관(삭제)할 수 있도록 변경
+                                        disabled={session.status !== 'CLOSED'}
+                                        title={session.status !== 'CLOSED' ? '종료된 채팅방만 보관할 수 있습니다.' : ''}
                                     />
                                 </TableCell>
                                 <TableCell>{session.sessionId}</TableCell>
@@ -74,12 +79,13 @@ function AdminChatCom({
                     </ChatTable>
 
                     <ActionButtonsContainer>
-                        <CloseButton
-                            onClick={onCloseSelectedSessions}
+                        {/* 버튼의 onClick과 텍스트 변경 */}
+                        <ActionButton
+                            onClick={onArchiveSelectedSessions}
                             disabled={selectedSessionIds.size === 0 || isLoading}
                         >
-                            선택된 채팅방 종료
-                        </CloseButton>
+                            선택된 채팅방 보관(삭제)
+                        </ActionButton>
                     </ActionButtonsContainer>
                 </>
             )}
