@@ -14,6 +14,9 @@ import MenuDetailPage from "./pages/menu/MenuDetailPage";
 import AdminMyPagePage from "./pages/admin/AdminMyPagePage";
 import AdminMemberListPage from "./pages/admin/AdminMemberListPage";
 import MyPagePage from "./pages/member/MyPagePage";
+import MyInfoPage from "./pages/member/MyInfoPage";
+import MyInfoEditPage from "./pages/member/MyInfoEditPage";
+import MyPagePage from "./pages/member/MyPagePage";
 import AdminInquiryPage from "./pages/inquiry/AdminInquiryPage";
 import AdminInquiryDetailPage from "./pages/inquiry/AdminInquiryDetailPage";
 import MemberInquiryPage from "./pages/inquiry/MemberInquiryPage";
@@ -32,6 +35,10 @@ function App() {
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/mypage" element={<MyPagePage/>}/>
+                        <Route path="/mypage/my-info" element={<MyInfoPage/>}/>
+                        <Route path="/mypage/my-info-edit" element={<MyInfoEditPage/>}/>
+
+                        {/*관리자 관련*/}
                         <Route path="/admin/mypage" element={<AdminMyPagePage/>}/>
                         <Route path="/admin/member-list" element={<AdminMemberListPage/>}/>
 

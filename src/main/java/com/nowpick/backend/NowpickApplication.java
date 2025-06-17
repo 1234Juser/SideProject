@@ -16,12 +16,12 @@ public class NowpickApplication {
 /*    @Bean
     public CommandLineRunner runner( PasswordEncoder passwordEncoder) {
         return args -> {
-            String encoded = passwordEncoder.encode("admin");
+            String encoded = passwordEncoder.encode("admin03");
             System.out.println("admin 암호화: " + encoded);
             
-            String encodedUser = passwordEncoder.encode("user");
+            String encodedUser = passwordEncoder.encode("user03");
             System.out.println("user 암호화: " + encodedUser);
         };
-    }*/
-    
+    }
+    */
 }
