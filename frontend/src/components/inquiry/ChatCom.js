@@ -90,7 +90,6 @@ function ChatCom({
             </MessageContainer>
             <ChatForm onSubmit={(e) => { e.preventDefault(); handleSendMessage(); }}>
                 <ChatInput
-                    // type="text" 속성은 textarea에 필요하지 않으므로 제거합니다.
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     onKeyDown={handleKeyDown}

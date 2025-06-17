@@ -6,6 +6,7 @@ import com.nowpick.backend.inquiry.domain.ReplyEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor; // AllArgsConstructor import 추가
 
 import java.time.LocalDateTime;
 
@@ -72,19 +73,28 @@ public class InquiryDTO {
 
     @Getter
     @Builder
+    @AllArgsConstructor // Builder를 사용하므로 AllArgsConstructor 추가
     public static class ReplyResponse {
         private Long id;
         private String content;
-        private String adminNickname;
+        private AdminInfo admin; // adminNickname 대신 AdminInfo 객체로 변경
         private LocalDateTime createdAt;
 
         public static ReplyResponse from(ReplyEntity reply) {
             return ReplyResponse.builder()
                     .id(reply.getId())
                     .content(reply.getContent())
-                    .adminNickname(reply.getAdmin().getMemberNickname())
+                    .admin(new AdminInfo(reply.getAdmin().getMemberUsername())) // AdminInfo 객체 생성 및 memberUsername 설정
                     .createdAt(reply.getCreatedAt())
                     .build();
+        }
+
+        @Getter
+        @Builder
+        @NoArgsConstructor
+        @AllArgsConstructor
+        public static class AdminInfo {
+            private String memberUsername;
         }
     }
 }

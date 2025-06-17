@@ -4,7 +4,7 @@ import {Route, Routes} from "react-router-dom";
 import MainLayout from "./layouts/Layout";
 import MenuListPage from "./pages/menu/MenuListPage";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 import SignupPage from "./pages/member/SignupPage";
 import LoginPage from "./pages/member/LoginPage";
 import {AuthProvider} from "./utils/AuthContext";
@@ -14,8 +14,12 @@ import MenuDetailPage from "./pages/menu/MenuDetailPage";
 import AdminMyPagePage from "./pages/admin/AdminMyPagePage";
 import AdminMemberListPage from "./pages/admin/AdminMemberListPage";
 import MyPagePage from "./pages/member/MyPagePage";
-import MyInfoPage from "./pages/member/MyInfoPage";
-import MyInfoEditPage from "./pages/member/MyInfoEditPage";
+// import MyInfoPage from "./pages/member/MyInfoPage";
+// import MyInfoEditPage from "./pages/member/MyInfoEditPage";
+import AdminInquiryPage from "./pages/inquiry/AdminInquiryPage";
+import AdminInquiryDetailPage from "./pages/inquiry/AdminInquiryDetailPage";
+import MemberInquiryPage from "./pages/inquiry/MemberInquiryPage";
+import MemberInquiryDetailPage from "./pages/inquiry/MemberInquiryDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -31,8 +35,8 @@ function App() {
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/mypage" element={<MyPagePage/>}/>
-                        <Route path="/mypage/my-info" element={<MyInfoPage/>}/>
-                        <Route path="/mypage/my-info-edit" element={<MyInfoEditPage/>}/>
+                        {/*<Route path="/mypage/my-info" element={<MyInfoPage/>}/>*/}
+                        {/*<Route path="/mypage/my-info-edit" element={<MyInfoEditPage/>}/>*/}
 
                         {/*관리자 관련*/}
                         <Route path="/admin/mypage" element={<AdminMyPagePage/>}/>
@@ -46,6 +50,11 @@ function App() {
                         {/* 1:1문의 */}
                         <Route path="/inquiry" element={<InquiryPage />} />
                         <Route path="/chat-inquiry" element={<ChatPage />} />
+                        <Route path="/admin/inquiries" element={<AdminInquiryPage />} />
+                        <Route path="/admin/inquiries/:inquiryId" element={<AdminInquiryDetailPage />} />
+                        <Route path="/member/inquiries" element={<MemberInquiryPage />} />
+                        <Route path="/member/inquiries/:inquiryId" element={<MemberInquiryDetailPage />} />
+
 
                     </Routes>
                   </MainLayout>
