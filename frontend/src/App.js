@@ -20,6 +20,10 @@ import AdminInquiryPage from "./pages/inquiry/AdminInquiryPage";
 import AdminInquiryDetailPage from "./pages/inquiry/AdminInquiryDetailPage";
 import MemberInquiryPage from "./pages/inquiry/MemberInquiryPage";
 import MemberInquiryDetailPage from "./pages/inquiry/MemberInquiryDetailPage";
+import AdminChatPage from "./pages/inquiry/AdminChatPage";
+import AdminChatDetailPage from "./pages/inquiry/AdminChatDetailPage";
+import MemberChatPage from "./pages/inquiry/MemberChatPage";
+import MemberChatDetailPage from "./pages/inquiry/MemberChatDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +58,10 @@ function App() {
                         <Route path="/admin/inquiries/:inquiryId" element={<AdminInquiryDetailPage />} />
                         <Route path="/member/inquiries" element={<MemberInquiryPage />} />
                         <Route path="/member/inquiries/:inquiryId" element={<MemberInquiryDetailPage />} />
+                        <Route path="/admin/chat-inquiries" element={<AdminChatPage/>} />
+                        <Route path="/admin/chat-inquiries/:sessionId" element={<AdminChatDetailPage/>} />
+                        <Route path="/member/chat-inquiries" element={<MemberChatPage/>} />
+                        <Route path="/member/chat-inquiries/:sessionId" element={<MemberChatDetailPage/>} />
 
 
                     </Routes>

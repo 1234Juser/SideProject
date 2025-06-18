@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'; // useMemo import
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Client } from '@stomp/stompjs';
@@ -24,14 +24,14 @@ function ChatCon() {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
-    // AI 어시스턴트 초기 메시지
-    const welcomeMessage = {
+    // AI 어시스턴트 초기 메시지를 useMemo로 메모이제이션
+    const welcomeMessage = useMemo(() => ({
         messageId: `system-${Date.now()}`,
         senderNickname: 'AI 어시스턴트',
         message: '안녕하세요. 궁금한 내용을 간단히 입력해 주시면 관리자가 답변을 드립니다!',
         createdAt: new Date().toISOString(),
         isSystem: true
-    };
+    }), []); // 의존성 배열이 비어 있으므로, 컴포넌트 마운트 시 한 번만 생성됩니다.
 
     useEffect(() => {
         scrollToBottom();
@@ -133,7 +133,7 @@ function ChatCon() {
             setIsLoading(false);
             setIsChatClosed(true); // 오류 발생 시 채팅 종료 상태로 간주
         }
-    }, [auth.accessToken, connectAndSubscribe]);
+    }, [auth.accessToken, connectAndSubscribe, welcomeMessage]);
 
     useEffect(() => {
         if (!auth.isAuthenticated) {

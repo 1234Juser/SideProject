@@ -46,6 +46,35 @@ public class ChatService {
         return ChatDTO.SessionResponse.from(session);
     }
 
+    // [사용자] 본인이 작성한 모든 채팅 세션 목록 조회
+    @Transactional(readOnly = true)
+    public List<ChatDTO.SessionResponse> getAllChatSessionsForUser(String memberUsername) {
+        MemberEntity member = memberRepository.findByMemberUsername(memberUsername)
+                .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
+
+        // 사용자의 모든 채팅 세션을 상태와 상관없이 조회합니다.
+        List<ChatSessionEntity> sessions = chatSessionRepository.findByMemberWithMessages(member);
+        return sessions.stream().map(ChatDTO.SessionResponse::from).collect(Collectors.toList());
+    }
+
+    // [사용자] 본인이 작성한 특정 채팅 세션 상세 조회
+    @Transactional(readOnly = true)
+    public ChatDTO.SessionResponse getChatSessionByIdForUser(Long sessionId, String memberUsername) throws AccessDeniedException {
+        MemberEntity member = memberRepository.findByMemberUsername(memberUsername)
+                .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
+
+        ChatSessionEntity session = chatSessionRepository.findByIdWithMessages(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("채팅 세션을 찾을 수 없습니다."));
+
+        // 요청한 사용자가 해당 세션의 소유자인지 확인
+        if (!session.getMember().equals(member)) {
+            throw new AccessDeniedException("해당 채팅 세션에 접근할 권한이 없습니다.");
+        }
+
+        return ChatDTO.SessionResponse.from(session);
+    }
+
+
     // 채팅 메시지 저장 및 처리
     public ChatMessageEntity saveMessage(ChatDTO.MessageRequest dto, String senderUsername) throws AccessDeniedException {
         MemberEntity sender = memberRepository.findByMemberUsername(senderUsername)
@@ -55,11 +84,11 @@ public class ChatService {
                 .orElseThrow(() -> new IllegalArgumentException("채팅 세션을 찾을 수 없습니다."));
 
         // 관리자가 아니면서, 자신의 채팅방이 아닌 경우 접근 거부
-        if (!"ADMIN".equals(sender.getMemberRole()) && !session.getMember().equals(sender)) {
+        if (!"ROLE_ADMIN".equals(sender.getMemberRole()) && !session.getMember().equals(sender)) {
             throw new AccessDeniedException("자신의 채팅방에만 메시지를 보낼 수 있습니다.");
         }
 
-        SenderType senderType = "ADMIN".equals(sender.getMemberRole()) ? SenderType.ADMIN : SenderType.USER;
+        SenderType senderType = "ROLE_ADMIN".equals(sender.getMemberRole()) ? SenderType.ADMIN : SenderType.USER;
 
         ChatMessageEntity messageEntity = ChatMessageEntity.builder()
                 .chatSession(session)
@@ -71,21 +100,38 @@ public class ChatService {
         return chatMessageRepository.save(messageEntity);
     }
 
-    // 관리자가 모든 열린 채팅 목록 조회
+    // [관리자] 활성(OPEN, CLOSED) 상태인 모든 채팅 목록 조회
     @Transactional(readOnly = true)
-    public List<ChatDTO.SessionResponse> getOpenChatSessions(String adminUsername) throws AccessDeniedException {
+    public List<ChatDTO.SessionResponse> getActiveChatSessionsForAdmin(String adminUsername) throws AccessDeniedException {
         MemberEntity admin = memberRepository.findByMemberUsername(adminUsername)
                 .orElseThrow(() -> new IllegalArgumentException("관리자 계정을 찾을 수 없습니다."));
 
-        if (!"ADMIN".equals(admin.getMemberRole())) {
+        if (!"ROLE_ADMIN".equals(admin.getMemberRole())) {
+            throw new AccessDeniedException("접근 권한이 없습니다.");
+        }
+        // OPEN과 CLOSED 상태의 세션을 모두 조회
+        List<ChatSessionStatus> statuses = List.of(ChatSessionStatus.OPEN, ChatSessionStatus.CLOSED);
+        List<ChatSessionEntity> activeSessions = chatSessionRepository.findByStatusesWithMessages(statuses);
+        return activeSessions.stream().map(ChatDTO.SessionResponse::from).collect(Collectors.toList());
+    }
+
+    // [관리자] 특정 채팅 세션 상세 조회
+    @Transactional(readOnly = true)
+    public ChatDTO.SessionResponse getChatSessionByIdForAdmin(Long sessionId, String adminUsername) throws AccessDeniedException {
+        MemberEntity admin = memberRepository.findByMemberUsername(adminUsername)
+                .orElseThrow(() -> new IllegalArgumentException("관리자 계정을 찾을 수 없습니다."));
+
+        if (!"ROLE_ADMIN".equals(admin.getMemberRole())) {
             throw new AccessDeniedException("접근 권한이 없습니다.");
         }
 
-        List<ChatSessionEntity> openSessions = chatSessionRepository.findByStatusWithMessages(ChatSessionStatus.OPEN);
-        return openSessions.stream().map(ChatDTO.SessionResponse::from).collect(Collectors.toList());
+        ChatSessionEntity session = chatSessionRepository.findByIdWithMessages(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("채팅 세션을 찾을 수 없습니다."));
+
+        return ChatDTO.SessionResponse.from(session);
     }
 
-    // 채팅 세션 종료
+    // 채팅 세션 종료 (상태를 CLOSED로 변경)
     public void closeChatSession(Long sessionId, String memberUsername) throws AccessDeniedException {
         MemberEntity member = memberRepository.findByMemberUsername(memberUsername)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
@@ -94,7 +140,7 @@ public class ChatService {
                 .orElseThrow(() -> new IllegalArgumentException("채팅 세션을 찾을 수 없습니다."));
 
         // 관리자 또는 채팅방 주인만 세션을 닫을 수 있음
-        if (!"ADMIN".equals(member.getMemberRole()) && !session.getMember().equals(member)) {
+        if (!"ROLE_ADMIN".equals(member.getMemberRole()) && !session.getMember().equals(member)) {
             throw new AccessDeniedException("세션을 닫을 권한이 없습니다.");
         }
 
@@ -103,4 +149,19 @@ public class ChatService {
         chatSessionRepository.save(session);
     }
 
+    // [관리자] 채팅 세션 아카이브 (목록에서 숨김 처리)
+    public void archiveChatSession(Long sessionId, String adminUsername) throws AccessDeniedException {
+        MemberEntity admin = memberRepository.findByMemberUsername(adminUsername)
+                .orElseThrow(() -> new IllegalArgumentException("관리자 계정을 찾을 수 없습니다."));
+
+        if (!"ROLE_ADMIN".equals(admin.getMemberRole())) {
+            throw new AccessDeniedException("아카이브할 권한이 없습니다.");
+        }
+
+        ChatSessionEntity session = chatSessionRepository.findById(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("채팅 세션을 찾을 수 없습니다."));
+
+        session.setStatus(ChatSessionStatus.ARCHIVED);
+        chatSessionRepository.save(session);
+    }
 }
