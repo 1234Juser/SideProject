@@ -44,14 +44,20 @@ function AdminChatDetailCom({
         }
     };
 
-    // 채팅이 종료되었을 때 표시할 메시지
-    const closedChatMessages = isChatClosed ? [{
-        messageId: 'system-closed',
-        senderNickname: '시스템',
-        message: '이 채팅방은 종료되었습니다.',
-        createdAt: new Date().toISOString(),
-        isSystem: true
-    }] : messages;
+    // 채팅이 종료되었을 때 표시할 메시지 목록 (종료 메시지 추가)
+    let displayMessages = messages;
+    if (isChatClosed) {
+        displayMessages = [
+            ...messages, // 기존 메시지 유지
+            {
+                messageId: 'system-closed',
+                senderNickname: '시스템',
+                message: '이 채팅방은 종료되었습니다.',
+                createdAt: new Date().toISOString(),
+                isSystem: true // 시스템 메시지임을 나타내는 플래그
+            }
+        ];
+    }
 
     return (
         <ChatWrapper>
@@ -65,18 +71,19 @@ function AdminChatDetailCom({
             </ChatHeader>
 
             <MessageContainer>
-                {closedChatMessages.length === 0 ? (
+                {displayMessages.length === 0 ? ( // 이제 displayMessages를 사용합니다.
                     <StatusMessage>메시지가 없습니다.</StatusMessage>
                 ) : (
-                    closedChatMessages.map((msg, index) => (
+                    displayMessages.map((msg, index) => (
                         <MessageBubble
                             key={msg.messageId || index}
                             isMine={msg.senderType === 'ADMIN' || msg.senderUsername === adminUsername}
                             isSystem={msg.isSystem}
                         >
+                            <strong>{msg.senderNickname}</strong>
                             <div className="message-content">{msg.message}</div>
                             <MessageMeta>
-                                {msg.senderNickname} &middot; {formatDateTime(msg.createdAt)}
+                                {formatDateTime(msg.createdAt)}
                             </MessageMeta>
                         </MessageBubble>
                     ))

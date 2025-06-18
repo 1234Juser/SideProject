@@ -1,8 +1,8 @@
 import React from 'react';
 import {
     ChatListContainer, Title, ChatTable, TableHeader, TableRow, TableCell,
-    StatusBadge, Checkbox, ActionButtonsContainer, ActionButton, InfoText, Message // ActionButton으로 변경
-} from '../../style/inquiry/AdminChatStyle'; // CloseButton -> ActionButton
+    StatusBadge, Checkbox, ActionButtonsContainer, ActionButton, InfoText, Message
+} from '../../style/inquiry/AdminChatStyle';
 import { useNavigate } from 'react-router-dom';
 
 function AdminChatCom({
@@ -12,7 +12,7 @@ function AdminChatCom({
                           successMessage,
                           selectedSessionIds,
                           onCheckboxChange,
-                          onArchiveSelectedSessions // props 이름 변경
+                          onArchiveSelectedSessions
                       }) {
     const navigate = useNavigate();
 

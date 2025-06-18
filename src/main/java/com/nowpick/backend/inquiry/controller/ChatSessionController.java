@@ -22,18 +22,36 @@ public class ChatSessionController {
     // 사용자의 채팅 세션 가져오기 (없으면 생성) 및 이전 대화내역 반환
     @PostMapping("/session")
     public ResponseEntity<ChatDTO.SessionResponse> getOrCreateSession(Principal principal) {
-        log.info("채팅 세션 생성/가져오기 요청 진입. 요청 사용자: {}", principal.getName());
+//        log.info("채팅 세션 생성/가져오기 요청 진입. 요청 사용자: {}", principal.getName());
         ChatDTO.SessionResponse sessionResponse = chatService.getOrCreateChatSession(principal.getName());
-        log.info("채팅 세션 성공적으로 처리됨. 세션 ID: {}, 사용자: {}", sessionResponse.getSessionId(), principal.getName());
+//        log.info("채팅 세션 성공적으로 처리됨. 세션 ID: {}, 사용자: {}", sessionResponse.getSessionId(), principal.getName());
+        return ResponseEntity.ok(sessionResponse);
+    }
+
+    // [사용자] 본인이 작성한 모든 채팅 세션 목록 조회 (전체조회)
+    @GetMapping("/my-sessions")
+    public ResponseEntity<List<ChatDTO.SessionResponse>> getAllMyChatSessions(Principal principal) {
+//        log.info("[사용자] 본인 채팅 세션 목록 조회 요청. 사용자: {}", principal.getName());
+        List<ChatDTO.SessionResponse> sessions = chatService.getAllChatSessionsForUser(principal.getName());
+//        log.info("[사용자] 본인 채팅 세션 {}개 조회 완료. 사용자: {}", sessions.size(), principal.getName());
+        return ResponseEntity.ok(sessions);
+    }
+
+    // [사용자] 본인이 작성한 특정 채팅 세션 상세 조회 (상세조회)
+    @GetMapping("/my-session/{sessionId}")
+    public ResponseEntity<ChatDTO.SessionResponse> getMySessionDetails(@PathVariable Long sessionId, Principal principal) throws AccessDeniedException {
+//        log.info("[사용자] 특정 채팅 세션 상세 조회 요청. 세션 ID: {}, 사용자: {}", sessionId, principal.getName());
+        ChatDTO.SessionResponse sessionResponse = chatService.getChatSessionByIdForUser(sessionId, principal.getName());
+//        log.info("[사용자] 채팅 세션 상세 조회 완료. 세션 ID: {}, 사용자: {}", sessionId, principal.getName());
         return ResponseEntity.ok(sessionResponse);
     }
 
     // [관리자] 활성(OPEN, CLOSED) 상태인 모든 채팅 세션 목록 조회
     @GetMapping("/sessions/admin")
     public ResponseEntity<List<ChatDTO.SessionResponse>> getActiveSessionsForAdmin(Principal principal) throws AccessDeniedException {
-        log.info("[관리자] 활성 채팅 세션 목록 조회 요청. 관리자: {}", principal.getName());
+//        log.info("[관리자] 활성 채팅 세션 목록 조회 요청. 관리자: {}", principal.getName());
         List<ChatDTO.SessionResponse> sessions = chatService.getActiveChatSessionsForAdmin(principal.getName());
-        log.info("[관리자] 활성 채팅 세션 {}개 조회 완료. 관리자: {}", sessions.size(), principal.getName());
+//        log.info("[관리자] 활성 채팅 세션 {}개 조회 완료. 관리자: {}", sessions.size(), principal.getName());
         return ResponseEntity.ok(sessions);
     }
 
@@ -46,18 +64,18 @@ public class ChatSessionController {
     // 채팅 세션 닫기 (상태: CLOSED)
     @PatchMapping("/session/{sessionId}/close")
     public ResponseEntity<Void> closeSession(@PathVariable Long sessionId, Principal principal) throws AccessDeniedException {
-        log.info("채팅 세션 닫기 요청. 세션 ID: {}, 요청 사용자: {}", sessionId, principal.getName());
+//        log.info("채팅 세션 닫기 요청. 세션 ID: {}, 요청 사용자: {}", sessionId, principal.getName());
         chatService.closeChatSession(sessionId, principal.getName());
-        log.info("채팅 세션 닫기 성공. 세션 ID: {}, 사용자: {}", sessionId, principal.getName());
+//        log.info("채팅 세션 닫기 성공. 세션 ID: {}, 사용자: {}", sessionId, principal.getName());
         return ResponseEntity.ok().build();
     }
 
     // [관리자] 채팅 세션 아카이브 (상태: ARCHIVED)
     @PatchMapping("/session/{sessionId}/archive")
     public ResponseEntity<Void> archiveSession(@PathVariable Long sessionId, Principal principal) throws AccessDeniedException {
-        log.info("[관리자] 채팅 세션 아카이브 요청. 세션 ID: {}, 관리자: {}", sessionId, principal.getName());
+//        log.info("[관리자] 채팅 세션 아카이브 요청. 세션 ID: {}, 관리자: {}", sessionId, principal.getName());
         chatService.archiveChatSession(sessionId, principal.getName());
-        log.info("[관리자] 채팅 세션 아카이브 성공. 세션 ID: {}, 관리자: {}", sessionId, principal.getName());
+//        log.info("[관리자] 채팅 세션 아카이브 성공. 세션 ID: {}, 관리자: {}", sessionId, principal.getName());
         return ResponseEntity.ok().build();
     }
 }

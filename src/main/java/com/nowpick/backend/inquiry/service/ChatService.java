@@ -46,6 +46,35 @@ public class ChatService {
         return ChatDTO.SessionResponse.from(session);
     }
 
+    // [사용자] 본인이 작성한 모든 채팅 세션 목록 조회
+    @Transactional(readOnly = true)
+    public List<ChatDTO.SessionResponse> getAllChatSessionsForUser(String memberUsername) {
+        MemberEntity member = memberRepository.findByMemberUsername(memberUsername)
+                .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
+
+        // 사용자의 모든 채팅 세션을 상태와 상관없이 조회합니다.
+        List<ChatSessionEntity> sessions = chatSessionRepository.findByMemberWithMessages(member);
+        return sessions.stream().map(ChatDTO.SessionResponse::from).collect(Collectors.toList());
+    }
+
+    // [사용자] 본인이 작성한 특정 채팅 세션 상세 조회
+    @Transactional(readOnly = true)
+    public ChatDTO.SessionResponse getChatSessionByIdForUser(Long sessionId, String memberUsername) throws AccessDeniedException {
+        MemberEntity member = memberRepository.findByMemberUsername(memberUsername)
+                .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
+
+        ChatSessionEntity session = chatSessionRepository.findByIdWithMessages(sessionId)
+                .orElseThrow(() -> new IllegalArgumentException("채팅 세션을 찾을 수 없습니다."));
+
+        // 요청한 사용자가 해당 세션의 소유자인지 확인
+        if (!session.getMember().equals(member)) {
+            throw new AccessDeniedException("해당 채팅 세션에 접근할 권한이 없습니다.");
+        }
+
+        return ChatDTO.SessionResponse.from(session);
+    }
+
+
     // 채팅 메시지 저장 및 처리
     public ChatMessageEntity saveMessage(ChatDTO.MessageRequest dto, String senderUsername) throws AccessDeniedException {
         MemberEntity sender = memberRepository.findByMemberUsername(senderUsername)
