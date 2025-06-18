@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'; // useMemo import
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Client } from '@stomp/stompjs';
@@ -15,7 +15,7 @@ function ChatCon() {
     const [newMessage, setNewMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isChatClosed, setIsChatClosed] = useState(false); // 채팅 종료 상태 추가
+    const [isChatClosed, setIsChatClosed] = useState(false);
 
     const stompClientRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -45,7 +45,6 @@ function ChatCon() {
 
         const accessToken = auth.accessToken;
         if (!accessToken) {
-            console.error("Access token is not available for WebSocket connection.");
             setError('인증 정보가 없어 채팅에 연결할 수 없습니다.');
             setIsLoading(false);
             return;
@@ -59,27 +58,23 @@ function ChatCon() {
             debug: (str) => { console.log(new Date(), str); },
             reconnectDelay: 5000,
             onConnect: () => {
-                console.log('WebSocket 연결 성공!');
+                // console.log('WebSocket 연결 성공!');
                 setError(null);
                 setIsChatClosed(false); // 연결 성공 시 채팅은 열린 상태
 
                 client.subscribe(`/topic/chat/room/${sessionId}`, message => {
                     const receivedMessage = JSON.parse(message.body);
                     setMessages(prevMessages => [...prevMessages, receivedMessage]);
-                    console.log("새 메시지 수신:", receivedMessage);
+                    // console.log("새 메시지 수신:", receivedMessage);
                 });
 
                 console.log(`구독 성공: /topic/chat/room/${sessionId}`);
             },
             onStompError: (frame) => {
-                console.error('Broker Reported error: ' + frame.headers['message']);
-                console.error('Additional details: ' + frame.body);
                 setError('채팅 서버 연결 오류: ' + frame.headers['message']);
                 setIsChatClosed(true); // 오류 발생 시 채팅 종료 상태로 간주
             },
             onWebSocketClose: (event) => {
-                console.log(new Date(), `'Connection closed to http://localhost:8080/ws-chat'`);
-                console.log(`Close event code: ${event.code}, reason: ${event.reason}`);
                 // 웹소켓 연결이 닫히면 채팅 종료 상태로 설정 (사용자가 명시적으로 닫지 않은 경우)
                 if (event.code !== 1000) { // 1000은 정상 종료 코드
                     setIsChatClosed(true);
@@ -112,7 +107,7 @@ function ChatCon() {
                 if (stompClientRef.current && stompClientRef.current.active) {
                     stompClientRef.current.deactivate(); // STOMP 연결 해제
                 }
-                console.log('이미 종료된 채팅 세션입니다.');
+                // console.log('이미 종료된 채팅 세션입니다.');
             } else {
                 // 세션이 열린 경우
                 setMessages([welcomeMessage, ...(sessionData.messages || [])]);
@@ -120,14 +115,14 @@ function ChatCon() {
             }
             setIsLoading(false);
         } catch (err) {
-            console.error("채팅 세션 로딩 실패:", err);
+            // console.error("채팅 세션 로딩 실패:", err);
             if (err.response) {
-                console.error(">> 응답 상태:", err.response.status);
-                console.error(">> 응답 데이터:", err.response.data);
+                // console.error(">> 응답 상태:", err.response.status);
+                // console.error(">> 응답 데이터:", err.response.data);
             } else if (err.request) {
-                console.error(">> 응답 없음:", err.request);
+                // console.error(">> 응답 없음:", err.request);
             } else {
-                console.error('>> 요청 설정 오류:', err.message);
+                // console.error('>> 요청 설정 오류:', err.message);
             }
             setError('채팅방에 입장할 수 없습니다. 잠시 후 다시 시도해주세요.');
             setIsLoading(false);
@@ -147,7 +142,6 @@ function ChatCon() {
         return () => {
             if (stompClientRef.current) {
                 stompClientRef.current.deactivate();
-                console.log('STOMP client deactivated on component unmount.');
             }
         };
     }, [auth.isAuthenticated, navigate, fetchSession]);
@@ -155,7 +149,7 @@ function ChatCon() {
 
     const handleSendMessage = () => {
         if (!stompClientRef.current || !stompClientRef.current.active || !session || !newMessage.trim() || isChatClosed) {
-            console.warn("메시지를 보낼 수 없습니다: 클라이언트 비활성, 세션 없음, 메시지 비어있음 또는 채팅 종료 상태.");
+            // console.warn("메시지를 보낼 수 없습니다: 클라이언트 비활성, 세션 없음, 메시지 비어있음 또는 채팅 종료 상태.");
             return;
         }
 
@@ -170,10 +164,10 @@ function ChatCon() {
                 destination: '/app/chat/sendMessage',
                 body: JSON.stringify(chatMessage),
             });
-            console.log("메시지 전송:", chatMessage);
+            // console.log("메시지 전송:", chatMessage);
             setNewMessage('');
         } catch (e) {
-            console.error("메시지 전송 실패:", e);
+            // console.error("메시지 전송 실패:", e);
             setError("메시지 전송에 실패했습니다.");
         }
     };
@@ -197,7 +191,7 @@ function ChatCon() {
                 headers: { 'Authorization': `Bearer ${auth.accessToken}` }
             });
 
-            console.log(`채팅 세션 ${session.sessionId} 종료 성공.`);
+            // console.log(`채팅 세션 ${session.sessionId} 종료 성공.`);
             setIsChatClosed(true); // 채팅 종료 상태로 변경
             setMessages([]); // 기존 메시지 모두 초기화 (ChatCom에서 '종료되었습니다' 메시지 표시)
             setNewMessage(''); // 입력 필드 초기화
@@ -206,11 +200,10 @@ function ChatCon() {
             // STOMP 연결 해제
             if (stompClientRef.current) {
                 stompClientRef.current.deactivate();
-                console.log('STOMP client deactivated after closing chat.');
             }
 
         } catch (err) {
-            console.error("채팅 세션 종료 실패:", err);
+            // console.error("채팅 세션 종료 실패:", err);
             if (err.response) {
                 setError(err.response.data?.message || '채팅 종료 중 오류가 발생했습니다.');
             } else {
