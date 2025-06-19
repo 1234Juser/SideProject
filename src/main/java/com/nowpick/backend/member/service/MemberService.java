@@ -137,8 +137,6 @@ public class MemberService {
         MemberEntity memberEntity = memberRepository.findByMemberUsername(memberUsername)
                                     .orElseThrow(() -> new EntityNotFoundException("회원 정보를 찾을 수 없습니다."));
         
-        memberEntity.setMemberEmail(requestDTO.getMemberEmail());
-        
         // 닉네임 업데이트
         if (requestDTO.getMemberNickname() != null && !requestDTO.getMemberNickname().isEmpty()) {
             // 닉네임 중복 검사 (선택 사항이지만, 요구사항에 따라 필요할 수 있음)
@@ -148,12 +146,12 @@ public class MemberService {
             memberEntity.setMemberNickname(requestDTO.getMemberNickname());
         }
         
-        // 전화번호 업데이트
+        // 전화번호 변경
         if (requestDTO.getMemberPhoneNumber() != null && !requestDTO.getMemberPhoneNumber().isEmpty()) {
             memberEntity.setMemberPhoneNumber(requestDTO.getMemberPhoneNumber());
         }
         
-        // 비밀번호 업데이트 (비밀번호 관련 필드가 모두 제공되었을 때만 처리)
+        // 비밀번호 변경 (currentPassword와 newPassword가 모두 DTO에 있을 경우에만)
         if (requestDTO.getCurrentPassword() != null && !requestDTO.getCurrentPassword().isEmpty() &&
             requestDTO.getNewPassword() != null && !requestDTO.getNewPassword().isEmpty()) {
             
@@ -172,12 +170,15 @@ public class MemberService {
         log.debug("변경된 엔티티 확인 : ", memberEntity);
         
         // 변경된 엔티티 저장
-        memberRepository.save(memberEntity);
+        return  memberRepository.save(memberEntity);
         
-        
-        return memberEntity;
+//        return memberEntity;
     }
     
     
-    
+    @Transactional(readOnly = true) // 읽기 전용 트랜잭션으로 성능 향상
+    public boolean isNicknameDuplicated(String nickname) {
+        // MemberRepository를 사용하여 닉네임이 존재하는지 확인
+        return memberRepository.existsByMemberNickname(nickname);
+    }
 }

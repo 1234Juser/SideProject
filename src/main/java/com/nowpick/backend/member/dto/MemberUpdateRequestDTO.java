@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 public class MemberUpdateRequestDTO {
     
-    private String memberEmail;
+    @Size(min = 2, message = "닉네임은 2자 이상이어야 합니다.")
     private String memberNickname;
     
     @Pattern(regexp = "^(01[016789])-\\d{3,4}-\\d{4}$", message = "유효한 전화번호 형식이 아닙니다 (예: 010-1234-5678).")

@@ -63,8 +63,9 @@ public class SecurityConfig {
                            .anyRequest().authenticated()
             )
             .csrf(csrf -> csrf.disable()) // 개발 중에는 CSRF 비활성화 (권장하지 않음, 프로덕션에서는 활성화해야 함)
-            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정 적용
-            
+//            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정 적용
+        .cors(cors -> {})
+        
             // 인증되지 않은 사용자가 보호된 리소스에 접근 시 401 Unauthorized 반환
             .exceptionHandling(exceptions -> exceptions
                                              .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)) // <--- 이 라인 추가
@@ -77,19 +78,4 @@ public class SecurityConfig {
         return http.build();
     }
     
-    
-    // 전역 CORS 설정을 위한 빈 (MemberController의 @CrossOrigin 대신 중앙 집중식 관리)
-    @Bean
-    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // React 개발 서버 주소 허용
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용할 HTTP 메서드
-        configuration.setAllowedHeaders(Arrays.asList("*")); // 모든 헤더 허용
-        configuration.setAllowCredentials(true); // 자격 증명(쿠키, 인증 헤더 등) 허용
-        configuration.setMaxAge(3600L); // Pre-flight 요청 캐싱 시간 (초)
-        
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // 모든 경로에 대해 CORS 설정 적용
-        return source;
-    }
 }

@@ -50,7 +50,7 @@ export const fetchMemberInfo = async (accessToken) => {
 // 회원 정보 수정 (닉네임, 전화번호, 비밀번호 등)
 export const updateMemberInfo = async (accessToken, updatePayload) => {
     try {
-        const response = await axios.patch(`${path}/api/members/m/{memberId}`, updatePayload, {
+        const response = await axios.patch(`${path}/api/members/me`, updatePayload, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
@@ -61,5 +61,20 @@ export const updateMemberInfo = async (accessToken, updatePayload) => {
     } catch (error) {
         console.error("회원 정보 수정 실패:", error.response?.data || error.message);
         throw error.response?.data?.message || new Error('회원 정보 수정에 실패했습니다.');
+    }
+};
+
+
+// 닉네임 중복 검사
+export const checkNicknameDuplication = async (nickname) => {
+    try {
+        const response = await axios.get(`${path}/api/members/check-nickname`, {
+            params: { nickname: nickname } // 쿼리 파라미터로 닉네임 전송
+        });
+        // 백엔드에서 boolean 값을 바로 반환하므로 response.data가 true/false
+        return response.data;
+    } catch (error) {
+        console.error("닉네임 중복 검사 실패:", error);
+        throw new Error('닉네임 중복 검사 중 오류가 발생했습니다.');
     }
 };

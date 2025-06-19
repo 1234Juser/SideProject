@@ -11,6 +11,8 @@ export const initialState = {
     error : null,
     successMessage : null,
     formErros: {},
+    nicknameDuplicateError: null, // 닉네임 중복 오류 메시지 저장
+    isNicknameAvailable: null,   // 닉네임 사용 가능 여부 (true/false/null)
 }
 
 export function memberReducer(state, action) {
@@ -81,6 +83,17 @@ export function memberReducer(state, action) {
                     newPassword: undefined,
                     confirmNewPassword: undefined,
                 },
+            };
+        case 'SET_NICKNAME_DUPLICATION_ERROR':
+            return {
+                ...state,
+                nicknameDuplicateError: action.payload,
+                isNicknameAvailable: null
+            };
+        case 'SET_NICKNAME_AVAILABLE':
+            return { ...state,
+                isNicknameAvailable: action.payload,
+                nicknameDuplicateError: null
             };
         default:
             throw new Error(`Unhandled action type: ${action.type}`);

@@ -93,7 +93,7 @@ public class MemberController {
     
     
     // 사용자 정보 수정
-    @PatchMapping("/me/{memberId}")
+    @PatchMapping("/me")
     public ResponseEntity<?> updateMember( @AuthenticationPrincipal UserDetails userDetails,
                                                       @Valid  @RequestBody MemberUpdateRequestDTO requestDTO ) {
         
@@ -105,6 +105,18 @@ public class MemberController {
             log.error("회원 정보 수정 중 오류 발생: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 정보 수정 중 서버 오류가 발생했습니다.");
         }
+    }
+    
+    
+    // 닉네임 중복 검사
+    @GetMapping("/check-nickname") // GET 요청으로 닉네임 검사
+    public ResponseEntity<Boolean> checkNicknameDuplication(@RequestParam String nickname) {
+        // memberService를 통해 닉네임 중복 여부를 확인
+        boolean isDuplicated = memberService.isNicknameDuplicated(nickname);
+        
+        // true (중복) 또는 false (사용 가능) 반환
+        // 프론트엔드에서 isDuplicated가 true면 중복, false면 사용 가능으로 판단
+        return ResponseEntity.ok(isDuplicated);
     }
     
 }

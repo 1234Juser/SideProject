@@ -23,7 +23,9 @@ import React from "react";
                                loading = false,          // boolean 기본값
                                error = null,             // null 기본값
                                successMessage = null,    // null 기본값
-                               changePassword = false    // boolean 기본값 (만약 이 prop이 사용된다면)
+                               // changePassword = false,    // boolean 기본값 (만약 이 prop이 사용된다면)
+                               nicknameDuplicateError = null, // 추가된 prop
+                               isNicknameAvailable = null,    // 추가된 prop
                            }) {
 
 
@@ -45,6 +47,15 @@ import React from "react";
                             />
                             {formErrors.memberNickname && <ErrorText>{formErrors.memberNickname}</ErrorText>}
                         </FormGroup>
+
+
+                        {/* 닉네임 중복 검사 결과 메시지 */}
+                        {nicknameDuplicateError && <ErrorText>{nicknameDuplicateError}</ErrorText>}
+                        {isNicknameAvailable === true && !nicknameDuplicateError && formData.memberNickname && formData.memberNickname.trim().length >= 2 && (
+                            <SuccessText>사용 가능한 닉네임입니다.</SuccessText>
+                        )}
+                        {/* isNicknameAvailable이 null일 때는 아직 검사 전이거나 초기 상태 */}
+
 
                         <FormGroup>
                             <Label htmlFor="memberPhoneNumber">전화번호</Label>
