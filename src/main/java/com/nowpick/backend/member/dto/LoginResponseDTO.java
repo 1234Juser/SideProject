@@ -11,6 +11,7 @@ import lombok.*;
 public class LoginResponseDTO {
     
     private String accessToken;
+    private Long memberId;
     private String memberUsername;
     private String memberRole;
     private String memberNickname;

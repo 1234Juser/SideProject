@@ -35,13 +35,14 @@ public class JwtUtil {
     
     
     // JWT 토큰 생성: memberRole을 String 타입으로 받도록 변경
-    public String generateToken(String memberUsername, String memberRole, String memberNickname) {
+    public String generateToken(Long memberId, String memberUsername, String memberRole, String memberNickname) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
         
         // memberRole은 이미 String 타입이므로 별도의 처리 없이 직접 클레임에 추가
         return Jwts.builder()
-               .setSubject(memberUsername)        // 토큰의 주체 (사용자 이름/ID)
+               .setSubject(String.valueOf(memberId))
+               .claim("memberUsername", memberUsername)
                .claim("memberRole", memberRole)
                .claim("memberNickname", memberNickname)
                .setIssuedAt(now)
@@ -121,11 +122,8 @@ public class JwtUtil {
                             .build()
                             .parseSignedClaims(token)
                             .getPayload();
-            // generateToken에서 setSubject로 memberId를 설정했으므로,
-            // memberUsername 클레임을 별도로 추가하지 않았다면 Subject를 반환
-            // 아니면 memberUsername을 별도 클레임으로 추가해야 함 (예: .claim("username", username))
-            return claims.getSubject(); // Subject가 memberUsername이라면
-            // return claims.get("username", String.class); // 만약 클레임 이름이 "username"이라면
+            return claims.get("memberUsername", String.class); // generateToken에서 "memberUsername" 클레임으로 추가했으므로
+
         } catch (Exception e) {
             log.error("Failed to get memberUsername from token [{}]: {}", token, e.getMessage());
             return null;
