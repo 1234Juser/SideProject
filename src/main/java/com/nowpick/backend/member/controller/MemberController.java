@@ -109,10 +109,11 @@ public class MemberController {
     
     
     // 닉네임 중복 검사
-    @GetMapping("/check-nickname") // GET 요청으로 닉네임 검사
+    @GetMapping("/check-nickname")
     public ResponseEntity<Boolean> checkNicknameDuplication(@RequestParam String nickname) {
-        // memberService를 통해 닉네임 중복 여부를 확인
+        
         boolean isDuplicated = memberService.isNicknameDuplicated(nickname);
+        log.info("닉네임 중복 T/F : {}", isDuplicated);
         
         // true (중복) 또는 false (사용 가능) 반환
         // 프론트엔드에서 isDuplicated가 true면 중복, false면 사용 가능으로 판단

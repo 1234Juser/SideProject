@@ -50,6 +50,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                .anyMatch(pattern -> antPathMatcher.match(pattern, request.getRequestURI()));
        */
         String requestUri = request.getRequestURI();
+        
+        // !!!!!!!!!!!!!!! 임시 테스트 코드 !!!!!!!!!!!!!!!
+        // 이 부분을 추가하여 닉네임 중복 검사 경로를 무조건 필터링하지 않도록 합니다.
+        if (requestUri.equals("/api/members/check-nickname")) {
+            System.out.println("✅ [JwtAuthenticationFilter] Found /api/members/check-nickname. Explicitly NOT FILTERING for test.");
+            return true; // 이 경로에 대해서는 무조건 필터링하지 않음
+        }
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
+        
         boolean shouldExclude = EXCLUDE_URLS.stream()
                                 .anyMatch(pattern -> antPathMatcher.match(pattern, requestUri));
         

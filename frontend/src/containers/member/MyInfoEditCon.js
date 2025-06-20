@@ -6,7 +6,7 @@ import {checkNicknameDuplication, fetchMemberInfo, updateMemberInfo} from "../..
 import {useNavigate} from "react-router-dom";
 
 function MyInfoEditCon() {
-    const {auth} = useAuth();
+    const {auth, login} = useAuth();
     const [state, dispatch] = useReducer(memberReducer, initialState);
 
     const {
@@ -25,6 +25,11 @@ function MyInfoEditCon() {
 
     const navigate = useNavigate()
 
+
+    useEffect(() => {
+        console.log("isNicknameAvailavle 상태 변경됨 : ", isNicknameAvailable);
+        console.log("nicknameDuplicateError 상태 변경됨", nicknameDuplicateError);
+    },[isNicknameAvailable, nicknameDuplicateError])
 
 
     // 컴포넌트 마운트 시 현재 사용자 정보 불러와서 폼 초기화
@@ -61,6 +66,7 @@ function MyInfoEditCon() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         dispatch({type: 'SET_FIELD', field: name,  value});
+        console.log('----------handleChagne 작동....value', value);
 
         // 닉네임 필드 변경 시 중복 검사 초기화 및 디바운스 설정
         if (name === 'memberNickname') {
@@ -74,6 +80,7 @@ function MyInfoEditCon() {
 
             // 0.5초 후에 중복 검사 실행 (사용자 입력이 멈춘 후)
             debounceTimer.current = setTimeout(() => {
+                console.log('-----중복 검사 실행-----', debounceTimer.current);
                 handleNicknameDuplicationCheck(value);
             }, 500);
         }
@@ -82,6 +89,9 @@ function MyInfoEditCon() {
 
     // 닉네임 중복 검사를 위한 함수
     const handleNicknameDuplicationCheck = useCallback(async (nickname) => {
+        console.log("닉네임:", nickname);
+        console.log("1-----isNicknameAvailable (디스패치 전):", state.isNicknameAvailable);
+
         if (!nickname || nickname.trim().length < 2) {
             dispatch({ type: 'SET_NICKNAME_DUPLICATION_ERROR', payload: "닉네임은 2자 이상이어야 합니다." });
             dispatch({ type: 'SET_NICKNAME_AVAILABLE', payload: false }); // 유효하지 않으니 false
@@ -89,8 +99,7 @@ function MyInfoEditCon() {
         }
 
         try {
-            // 현재 로그인된 사용자의 닉네임은 중복 검사 대상에서 제외 (선택 사항)
-            // 즉, 내 닉네임을 내가 변경하지 않고 그대로 유지할 때는 중복이 아니어야 함.
+            // 현재 로그인된 사용자의 닉네임은 중복 검사 대상에서 제외 ( 즉, 내 닉네임을 변경하지 않고 그대로 유지할 때는 중복 X)
             const initialMemberData = await fetchMemberInfo(auth.accessToken); // 현재 사용자 정보 가져옴
             if (initialMemberData && initialMemberData.memberNickname === nickname) {
                 dispatch({ type: 'SET_NICKNAME_AVAILABLE', payload: true }); // 내 닉네임이므로 사용 가능
@@ -98,22 +107,33 @@ function MyInfoEditCon() {
                 return;
             }
 
-
             const isDuplicated = await checkNicknameDuplication(nickname);
+            console.log("-------isDuplicated:", isDuplicated);
+            console.log("2-----isNicknameAvailable (디스패치 전):", state.isNicknameAvailable);
+
             if (isDuplicated) {
+                console.log("🔥 닉네임 중복됨! 오류 메시지 디스패치!"); // 디버깅용 로그
                 dispatch({ type: 'SET_NICKNAME_DUPLICATION_ERROR', payload: "이미 사용 중인 닉네임입니다." });
                 dispatch({ type: 'SET_NICKNAME_AVAILABLE', payload: false });
+
             } else {
+                console.log("✅ 닉네임 사용 가능! 상태 디스패치!"); // 디버깅용 로그
                 dispatch({ type: 'SET_NICKNAME_AVAILABLE', payload: true });
+                console.log("3-----isNicknameAvailable (디스패치 후):", state.isNicknameAvailable);
+
                 dispatch({ type: 'SET_NICKNAME_DUPLICATION_ERROR', payload: null });
             }
         } catch (err) {
             console.error("닉네임 중복 검사 중 오류:", err);
+            console.log("❌ 닉네임 검사 중 예외 발생!"); // 디버깅용 로그
             dispatch({ type: 'SET_NICKNAME_DUPLICATION_ERROR', payload: err.message || "닉네임 검사 중 오류가 발생했습니다." });
             dispatch({ type: 'SET_NICKNAME_AVAILABLE', payload: false });
         }
-    }, [auth.accessToken]); // auth.accessToken이 변경될 때 함수 재생성
 
+        console.log('-----중복 검사 종료-----', debounceTimer.current);
+        console.log("4-----isNicknameAvailable (디스패치 후):", state.isNicknameAvailable);
+
+    }, [auth.accessToken]); // auth.accessToken이 변경될 때 함수 재생성
 
     // 각 필드의 유효성 검사
     const validateForm = () => {
@@ -182,13 +202,26 @@ function MyInfoEditCon() {
 
             };
 
-            const message = await updateMemberInfo(auth.accessToken, updatePayload);
-            dispatch({ type: 'SET_SUCCESS_MESSAGE', payload: message || "회원 정보가 성공적으로 수정되었습니다." });
+            // 회원 정보 수정 API 호출
+            const updatedMemberData = await updateMemberInfo(auth.accessToken, updatePayload); // 수정된 정보 응답을 받습니다.
+            const newNickname = updatedMemberData.memberNickname;
+
+            dispatch({ type: 'SET_SUCCESS_MESSAGE', payload: "회원 정보가 성공적으로 수정되었습니다." });
+
 
             // 비밀번호 변경 성공 시 비밀번호 필드 초기화
             if (newPassword) {       // 새 비밀번호가 입력된 경우에만 초기화
                 dispatch({ type: 'RESET_PASSWORD_FIELDS' });
             }
+
+            // AuthContext의 login 함수를 호출하여 닉네임 업데이트 (AuthContext에 저장된 다른 정보는 그대로 유지)
+            login(
+                auth.accessToken,
+                auth.memberId,
+                auth.memberUsername,
+                auth.memberRole,
+                newNickname // <--- 변경된 닉네임을 전달합니다.
+            );
 
             alert("정보가 수정되었습니다.")
             navigate('/mypage/my-info');

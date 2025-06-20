@@ -57,7 +57,7 @@ export const updateMemberInfo = async (accessToken, updatePayload) => {
         });
         console.log('회원 정보 수정 응답:', response.data);
         // 백엔드에서 ApiResponse 형태로 응답이 오므로, message 필드를 반환
-        return response.data.message;
+        return response.data;
     } catch (error) {
         console.error("회원 정보 수정 실패:", error.response?.data || error.message);
         throw error.response?.data?.message || new Error('회원 정보 수정에 실패했습니다.');
@@ -72,6 +72,7 @@ export const checkNicknameDuplication = async (nickname) => {
             params: { nickname: nickname } // 쿼리 파라미터로 닉네임 전송
         });
         // 백엔드에서 boolean 값을 바로 반환하므로 response.data가 true/false
+        console.log("백엔드에서 닉네임 중복 결과 받은거 확인 : ",  response.data);
         return response.data;
     } catch (error) {
         console.error("닉네임 중복 검사 실패:", error);
