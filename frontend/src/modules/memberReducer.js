@@ -88,7 +88,7 @@ export function memberReducer(state, action) {
             return {
                 ...state,
                 nicknameDuplicateError: action.payload,
-                isNicknameAvailable: null
+                // isNicknameAvailable: null
             };
         case 'SET_NICKNAME_AVAILABLE':
             return { ...state,
