@@ -50,10 +50,13 @@ import React from "react";
 
 
                         {/* 닉네임 중복 검사 결과 메시지 */}
+                        <div style={{border: "1px solid black"}}>
+
                         {nicknameDuplicateError && <ErrorText>{nicknameDuplicateError}</ErrorText>}
                         {isNicknameAvailable === true && !nicknameDuplicateError && formData.memberNickname && formData.memberNickname.trim().length >= 2 && (
                             <SuccessText>사용 가능한 닉네임입니다.</SuccessText>
                         )}
+                        </div>
                         {/* isNicknameAvailable이 null일 때는 아직 검사 전이거나 초기 상태이므로 아무것도 표시하지 않습니다. */}
 
 
