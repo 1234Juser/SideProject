@@ -24,6 +24,7 @@ import AdminChatPage from "./pages/inquiry/AdminChatPage";
 import AdminChatDetailPage from "./pages/inquiry/AdminChatDetailPage";
 import MemberChatPage from "./pages/inquiry/MemberChatPage";
 import MemberChatDetailPage from "./pages/inquiry/MemberChatDetailPage";
+import WishListPage from "./pages/wishlist/WishListPage";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +63,9 @@ function App() {
                         <Route path="/admin/chat-inquiries/:sessionId" element={<AdminChatDetailPage/>} />
                         <Route path="/member/chat-inquiries" element={<MemberChatPage/>} />
                         <Route path="/member/chat-inquiries/:sessionId" element={<MemberChatDetailPage/>} />
+
+                        {/*  찜조회*/}
+                        <Route path="/mypage/wishlist" element={<WishListPage/>}/>
 
 
                     </Routes>

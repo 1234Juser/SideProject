@@ -88,3 +88,41 @@ export const MenuIce = styled.p`
   font-size: 0.85rem;
   color: #888;
 `;
+
+export const MenuActionsContainer = styled.div`
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    margin-top: auto; /* info 내에서 항상 하단에 위치 */
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+`;
+
+export const ActionButton = styled.button`
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #3498db;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    flex-grow: 1; /* 공간을 균등하게 차지하도록 설정 */
+    justify-content: center; /* 내용 중앙 정렬 */
+
+    &:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+`;
+
+export const ActionIcon = styled.span`
+    margin-right: 8px;
+    font-size: 1.2em;
+`;
