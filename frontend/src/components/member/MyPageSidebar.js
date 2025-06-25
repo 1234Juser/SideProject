@@ -16,9 +16,12 @@ const MyPageSidebar = () => {
             <SidebarItem>
                 주문 내역
             </SidebarItem>
-            <SidebarItem>
-                찜한 메뉴
-            </SidebarItem>
+            <Link to="/mypage/wishlist">
+                <SidebarItem>
+                    찜한 메뉴
+                </SidebarItem>
+            </Link>
+
             <SidebarItem>
                 나의 리뷰
             </SidebarItem>
