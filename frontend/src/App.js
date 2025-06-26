@@ -25,6 +25,7 @@ import AdminChatDetailPage from "./pages/inquiry/AdminChatDetailPage";
 import MemberChatPage from "./pages/inquiry/MemberChatPage";
 import MemberChatDetailPage from "./pages/inquiry/MemberChatDetailPage";
 import WishListPage from "./pages/wishlist/WishListPage";
+import CartPage from "./pages/cart/CartPage";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,9 @@ function App() {
 
                         {/*  찜조회*/}
                         <Route path="/mypage/wishlist" element={<WishListPage/>}/>
+
+                        {/* 장바구니   */}
+                        <Route path="/mypage/cartItem" element={<CartPage/>}/>
 
 
                     </Routes>
