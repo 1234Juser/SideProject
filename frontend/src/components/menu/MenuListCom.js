@@ -11,9 +11,12 @@ import {Link} from "react-router-dom";
 
 import { FaHeart, FaShoppingCart, FaCreditCard } from 'react-icons/fa';
 import { addWishlist, removeWishlist, fetchWishlists } from '../../service/wishlistService';
+import { addCartItem, removeCartItem, fetchCartItems } from '../../service/CartService';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../utils/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import {useQueryClient} from "@tanstack/react-query";
+
 
 
 const getCategoryKorean = (category) => {
@@ -29,11 +32,13 @@ const getCategoryKorean = (category) => {
     }
 };
 
-
 function MenuListCom({ menuList }) {
     const { auth } = useAuth(); // AuthContext에서 인증 정보 가져오기
     const navigate = useNavigate(); // useNavigate 훅 사용
     const [wishlistStatus, setWishlistStatus] = useState({});
+    const [cartStatus, setCartStatus] = useState({}); // 장바구니 상태 추가
+    const queryClient = useQueryClient(); // queryClient 초기화
+
 
     // 컴포넌트 마운트 시 또는 로그인 상태 변경 시 찜 목록을 불러와 찜 상태를 업데이트
     useEffect(() => {
@@ -56,11 +61,33 @@ function MenuListCom({ menuList }) {
                         alert('찜 목록을 불러오는 중 오류가 발생했습니다.');
                     }
                 });
+            // 로그인되어 있으면 장바구니 목록을 불러옴
+            fetchCartItems(auth.accessToken)
+                .then(data => {
+                    const status = {};
+                    data.forEach(item => {
+                        status[item.menu.menuId] = {
+                            inCart: true,
+                            cartItemId: item.cartItemId,
+                            quantity: item.quantity
+                        };
+                    });
+                    setCartStatus(status);
+                })
+                .catch(error => {
+                    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                        alert('장바구니 목록을 불러오려면 로그인이 필요합니다.');
+                    } else {
+                        alert('장바구니 목록을 불러오는 중 오류가 발생했습니다.');
+                    }
+                });
         } else {
-            // 로그아웃 상태면 찜 상태 초기화
+            // 로그아웃 상태면 찜 및 장바구니 상태 초기화
             setWishlistStatus({});
+            setCartStatus({});
         }
-    }, [auth.isAuthenticated, auth.accessToken]); // 인증 상태나 토큰이 변경될 때마다 실행
+    }, [auth.isAuthenticated, auth.accessToken]);
+
 
     const handleWishlistClick = async (menuId, menuName) => {
         if (!auth.isAuthenticated || !auth.accessToken) {
@@ -94,10 +121,50 @@ function MenuListCom({ menuList }) {
         }
     };
 
-    const handleCartClick = (menuId, menuName) => {
-        console.log(`${menuName} (${menuId}) 장바구니 클릭`);
-        // 여기에 장바구니 API 호출 로직 추가 (필요시 인증 확인)
+    const handleCartClick = async (menuId, menuName) => {
+        if (!auth.isAuthenticated || !auth.accessToken) {
+            alert('장바구니 기능을 사용하려면 로그인이 필요합니다.');
+            navigate('/login');
+            return;
+        }
+
+        const isInCart = cartStatus[menuId]?.inCart;
+        const cartItemId = cartStatus[menuId]?.cartItemId;
+
+        try {
+            if (isInCart) {
+                await removeCartItem(cartItemId, auth.accessToken);
+                alert(`${menuName} 장바구니에서 제거되었습니다.`);
+                setCartStatus(prevStatus => {
+                    const newStatus = { ...prevStatus };
+                    delete newStatus[menuId];
+                    return newStatus;
+                });
+                queryClient.invalidateQueries(['cartItems']); // 장바구니 항목 제거 후 쿼리 무효화
+            } else {
+                const addedItem = await addCartItem(menuId, 1, auth.accessToken); // 수량 1로 추가
+                alert(`${menuName} 장바구니에 추가되었습니다.`);
+                setCartStatus(prevStatus => ({
+                    ...prevStatus,
+                    [menuId]: {
+                        inCart: true,
+                        cartItemId: addedItem.cartItemId,
+                        quantity: 1 // 추가 시 수량은 1로 설정
+                    }
+                }));
+                queryClient.invalidateQueries(['cartItems']); // 장바구니 항목 추가 후 쿼리 무효화
+            }
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || error.message;
+            if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                alert('인증 정보가 유효하지 않습니다. 다시 로그인해주세요.');
+                navigate('/login');
+            } else {
+                alert(`장바구니 처리 중 오류가 발생했습니다: ${errorMessage}`);
+            }
+        }
     };
+
 
     const handleCheckoutClick = (menuId, menuName) => {
         console.log(`${menuName} (${menuId}) 결제하기 클릭`);
@@ -125,20 +192,35 @@ function MenuListCom({ menuList }) {
                                 <MenuActionsContainer>
                                     {/* 로그인 상태에 따라 찜 버튼 활성화/비활성화 */}
                                     <ActionButton
-                                        onClick={() => handleWishlistClick(menu.menuId, menu.menuName)}
-                                        disabled={!auth.isAuthenticated} // 로그인되지 않았다면 비활성화
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleWishlistClick(menu.menuId, menu.menuName);
+                                        }}
+                                        disabled={!auth.isAuthenticated}
                                     >
                                         <ActionIcon>
                                             <FaHeart color={wishlistStatus[menu.menuId] ? 'red' : 'inherit'} />
                                         </ActionIcon>
                                         {wishlistStatus[menu.menuId] ? '찜 취소' : '찜하기'}
                                     </ActionButton>
-                                    <ActionButton onClick={() => handleCartClick(menu.menuId, menu.menuName)}>
+                                    <ActionButton
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleCartClick(menu.menuId, menu.menuName);
+                                        }}
+                                        disabled={!auth.isAuthenticated}
+                                    >
                                         <ActionIcon><FaShoppingCart /></ActionIcon>
-                                        장바구니
+                                        {cartStatus[menu.menuId]?.inCart ? '장바구니에서 제거' : '장바구니'}
                                     </ActionButton>
-                                    <ActionButton onClick={() => handleCheckoutClick(menu.menuId, menu.menuName)}>
-                                        <ActionIcon><FaCreditCard /></ActionIcon>
+                                    <ActionButton onClick={(e) => {
+                                        e.preventDefault();
+                                        handleCheckoutClick(menu.menuId, menu.menuName);
+                                    }}
+                                                  disabled={!auth.isAuthenticated}
+                                    >
+
+                                    <ActionIcon><FaCreditCard /></ActionIcon>
                                         결제하기
                                     </ActionButton>
                                 </MenuActionsContainer>

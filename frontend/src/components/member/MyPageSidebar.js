@@ -21,7 +21,11 @@ const MyPageSidebar = () => {
                     찜한 메뉴
                 </SidebarItem>
             </Link>
-
+            <Link to="/mypage/cartItem">
+                <SidebarItem>
+                    나의 장바구니
+                </SidebarItem>
+            </Link>
             <SidebarItem>
                 나의 리뷰
             </SidebarItem>
