@@ -6,7 +6,7 @@ import {
     MenuName, MenuOptionGroup,
     MenuPrice, MenuRadioGroup, MenuSelect, OrderButton
 } from "../../style/menu/StyleMenuDetail";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 function MenuDetailCom({ menu }) {
     const [temperature, setTemperature] = useState('HOT');
@@ -18,6 +18,27 @@ function MenuDetailCom({ menu }) {
     const [extraShot, setExtraShot] = useState(0);
     const [pickupTime, setPickupTime] = useState('');
 
+    const showMilkOptions = menu.menuCategory === "COFFEE" && menu.menuName !== "아메리카노" && menu.menuName !== "콜드브루";
+    const onlyIce = menu.menuName === "아포가토";
+
+
+    // onlyIce가 true일 때 temperature를 'ICE'로 설정
+    useEffect(() => {
+        if (onlyIce) {
+            setTemperature('ICE');
+        }
+        // 만약 onlyIce가 false이고, 현재 temperature가 'ICE'이며,
+        // 해당 메뉴가 원래 ICE를 지원하지 않는 경우 'HOT'으로 되돌릴 수도 있습니다.
+        // 이 부분은 필요에 따라 추가하거나 제거하세요.
+        // else if (temperature === 'ICE' && !menu.menuIsIceAvailable) {
+        //     setTemperature('HOT');
+        // }
+    }, [onlyIce, menu.menuIsIceAvailable]); // onlyIce 또는 menu.menuIsIceAvailable이 변경될 때마다 실행
+
+
+
+
+
     return (
         <MenuDetailContainer>
             <MenuImage src={`http://localhost:8080${menu.menuImageUrl}`} alt={menu.menuName} />
@@ -27,34 +48,36 @@ function MenuDetailCom({ menu }) {
                 <MenuPrice>{menu.menuPrice.toLocaleString()}원</MenuPrice>
 
                 <MenuOptionGroup>
-                    <MenuLabel>온도</MenuLabel>
                     <MenuRadioGroup>
+                        {!onlyIce && ( <>
                         <label><input type="radio" name="temp" value="HOT" checked={temperature === 'HOT'} onChange={() => setTemperature('HOT')} /> HOT</label>
-                        {menu.menuIsIceAvailable && (
+                        </> )}
+                        {(onlyIce || menu.menuIsIceAvailable) && (
                             <label><input type="radio" name="temp" value="ICE" checked={temperature === 'ICE'} onChange={() => setTemperature('ICE')} /> ICE</label>
                         )}
                     </MenuRadioGroup>
 
+                    {showMilkOptions && ( <>
                     <MenuLabel>우유 선택</MenuLabel>
-                    <MenuSelect value={milk} onChange={(e) => setMilk(e.target.value)}>
-                        <option value="regular">일반우유</option>
-                        <option value="lowfat">무지방우유</option>
-                        <option value="oat">오트밀크</option>
-                    </MenuSelect>
+                    <label><input type="radio" name="milk" value="regular" checked={milk === 'regular'} onChange={() => setMilk('regular')} /> 일반우유</label>
+                    <label><input type="radio" name="milk" value="lowfat" checked={milk === 'lowfat'} onChange={() => setMilk('lowfat')} /> 무지방우유</label>
+                    <label><input type="radio" name="milk" value="regular" checked={milk === 'oat'} onChange={() => setMilk('oat')} /> 오트밀크</label>
+                    </> )}
 
+                    { temperature === 'ICE' && ( <>
                     <MenuLabel>얼음량</MenuLabel>
-                    <MenuSelect value={ice} onChange={(e) => setIce(e.target.value)}>
-                        <option value="less">적게</option>
-                        <option value="normal">보통</option>
-                        <option value="more">많이</option>
-                    </MenuSelect>
+                    <label><input type="radio" name="ice" value="less" checked={ice === 'less'} onChange={() => setIce('less')} /> 적게</label>
+                    <label><input type="radio" name="ice" value="normal" checked={ice === 'normal'} onChange={() => setIce('normal')} /> 보통</label>
+                    <label><input type="radio" name="ice" value="more" checked={ice === 'more'} onChange={() => setIce('more')} /> 많이</label>
+                    </>
+                    )}
 
                     <MenuLabel>물양</MenuLabel>
-                    <MenuSelect value={water} onChange={(e) => setWater(e.target.value)}>
-                        <option value="less">적게</option>
-                        <option value="normal">많이</option>
-                    </MenuSelect>
+                    <label><input type="radio" name="water" value="less" checked={water === 'less'} onChange={() => setWater('less')} /> 적게</label>
+                    <label><input type="radio" name="water" value="normal" checked={water === 'normal'} onChange={() => setWater('normal')} /> 보통</label>
+                    <label><input type="radio" name="water" value="more" checked={water === 'more'} onChange={() => setWater('more')} /> 많이</label>
 
+                    <MenuLabel>시럽</MenuLabel>
                     <MenuLabel><input type="checkbox" checked={syrup} onChange={() => setSyrup(!syrup)} /> 시럽 추가</MenuLabel>
                     <MenuLabel><input type="checkbox" checked={stevia} onChange={() => setStevia(!stevia)} /> 스테비아로 변경</MenuLabel>
 

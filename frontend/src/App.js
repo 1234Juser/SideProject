@@ -51,7 +51,7 @@ function App() {
                         {/*네비게이션*/}
                         <Route path="/" element={<MainPage/>} />
                         <Route path="/menu/:category" element={<MenuListPage />} />
-                        <Route path="/menu/option/:menuId" element={<MenuDetailPage />} />
+                        <Route path="/menu/detail/:menuId" element={<MenuDetailPage />} />
 
                         {/* 1:1문의 */}
                         <Route path="/inquiry" element={<InquiryPage />} />
