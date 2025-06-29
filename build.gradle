@@ -42,6 +42,8 @@ dependencies {
 //    채팅
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+    // 매장 정보 스크래핑 Jsoup 라이브러리 의존성 추가
+    implementation 'org.jsoup:jsoup:1.21.1'
 }
 
 tasks.named('test') {
