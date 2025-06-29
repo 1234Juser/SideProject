@@ -40,6 +40,7 @@ function MenuListCom({ menuList }) {
     const queryClient = useQueryClient(); // queryClient 초기화
 
 
+
     // 컴포넌트 마운트 시 또는 로그인 상태 변경 시 찜 목록을 불러와 찜 상태를 업데이트
     useEffect(() => {
         if (auth.isAuthenticated && auth.accessToken) {
@@ -166,10 +167,16 @@ function MenuListCom({ menuList }) {
     };
 
 
-    const handleCheckoutClick = (menuId, menuName) => {
-        console.log(`${menuName} (${menuId}) 결제하기 클릭`);
-        // 여기에 결제하기 API 호출 로직 추가 (필요시 인증 확인)
+    const handleCheckoutClick = (menu) => { // 변경: menuId, menuName 대신 전체 menu 객체 받음
+        if (!auth.isAuthenticated) {
+            alert('로그인이 필요합니다.');
+            navigate('/login');
+            return;
+        }
+        // 단일 상품을 즉시 구매하는 경우, 기본 수량을 1로 설정하여 OrderCom으로 전달
+        navigate('/order-confirm', { state: { menu: menu, quantity: 1 } });
     };
+
 
     if (!menuList || menuList.length === 0) {
         return <MenuListContainer><p>메뉴가 없습니다.</p></MenuListContainer>;
@@ -215,13 +222,13 @@ function MenuListCom({ menuList }) {
                                     </ActionButton>
                                     <ActionButton onClick={(e) => {
                                         e.preventDefault();
-                                        handleCheckoutClick(menu.menuId, menu.menuName);
+                                        handleCheckoutClick(menu);
                                     }}
                                                   disabled={!auth.isAuthenticated}
                                     >
 
                                     <ActionIcon><FaCreditCard /></ActionIcon>
-                                        결제하기
+                                        바로구매
                                     </ActionButton>
                                 </MenuActionsContainer>
                             </MenuInfo>
