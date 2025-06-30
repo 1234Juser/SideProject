@@ -69,3 +69,34 @@ export const OrderButton = styled.button`
     background-color: #e65c00;
   }
 `;
+
+export const OptionButton = styled.button`
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 1em;
+
+    &:hover {
+        background-color: #f0f0f0;
+    }
+
+    &:active {
+        background-color: #e0e0e0;
+    }
+`;
+
+export const ExtraShotControl = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+`;
+
+export const ShotCount = styled.span`
+    font-size: 1.2em;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+`;

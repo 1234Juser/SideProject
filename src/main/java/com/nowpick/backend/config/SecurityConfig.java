@@ -52,6 +52,7 @@ public class SecurityConfig {
                                                 "/api/members/signup",
                                                 "/api/members/check-nickname",
                                                 "/api/menu/**",
+                                                "/api/stores/list",
                                                 "/",          // 루트 경로
                                                 "/images/**", // 이미지
                                                 "/main",      // 메인 페이지

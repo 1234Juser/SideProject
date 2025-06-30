@@ -1,22 +1,34 @@
 import {
+    ExtraShotControl,
     MenuDescription,
     MenuDetailContainer,
     MenuImage,
     MenuInfo, MenuLabel,
     MenuName, MenuOptionGroup,
-    MenuPrice, MenuRadioGroup, MenuSelect, OrderButton
+    MenuPrice, MenuRadioGroup, MenuSelect, OptionButton, OrderButton, ShotCount
 } from "../../style/menu/StyleMenuDetail";
 import {useEffect, useState} from "react";
 
-function MenuDetailCom({ menu }) {
-    const [temperature, setTemperature] = useState('HOT');
-    const [milk, setMilk] = useState('regular');
-    const [ice, setIce] = useState('normal');
-    const [water, setWater] = useState('normal');
-    const [syrup, setSyrup] = useState(false);
-    const [stevia, setStevia] = useState(false);
-    const [extraShot, setExtraShot] = useState(0);
-    const [pickupTime, setPickupTime] = useState('');
+function MenuDetailCom({
+                           menu,
+                           temperature,
+                           setTemperature,
+                           milk,
+                           setMilk,
+                           ice,
+                           setIce,
+                           water,
+                           setWater,
+                           syrup,
+                           setSyrup,
+                           stevia,
+                           setStevia,
+                           extraShot,
+                           handleExtraShotChange,
+                           // pickupTime,
+                           // setPickupTime,
+                           handleOrder,
+                       }) {
 
     const showMilkOptions = menu.menuCategory === "COFFEE" && menu.menuName !== "아메리카노" && menu.menuName !== "콜드브루";
     const onlyIce = menu.menuName === "아포가토";
@@ -27,14 +39,7 @@ function MenuDetailCom({ menu }) {
         if (onlyIce) {
             setTemperature('ICE');
         }
-        // 만약 onlyIce가 false이고, 현재 temperature가 'ICE'이며,
-        // 해당 메뉴가 원래 ICE를 지원하지 않는 경우 'HOT'으로 되돌릴 수도 있습니다.
-        // 이 부분은 필요에 따라 추가하거나 제거하세요.
-        // else if (temperature === 'ICE' && !menu.menuIsIceAvailable) {
-        //     setTemperature('HOT');
-        // }
     }, [onlyIce, menu.menuIsIceAvailable]); // onlyIce 또는 menu.menuIsIceAvailable이 변경될 때마다 실행
-
 
 
 
@@ -82,13 +87,17 @@ function MenuDetailCom({ menu }) {
                     <MenuLabel><input type="checkbox" checked={stevia} onChange={() => setStevia(!stevia)} /> 스테비아로 변경</MenuLabel>
 
                     <MenuLabel>샷 추가</MenuLabel>
-                    <input type="number" min="0" max="5" value={extraShot} onChange={(e) => setExtraShot(Number(e.target.value))} />
+                    <ExtraShotControl>
+                        <OptionButton onClick={() => handleExtraShotChange(-1)}>-</OptionButton>
+                        <ShotCount>{extraShot}</ShotCount>
+                        <OptionButton onClick={() => handleExtraShotChange(1)}>+</OptionButton>
+                    </ExtraShotControl>
 
-                    <MenuLabel>픽업 시간 선택</MenuLabel>
-                    <input type="time" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} />
+                    {/*<MenuLabel>픽업 시간 선택</MenuLabel>
+                    <input type="time" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)} />*/}
                 </MenuOptionGroup>
 
-                <OrderButton>담기</OrderButton>
+                <OrderButton onClick={handleOrder}>주문하기</OrderButton>
             </MenuInfo>
         </MenuDetailContainer>
     );
