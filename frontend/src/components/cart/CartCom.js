@@ -19,10 +19,12 @@ import {
 import { removeCartItem, updateCartItemQuantity } from '../../service/CartService';
 import { useAuth } from '../../utils/AuthContext';
 import { useQueryClient } from '@tanstack/react-query';
+import {useNavigate} from "react-router-dom";
 
 function CartCom({ cartItems, selectedCartItems, setSelectedCartItems }) {
     const { auth } = useAuth();
     const queryClient = useQueryClient(); // queryClient 초기화
+    const navigate = useNavigate();
 
     // 모든 장바구니 항목이 선택 해제되면 selectedCartItems를 초기화
     useEffect(() => {
@@ -85,6 +87,22 @@ function CartCom({ cartItems, selectedCartItems, setSelectedCartItems }) {
         );
     }
 
+    const handleCheckout = () => {
+        if (selectedCartItems.length === 0) {
+            alert('구매할 상품을 하나 이상 선택해주세요.');
+            return;
+        }
+
+        // 선택된 장바구니 항목들만 필터링
+        const itemsToOrder = cartItems.filter(item =>
+            selectedCartItems.includes(item.cartItemId)
+        );
+
+        // OrderCom으로 선택된 상품 정보와 함께 이동
+        navigate('/order-confirm', { state: { selectedItems: itemsToOrder } });
+    };
+
+
     return (
         <CartContainer>
             <CartHeader>나의 장바구니</CartHeader>
@@ -115,7 +133,7 @@ function CartCom({ cartItems, selectedCartItems, setSelectedCartItems }) {
                 선택된 상품 총 금액: {calculateTotal().toLocaleString()}원
             </CartTotal>
             <CheckoutButton
-                onClick={() => alert(`총 ${selectedCartItems.length}개의 항목 결제 예정: ${calculateTotal().toLocaleString()}원`)}
+                onClick={handleCheckout}
                 disabled={selectedCartItems.length === 0}
             >
                 선택된 상품 구매하기
