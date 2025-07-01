@@ -29,14 +29,24 @@ public class StoreController {
     }
     
     
+    // 스크래핑 실행
     @GetMapping("/scrape")
     public List<StoreDTO> getStores() {
-        
         try {
             return storeService.scrapeStores();
         } catch (Exception e){
             throw new RuntimeException("스크래핑 중 오류 발생", e);
         }
-        
+    }
+    
+    
+    // 매장 전체 조회
+    @GetMapping("/list")
+    public List<StoreDTO> getAllStores() {
+        try {
+            return storeService.getAllStores();
+        } catch(Exception e) {
+            throw new RuntimeException("매장 전체 조회 오류 발생", e);
+        }
     }
 }

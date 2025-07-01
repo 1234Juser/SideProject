@@ -14,8 +14,8 @@ import MenuDetailPage from "./pages/menu/MenuDetailPage";
 import AdminMyPagePage from "./pages/admin/AdminMyPagePage";
 import AdminMemberListPage from "./pages/admin/AdminMemberListPage";
 import MyPagePage from "./pages/member/MyPagePage";
-// import MyInfoPage from "./pages/member/MyInfoPage";
-// import MyInfoEditPage from "./pages/member/MyInfoEditPage";
+import MyInfoPage from "./pages/member/MyInfoPage";
+import MyInfoEditPage from "./pages/member/MyInfoEditPage";
 import AdminInquiryPage from "./pages/inquiry/AdminInquiryPage";
 import AdminInquiryDetailPage from "./pages/inquiry/AdminInquiryDetailPage";
 import MemberInquiryPage from "./pages/inquiry/MemberInquiryPage";
@@ -27,6 +27,7 @@ import MemberChatDetailPage from "./pages/inquiry/MemberChatDetailPage";
 import WishListPage from "./pages/wishlist/WishListPage";
 import CartPage from "./pages/cart/CartPage";
 import OrderPage from "./pages/order/OrderPage";
+import StoreSelectionPage from "./pages/store/StoreSelectionPage";
 
 const queryClient = new QueryClient();
 
@@ -42,8 +43,8 @@ function App() {
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/mypage" element={<MyPagePage/>}/>
-                        {/*<Route path="/mypage/my-info" element={<MyInfoPage/>}/>*/}
-                        {/*<Route path="/mypage/my-info-edit" element={<MyInfoEditPage/>}/>*/}
+                        <Route path="/mypage/my-info" element={<MyInfoPage/>}/>
+                        <Route path="/mypage/my-info-edit" element={<MyInfoEditPage/>}/>
 
                         {/*관리자 관련*/}
                         <Route path="/admin/mypage" element={<AdminMyPagePage/>}/>
@@ -52,7 +53,8 @@ function App() {
                         {/*네비게이션*/}
                         <Route path="/" element={<MainPage/>} />
                         <Route path="/menu/:category" element={<MenuListPage />} />
-                        <Route path="/menu/option/:menuId" element={<MenuDetailPage />} />
+                        <Route path="/menu/detail/:menuId" element={<MenuDetailPage />} />
+                        <Route path="/menu/select-store" element={<StoreSelectionPage/>}/>
 
                         {/* 1:1문의 */}
                         <Route path="/inquiry" element={<InquiryPage />} />

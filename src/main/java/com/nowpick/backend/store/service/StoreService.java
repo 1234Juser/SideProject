@@ -143,4 +143,17 @@ public class StoreService {
         saveScrapedStores();
         log.info("### 예약된 스크래핑 및 DB 저장 프로세스 완료 ###");
     }
+    
+    
+    // 매장 전체 조회
+    public List<StoreDTO> getAllStores() {
+        
+        List<StoreEntity> storeEntityList = storeRepository.findAll();
+        List<StoreDTO> storeList = storeEntityList.stream()
+                                                  .map(store -> new StoreDTO(store))
+                                                  .toList();
+        log.info("매장 전체 조회 : {}", storeList);
+        
+        return storeList;
+    }
 }
