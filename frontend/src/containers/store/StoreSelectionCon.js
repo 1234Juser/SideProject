@@ -1,6 +1,6 @@
 import StoreSelectionCom from "../../components/store/StoreSelectionCom";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useReducer, useState} from "react";
+import {useEffect, useReducer} from "react";
 import {useQuery} from "@tanstack/react-query";
 import {getAllStores} from "../../service/storeService";
 import {StorePageContainer} from "../../style/store/StyleStoreSelection";
@@ -13,11 +13,35 @@ function StoreSelectionCon() {
     const {orderOptions} = location.state || {};
 
     const [state, dispatch] = useReducer(storeSelectionReducer, initialState)
-    const {selectedStore} = state;
+    const {selectedStore, userLocation, error : reducerError} = state;      // useQuery의 error와 구분
 
-    const { data : storeList, isLoading, isError,error, } = useQuery({
-        queryKey : ['storeList'],
-        queryFn : () => getAllStores(),
+
+    // 1. 사용자의 현재 위치 가져오기
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const { latitude, longitude } = position.coords;
+                    dispatch({ type : 'SET_USER_LOCATION', payload : { latitude, longitude }});
+                    console.log("사용자 현재 위치:", latitude, longitude);
+                },
+                error => {
+                    console.error("위치 정보를 가져오는데 실패했습니다. : ", error);
+                    dispatch({ type : 'SET_ERROR', payload : "위치 정보를 가져올 수 없습니다. 브라우저 설정에서 위치 접근을 허용해주세요." });
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        } else {
+            dispatch({ type : 'SET_ERROR', payload : "이 브라우저는 위치 정보를 지원하지 않습니다."});
+        }
+    }, []);
+
+
+    // 2. userLocation이 있을 때만 매장 전체 목록 가져오기
+    const { data : storeList, isLoading, isError,error : queryError, } = useQuery({
+        queryKey : ['storeList', userLocation],     // userLocation이 변경되면 쿼리 다시 실행
+        queryFn : () => getAllStores(userLocation.latitude, userLocation.longitude),
+        enabled : !!userLocation,           // userLocation이 유효할 때만 쿼리 실행
         staleTime : 1000 * 60 * 5,
     })
 
@@ -45,8 +69,9 @@ function StoreSelectionCon() {
     };
 
     if (isLoading) return <StorePageContainer><p>매장 정보를 불러오는 중...</p></StorePageContainer>;
-    if (error) return <StorePageContainer><p>매장 정보를 불러오는데 실패했습니다: {error.message}</p></StorePageContainer>;
+    if (queryError) return <StorePageContainer><p>매장 정보를 불러오는데 실패했습니다: {queryError.message}</p></StorePageContainer>;
     if (!orderOptions) return <StorePageContainer><p>주문 정보가 없습니다. 메뉴 페이지로 돌아가세요.</p></StorePageContainer>; // 잘못된 접근 방지
+    if (reducerError) return <StorePageContainer><p>오류: {reducerError}</p></StorePageContainer>; // 위치 정보 에러 처리
 
 
 
@@ -56,6 +81,7 @@ function StoreSelectionCon() {
                                                 selectedStore={selectedStore}
                                                 handleStoreSelect={handleStoreSelect}
                                                 handleConfirmSelection={handleConfirmSelection}
+                                                userLocation={userLocation}
             />
         </>
     )

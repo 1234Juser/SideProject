@@ -28,10 +28,14 @@ import WishListPage from "./pages/wishlist/WishListPage";
 import CartPage from "./pages/cart/CartPage";
 import OrderPage from "./pages/order/OrderPage";
 import StoreSelectionPage from "./pages/store/StoreSelectionPage";
+import useKakaoLoader from "./utils/useKakaoLoader";
 
 const queryClient = new QueryClient();
 
 function App() {
+
+    useKakaoLoader();
+
   return (
       <QueryClientProvider client={queryClient}>
           <AuthProvider>

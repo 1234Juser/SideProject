@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -42,11 +43,15 @@ public class StoreController {
     
     // 매장 전체 조회
     @GetMapping("/list")
-    public List<StoreDTO> getAllStores() {
-        try {
-            return storeService.getAllStores();
-        } catch(Exception e) {
-            throw new RuntimeException("매장 전체 조회 오류 발생", e);
+    public ResponseEntity<List<StoreDTO>> getAllStores ( @RequestParam(required = false) Double latitude,
+                                                                                            @RequestParam(required = false) Double longitude) {
+        List<StoreDTO> stores;
+        if (latitude != null && longitude != null) {
+            stores = storeService.getAllStoresOrderByDistance(latitude, longitude);
+        } else {
+            stores = storeService.getAllStores();
         }
+       return ResponseEntity.status(HttpStatus.OK).body(stores);
     }
+    
 }
