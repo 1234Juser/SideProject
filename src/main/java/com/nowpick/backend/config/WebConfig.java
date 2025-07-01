@@ -1,11 +1,28 @@
 package com.nowpick.backend.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.io.IOException;
+
 @Configuration
+@Slf4j
 public class WebConfig implements WebMvcConfigurer {
+    
+    @Value("${kakao.rest-api-key}")
+    private String kakaoRestApiKey;
+    
     
     @Override
     public void addCorsMappings( CorsRegistry registry) {
@@ -32,5 +49,30 @@ public class WebConfig implements WebMvcConfigurer {
         // 쿠키나 인증 정보(세션, 토큰 등)를 포함한 요청을 허용합니다.
         // 보통 로그인 유지나 인증이 필요한 API 요청에 사용되며,
         // 클라이언트 측 fetch/axios 요청 시 `{ withCredentials: true }` 설정이 함께 필요합니다.
+    }
+    
+    
+    @Bean
+    public RestTemplate restTemplate( RestTemplateBuilder builder ) {
+        // 모든 요청에 Authorization 헤더를 기본으로 추가
+        // KakaoMapService에서 RequestEntity를 만들 때 헤더를 별도로 설정할 필요가 없습니다.
+        return builder
+               .defaultHeader(HttpHeaders.AUTHORIZATION, "KakaoAK " + kakaoRestApiKey)
+               .defaultHeader(HttpHeaders.ORIGIN, "http://localhost:8080") // ⭐ 중요: 백엔드 서버의 Origin 주소로 설정 ⭐
+               .interceptors(new ClientHttpRequestInterceptor() { // 익명 클래스로 인터셉터 정의
+                   @Override
+                   public ClientHttpResponse intercept( HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException, IOException {
+                       log.info(">>>> RestTemplate Request URL: {}", request.getURI());
+                       log.info(">>>> RestTemplate Request Headers: {}", request.getHeaders());
+                       // 실제 Origin 헤더가 여기에 포함되어 있는지 확인!
+                       if (request.getHeaders().containsKey(HttpHeaders.ORIGIN)) {
+                           log.info(">>>> Actual Origin Header Sent: {}", request.getHeaders().get(HttpHeaders.ORIGIN));
+                       } else {
+                           log.warn(">>>> Origin Header NOT found in RestTemplate request!");
+                       }
+                       return execution.execute(request, body);
+                   }
+               })
+               .build();
     }
 }

@@ -1,6 +1,7 @@
 package com.nowpick.backend.store.service;
 
 import com.nowpick.backend.store.domain.StoreEntity;
+import com.nowpick.backend.store.dto.KakaoGeoResponse;
 import com.nowpick.backend.store.dto.StoreDTO;
 import com.nowpick.backend.store.repo.StoreRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -26,6 +28,7 @@ public class StoreService {
     private static final int MAX_PAGE = 13;     // 서울 지역의 총 페이지 수
     
     private final StoreRepository storeRepository;
+    private final KakaoMapService kakaoMapService;
     
     
     
@@ -110,12 +113,32 @@ public class StoreService {
         
         int savedCount = 0;
         int skippedCount = 0;
+        int geocodedCount = 0;
         
         for (StoreDTO dto : scrapedStores) {
             
             // 중복 데이터 방지 (매장명과 주소가 동일하면 중복으로 간주)
             if (! storeRepository.existsByStoreNameAndStoreAddress(dto.getStoreName(), dto.getStoreAddress())) {
-                StoreEntity store = new StoreEntity(dto);
+                
+                try {
+                    // KakaoMapService로 지오코딩 수행
+                    KakaoGeoResponse geoResponse = kakaoMapService.getCoordinatesFromAddress(dto.getStoreAddress());
+                    
+                    // ⭐ 여기서 geoResponse.getDocuments()를 통해 List<Document>를 얻습니다. ⭐
+                    if (geoResponse != null && geoResponse.getDocuments() != null && !geoResponse.getDocuments().isEmpty()) {
+                        KakaoGeoResponse.Document document = geoResponse.getDocuments().get(0);
+                        dto.setLongitude(Double.parseDouble(document.getX()));
+                        dto.setLatitude(Double.parseDouble(document.getY()));
+                        geocodedCount++;
+                        log.debug("지오코딩 성공 -> 위도 {}, 경도 {} ", dto.getLatitude(), dto.getLongitude());
+                    } else {
+                        log.warn("지오코딩 실패 또는 결과 없음: {}\", dto.getStoreAddress()");
+                    }
+                } catch (Exception e) {
+                    log.error("지오코딩 중 에러 발생 (주소: {}): {}", dto.getStoreAddress(), e.getMessage());
+                }
+                
+                StoreEntity store = new StoreEntity(dto);       // StoreDTO를 StoreEntity로 변환.
                 storeRepository.save(store);
                 savedCount++;
                 log.debug("DB에 새 매장 저장 완료: {}", dto.getStoreName());
@@ -131,17 +154,24 @@ public class StoreService {
     }
     
     
+    /*
     // 매일 새벽 3시에 스크래핑 및 DB 저장 실행 ( → 스케줄러를 통해 주기적으로 실행. 메인 어플리케이션에 스케줄링 활성화 어노테이션 추가)
     // @Scheduled(cron = "0 0 3 * * ?") // 초 분 시 일 월 요일
     
     // ⭐ 테스트를 위해 잠시 fixedDelay로 변경 ⭐
     // 애플리케이션 시작 후 5초(5000ms) 후에 한 번 실행
     // 이 후에는 saveScrapedStoresToDb() 메서드 완료 후 24시간(1일) 뒤에 재실행되도록 설정
-    @Scheduled(initialDelay = 5000, fixedDelay = 24 * 60 * 60 * 1000) // 5초 후 첫 실행, 이후 24시간마다 실행
+    @Scheduled(initialDelay = 5000, fixedDelay = 24 * 60 * 60 * 1000) // 5초 후 첫 실행, 이후 24시간마다 실행 */
     public void scheduleScrapingAndSaving() {
         log.info("### 예약된 스크래핑 및 DB 저장 프로세스 시작 ###");
         saveScrapedStores();
         log.info("### 예약된 스크래핑 및 DB 저장 프로세스 완료 ###");
+    }
+    
+    // ⭐ 추가: DB에 매장 데이터가 존재하는지 확인하는 메서드 ⭐
+    @Transactional(readOnly = true) // 읽기 전용 트랜잭션으로 설정
+    public boolean isStoreDataPresent() {
+        return storeRepository.count() > 0; // DB에 저장된 StoreEntity가 1개 이상인지 확인
     }
     
     
@@ -156,4 +186,43 @@ public class StoreService {
         
         return storeList;
     }
+    
+    
+    // 지구상의 두 지점 간 거리를 계산하는 Haversine 공식 (유지)
+    private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+        // ... (기존 코드) ...
+        final int R = 6371; // 지구 반지름 (킬로미터)
+        
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                   + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                     * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c; // 거리 (km)
+    }
+    
+    
+    // 매장 전체 조회 (거리 정렬 포함)
+    public List<StoreDTO> getAllStoresOrderByDistance(Double userLat, Double userLon) {
+        
+        List<StoreEntity> storeEntityList = storeRepository.findAll();
+        List<StoreDTO> storeList = storeEntityList.stream()
+                                   .map(store -> {
+                                       StoreDTO dto = new StoreDTO(store);
+                                       if (store.getLatitude() != null && store.getLongitude() != null && userLat != null && userLon != null) {
+                                           double distance = calculateDistance(userLat, userLon, store.getLatitude(), store.getLongitude());        // 사용자의 현재 위치와 매장의 위치 간의 거리를 계산
+                                           dto.setDistance(distance);
+                                       }
+                                       return dto;
+                                   })
+                                   .sorted(Comparator.comparing(StoreDTO::getDistance, Comparator.nullsLast(Double::compareTo)))
+                                   // StoreDTO 목록을 distance 필드를 기준으로 오름차순 정렬합니다. (거리가 가까울수록 먼저 오도록)
+                                   // nullsLast는 distance가 null(예: 지오코딩 실패)인 경우 맨 뒤로 보냄
+                                   .toList();
+        
+        log.info("매장 전체 조회 (거리 정렬): {}", storeList);
+        return storeList;
+    }
+    
 }
