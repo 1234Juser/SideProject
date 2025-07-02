@@ -121,7 +121,7 @@ public class PaymentService {
             orderRepository.save(order); // 주문 상태 업데이트
 
             // PaymentEntity 생성 또는 업데이트
-            Optional<PaymentEntity> existingPayment = paymentRepository.findByOrderId(order.getOrderId());
+            Optional<PaymentEntity> existingPayment = paymentRepository.findByOrder_OrderId(order.getOrderId());
             PaymentEntity payment;
 
             if (existingPayment.isPresent()) {
