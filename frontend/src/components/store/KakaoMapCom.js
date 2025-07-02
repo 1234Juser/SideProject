@@ -1,11 +1,14 @@
 import {Map, MapMarker, MapTypeControl, useMap} from "react-kakao-maps-sdk";
-import {useRef, useState} from "react";
+import {memo, useRef, useState} from "react";
+import EventMarkerContainer from "../../containers/store/EventMarkerContainer";
 
 function KakaoMapCom({userLocation, storeList, handleStoreSelect, selectedStore}) {
+    console.log("KakaoMapCom 렌더링:", { userLocation, storeList, selectedStore });
 
     const mapRef = useRef(null)
-    const [info, setInfo] = useState("")
-    const [showInfo, setShowInfo] = useState(false)
+    const [mapInfo, setMapInfo] = useState("")
+    // 여기에 isVisible useState를 호출하면 모든 마커의 정보창이 isVisible을 참조하게됨
+
 
     // userLocation이 없으면 기본 중심 좌표 설정 (예: 서울 시청)
     const defaultCenter = {
@@ -60,58 +63,7 @@ function KakaoMapCom({userLocation, storeList, handleStoreSelect, selectedStore}
             ", " +
             neLatLng.getLng() +
             " 입니다"
-        setInfo(message)
-    }
-
-
-    // 매장 목록 마커 표시 + 매장명
-    const EventMarkerContainer = ({store, isSelected, onSelect}) => {
-        const map = useMap();
-
-        const markerImageSrc = isSelected
-            ? "https://t1.daumcdn.net/mapjsapi/images/marker.png"
-            : "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-
-
-        return (
-            <MapMarker
-                position={{ lat: store.latitude, lng: store.longitude }}
-                clickable={true} // 마커 클릭 가능하게 설정
-                onClick={(marker) => {
-                    map.panTo(marker.getPosition()); // 마커 클릭 시 지도를 해당 위치로 이동
-                    onSelect(store); // 부모 컴포넌트의 handleStoreSelect 호출 (store 객체 전달)
-                    }}// 마커 클릭 시 매장 선택 핸들러 호출
-                image={{
-                    src: markerImageSrc,
-                    size: { width: 24, height: 35 },
-                    options: { offset: { x: 12, y: 35 } },
-                }}
-                title={store.storeName}
-                onMouseOver={() => setShowInfo(true)}
-                onMouseOut={() => setShowInfo(false)}
-            >
-                {showInfo  && (
-                    <div style={{
-                        padding: "5px",
-                        color: "#000",
-                        textAlign: "center",
-                        backgroundColor: "white",
-                        border: "1px solid #ccc",
-                        borderRadius: "5px",
-                        fontSize: "12px",
-                        position: "absolute",
-                        bottom: "40px", // 마커 위로 띄우기
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        whiteSpace: "nowrap", // 줄바꿈 방지
-                        zIndex: 10, // 다른 요소 위에 표시
-                    }}>
-                        <strong>{store.storeName}</strong><br />
-                        {store.storeAddress}
-                    </div>
-                )}
-            </MapMarker>
-        )
+        setMapInfo(message)
     }
 
 
@@ -158,9 +110,9 @@ function KakaoMapCom({userLocation, storeList, handleStoreSelect, selectedStore}
                     맵정보 가져오기
                 </button>
                 <p
-                    id="info"
+                    id="mapInfo"
                     dangerouslySetInnerHTML={{
-                        __html: info,
+                        __html: mapInfo,
                     }}
                 />
             </Map>
@@ -168,4 +120,4 @@ function KakaoMapCom({userLocation, storeList, handleStoreSelect, selectedStore}
     )
 }
 
-export default KakaoMapCom
+export default memo(KakaoMapCom)
