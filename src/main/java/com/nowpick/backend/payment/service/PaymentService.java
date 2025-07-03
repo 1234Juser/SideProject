@@ -80,6 +80,14 @@ public class PaymentService {
             OrderEntity order = orderRepository.findByMerchantUid(merchantUid)
                     .orElseThrow(() -> new EntityNotFoundException("주문을 찾을 수 없습니다. merchantUid: " + merchantUid));
 
+            // [수정됨] pay_method가 null일 경우를 대비한 처리: NullPointerException 방지
+            String payMethod = request.getPay_method();
+            if (payMethod == null) {
+                log.warn("Payment callback request received with null pay_method for merchant_uid: {}", merchantUid);
+                payMethod = "UNKNOWN"; // 기본값 설정 또는 다른 오류 처리
+            }
+            String paymentMethodUpperCase = payMethod.toUpperCase(); // null 체크된 payMethod 사용
+
             // 4. 결제 상태 및 금액 검증
             // 아임포트 상태가 'paid'가 아니면 실패 처리
             if (!"paid".equals(paymentData.getStatus())) {
@@ -90,7 +98,7 @@ public class PaymentService {
                         .impUid(impUid)
                         .paymentAmount(BigDecimal.ZERO) // 실패 시 금액은 0으로 기록
                         .paymentStatus(PaymentEntity.PaymentStatus.FAILED)
-                        .paymentMethod(PaymentEntity.PaymentMethod.valueOf(request.getPay_method().toUpperCase()))
+                        .paymentMethod(PaymentEntity.PaymentMethod.valueOf(paymentMethodUpperCase)) // [수정됨] null 체크된 변수 사용
                         .failedAt(LocalDateTime.now())
                         .failureReason(paymentData.getFailReason() != null ? paymentData.getFailReason() : "결제 실패 (아임포트 상태: " + paymentData.getStatus() + ")")
                         .build();
@@ -108,7 +116,7 @@ public class PaymentService {
                         .impUid(impUid)
                         .paymentAmount(paymentData.getAmount())
                         .paymentStatus(PaymentEntity.PaymentStatus.FAILED)
-                        .paymentMethod(PaymentEntity.PaymentMethod.valueOf(request.getPay_method().toUpperCase()))
+                        .paymentMethod(PaymentEntity.PaymentMethod.valueOf(paymentMethodUpperCase)) // [수정됨] null 체크된 변수 사용
                         .paidAt(timestampToLocalDateTime(paymentData.getPaidAt().getTime() / 1000L))
                         .failedAt(LocalDateTime.now())
                         .failureReason("결제 금액 불일치: 요청(" + order.getOrderTotalAmount() + ") vs 실제(" + paymentData.getAmount() + ")")
@@ -129,7 +137,7 @@ public class PaymentService {
                 payment.setImpUid(impUid);
                 payment.setPaymentAmount(paymentData.getAmount());
                 payment.setPaymentStatus(PaymentEntity.PaymentStatus.PAID);
-                payment.setPaymentMethod(PaymentEntity.PaymentMethod.valueOf(request.getPay_method().toUpperCase()));
+                payment.setPaymentMethod(PaymentEntity.PaymentMethod.valueOf(paymentMethodUpperCase)); // [수정됨] null 체크된 변수 사용
                 payment.setReceiptUrl(paymentData.getReceiptUrl());
                 payment.setPaidAt(timestampToLocalDateTime(paymentData.getPaidAt().getTime() / 1000L));
                 payment.setFailedAt(null); // 성공했으므로 실패 정보 초기화
@@ -140,7 +148,7 @@ public class PaymentService {
                         .impUid(impUid)
                         .paymentAmount(paymentData.getAmount())
                         .paymentStatus(PaymentEntity.PaymentStatus.PAID)
-                        .paymentMethod(PaymentEntity.PaymentMethod.valueOf(request.getPay_method().toUpperCase()))
+                        .paymentMethod(PaymentEntity.PaymentMethod.valueOf(paymentMethodUpperCase)) // [수정됨] null 체크된 변수 사용
                         .receiptUrl(paymentData.getReceiptUrl())
                         .paidAt(timestampToLocalDateTime(paymentData.getPaidAt().getTime() / 1000L))
                         .build();
@@ -282,10 +290,3 @@ public class PaymentService {
         return LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault());
     }
 }
-
-
-
-
-
-
-
