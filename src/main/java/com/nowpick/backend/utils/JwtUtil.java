@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,20 @@ public class JwtUtil {
     
     @Value("${jwt.expiration}")
     private long expiration;
+
+    // [추가됨] 스프링 빈 초기화 시점에 이 메서드가 호출되어 secretKey와 expiration 값을 로깅합니다.
+    @PostConstruct
+    public void init() {
+        log.info("JwtUtil initialized. Loaded secretKey: {}", secretKey);
+        log.info("JwtUtil initialized. Loaded expiration: {}", expiration);
+        // [추가됨] 디버깅 목적으로 secretKey로 키 생성 시도:
+        try {
+            SecretKey key = getSigningKey(); // [추가됨] getSigningKey()가 제대로 작동하는지 확인
+            log.info("SecretKey successfully decoded and key generated during init.");
+        } catch (Exception e) {
+            log.error("Error decoding secretKey or generating key during init: {}", e.getMessage());
+        }
+    }
     
     // SecretKey 객체를 반환하는 헬퍼 메소드
     private SecretKey getSigningKey() {

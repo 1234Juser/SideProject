@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList; // [추가됨] ArrayList import
 import java.util.UUID;
 
 @Slf4j
@@ -42,6 +43,7 @@ public class OrderService {
                 .merchantUid(UUID.randomUUID().toString())
                 .orderStatus(OrderEntity.OrderStatus.PENDING)
                 .pickupAt(orderRequestDTO.getPickupAt())
+                .orderItems(new ArrayList<>()) // [핵심 수정] orderItems 리스트를 빌더에서 명시적으로 초기화
                 .build();
 
         BigDecimal totalAmount = BigDecimal.ZERO;
@@ -70,4 +72,3 @@ public class OrderService {
         return OrderResponseDTO.from(savedOrder);
     }
 }
-

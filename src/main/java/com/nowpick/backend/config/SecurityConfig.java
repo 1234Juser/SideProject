@@ -68,7 +68,8 @@ public class SecurityConfig {
                             
                            // 3. 마지막으로 인증이 필요한 넓은 범위의 경로 설정
                             // 예: /api/public/** 같은 공개 API는 permitAll(), /api/private/** 는 authenticated()
-                            .requestMatchers("/api/**", "/inquiries/**", "/chat/**").authenticated() // 모든 /api/**에 대해 인증 필요 (로그인/회원가입 제외)
+                            .requestMatchers("/api/**", "/inquiries/**", "/chat/**","/api/order/**","/api/payments/**"
+                            ).authenticated() // 모든 /api/**에 대해 인증 필요 (로그인/회원가입 제외)
                             
                            // 4. 그 외 모든 요청은 인증 필요 (가장 마지막에 위치)
                            // 그 외 모든 요청은 인증 필요
