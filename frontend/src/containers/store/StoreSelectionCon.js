@@ -1,6 +1,6 @@
 import StoreSelectionCom from "../../components/store/StoreSelectionCom";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useEffect, useReducer} from "react";
+import {useCallback, useEffect, useReducer, useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import {getAllStores} from "../../service/storeService";
 import {StorePageContainer} from "../../style/store/StyleStoreSelection";
@@ -46,14 +46,21 @@ function StoreSelectionCon() {
     })
 
 
-    // 매장 선택
-    const handleStoreSelect = (store) => {
+    // 매장 선택 (useCallback으로 감싸 함수 참조 안정화)
+    const handleStoreSelect = useCallback((store) => {
         dispatch({type : 'SELECT_STORE', payload : store})
-    };
+        console.log('선택한 매장 확인 : ', store);
+    }, [dispatch]);         // dispatch는 useReducer가 반환하는 함수로, 리렌더링되어도 변경되지 않음.
 
 
-    // 선택 완료
-    const handleConfirmSelection = () => {
+    const handleStoreClose = useCallback(() => {
+        dispatch({type : 'CLEAR_SELECTION'})
+        console.log('선택 취소');
+    }, [dispatch]);     // dispatch는 항상 동일한 참조를 유지하므로 의존성 배열에 추가해도 안전합니다.
+
+
+    // 선택 완료 (useCallback으로 감싸 함수 참조 안정화)
+    const handleConfirmSelection = useCallback(() => {
         if (selectedStore && orderOptions) {
             // 선택된 매장 정보와 기존 주문 옵션을 합쳐서 다음 단계로 전달하거나 처리합니다.
             const finalOrder = {
@@ -66,7 +73,7 @@ function StoreSelectionCon() {
         } else {
             alert("매장을 선택해주세요.");
         }
-    };
+    }, [selectedStore, orderOptions, navigate]);
 
     if (isLoading) return <StorePageContainer><p>매장 정보를 불러오는 중...</p></StorePageContainer>;
     if (queryError) return <StorePageContainer><p>매장 정보를 불러오는데 실패했습니다: {queryError.message}</p></StorePageContainer>;
@@ -82,6 +89,7 @@ function StoreSelectionCon() {
                                                 handleStoreSelect={handleStoreSelect}
                                                 handleConfirmSelection={handleConfirmSelection}
                                                 userLocation={userLocation}
+                                                handleStoreClose={handleStoreClose}
             />
         </>
     )
