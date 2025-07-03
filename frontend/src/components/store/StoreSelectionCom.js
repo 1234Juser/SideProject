@@ -7,6 +7,7 @@ import {
 } from "../../style/store/StyleStoreSelection";
 import KakaoMapCom from "./KakaoMapCom";
 import StoreInfoCom from "./StoreInfoCom";
+import StoreListCom from "./StoreListCom";
 
 function StoreSelectionCom({storeList, selectedStore, handleStoreSelect, handleConfirmSelection, userLocation, handleStoreClose}) {
 
@@ -18,14 +19,16 @@ function StoreSelectionCom({storeList, selectedStore, handleStoreSelect, handleC
     console.log('여기서 선택한 매장 확인하기...', selectedStore);
 
     return (
-        <StorePageContainer>
+        <>
             <StoreTitle>주문하실 곳을 선택하세요!</StoreTitle>
-            <KakaoMapCom userLocation={userLocation} storeList={storeList} handleStoreSelect={handleStoreSelect} selectedStore={selectedStore}/>
-            <StoreInfoCom selectedStore={selectedStore} handleStoreClose={handleStoreClose}/>
-            <StoreSelectButton onClick={handleConfirmSelection} disabled={!selectedStore}>
-                { selectedStore ? `${selectedStore.storeName} 으로 주문하기` : `매장을 선택하세요` }
-            </StoreSelectButton>
-        </StorePageContainer>
+            <StorePageContainer>
+                <KakaoMapCom userLocation={userLocation} storeList={storeList} handleStoreSelect={handleStoreSelect} selectedStore={selectedStore}/>
+                <StoreInfoCom selectedStore={selectedStore} handleStoreClose={handleStoreClose}/>
+                <StoreSelectButton onClick={handleConfirmSelection} disabled={!selectedStore}>
+                    { selectedStore ? `${selectedStore.storeName} 으로 주문하기` : `매장을 선택하세요` }
+                </StoreSelectButton>
+            </StorePageContainer>
+        </>
     )
 }
 

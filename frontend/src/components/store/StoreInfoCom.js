@@ -11,11 +11,12 @@ import {
 const StoreInfo = ({ selectedStore , handleStoreClose }) => {
 
     if (!selectedStore) {
-        return (
+/*        return (
             <InfoContainer>
                 <p style={{textAlign:"center"}}>지도에서 매장을 선택해주세요.</p>
             </InfoContainer>
-        )
+        )*/
+        return null;
     };
 
     return (

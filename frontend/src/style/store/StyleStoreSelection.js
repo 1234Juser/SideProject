@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const StorePageContainer = styled.div`
     padding: 20px;
     font-family: 'Arial', sans-serif;
+    border: 1px solid red;
 `;
 
 export const StoreTitle = styled.h1`
@@ -52,7 +53,7 @@ export const StoreSelectButton = styled.button`
     display: block;
     width: 300px;
     padding: 15px;
-    background-color: #28a745;
+    background-color: #0400a3;
     color: white;
     font-size: 1.2em;
     border: none;
@@ -61,7 +62,7 @@ export const StoreSelectButton = styled.button`
     margin: 30px auto 0;
 
     &:hover {
-        background-color: ${props => props.disabled ? '#28a745' : '#218838'};
+        background-color: ${props => props.disabled ? '#1d19af' : '#827fe7'};
     }
     &:disabled {
         opacity: 0.6;

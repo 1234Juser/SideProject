@@ -1,6 +1,7 @@
 // 매장 목록 마커 표시 + 매장명
-import {MapMarker, useMap} from "react-kakao-maps-sdk";
+import {CustomOverlayMap, MapMarker, useMap} from "react-kakao-maps-sdk";
 import {memo, useState} from "react";
+// import {InfoWindow} from "react-kakao-maps-sdk/dist/components/InfoWindow";
 
 const EventMarkerContainer = memo(({store, isSelected, onSelect}) => {
     const map = useMap();
@@ -11,31 +12,68 @@ const EventMarkerContainer = memo(({store, isSelected, onSelect}) => {
         : "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
     const markerContent  = (
-        <span>{store.storeName}</span>
+        // <div style={{
+        //     padding: "5px",
+        //     color: "#000",
+        //     textAlign: "center",
+        //     backgroundColor: "white",
+        //     border: "1px solid #ccc",
+        //     borderRadius: "5px",
+        //     fontSize: "12px",
+        //     position: "absolute",
+        //     bottom: "40px",
+        //     left: "50%",
+        //     transform: "translateX(-50%)",
+        //     whiteSpace: "nowrap",
+        //     zIndex: 10,
+        //     boxShadow: "2px 2px 5px rgba(0,0,0,0.2)",
+        // }}>
+
+            <span style={{color: "blue"}}>{store.storeName}</span>
+        // </div>
     )
 
 
     return (
-        <MapMarker
-            position={{ lat: store.latitude, lng: store.longitude }}
-            clickable={true} // 마커 클릭 가능하게 설정
-            onClick={(marker) => {
+        <>
+            <MapMarker
+                position={{ lat: store.latitude, lng: store.longitude }}
+                clickable={true} // 마커 클릭 가능하게 설정
+                onClick={(marker) => {
                     map.panTo(marker.getPosition()); // 마커 클릭 시 지도를 해당 위치로 이동
                     onSelect(store); // 부모 컴포넌트의 handleStoreSelect 호출 (store 객체 전달)
-            }}// 마커 클릭 시 매장 선택 핸들러 호출
-            image={{
-                src: markerImageSrc,
-                size: { width: 24, height: 35 },
-                options: { offset: { x: 12, y: 35 } },
-            }}
-            title={store.storeName}
-            onMouseOver={() => setShowInfo(true)}
-            onMouseOut={() => setShowInfo(false)}
-            content={store.storeName}
-        >
-            {showInfo  &&  markerContent}
-        </MapMarker>
-        )
+                }}
+                // onClick={() => onSelect(store)}
+                image={{
+                    src: markerImageSrc,
+                    size: { width: 24, height: 35 },
+                    options: { offset: { x: 12, y: 35 } },
+                }}
+                title={store.storeName}
+                // content={store.storeName}
+            >
+                {isSelected  &&  markerContent}
+                {/*{isSelected && (*/}
+                {/*    <CustomOverlayMap*/}
+                {/*        position={{ lat: store.latitude, lng: store.longitude }}*/}
+                {/*        yAnchor={1.5}*/}
+                {/*    >*/}
+                {/*        <div style={{*/}
+                {/*            padding: "10px",*/}
+                {/*            color: "#000",*/}
+                {/*            backgroundColor: "white",*/}
+                {/*            border: "1px solid #ccc",*/}
+                {/*            borderRadius: "8px",*/}
+                {/*            boxShadow: "0 2px 5px rgba(0,0,0,0.1)",*/}
+                {/*            whiteSpace: "nowrap", // 줄바꿈 방지*/}
+                {/*        }}>*/}
+                {/*            {store.storeName}*/}
+                {/*        </div>*/}
+                {/*    </CustomOverlayMap>*/}
+                {/*)}*/}
+            </MapMarker>
+        </>
+    )
 });
 
 export default EventMarkerContainer

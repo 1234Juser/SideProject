@@ -5,9 +5,9 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  bottom: 40px; /* 마커 바로 위에 위치하도록 조정 */
+  bottom: 20px;
   left: 50%;
-  transform: translateX(-50%);
+    transform: translate(-50%, 100%);
   width: 280px;
   background-color: white;
   border-radius: 12px;
