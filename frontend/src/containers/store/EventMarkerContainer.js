@@ -11,7 +11,7 @@ const EventMarkerContainer = memo(({store, isSelected, onSelect}) => {
         : "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
     const markerContent  = (
-        <strong>{store.storeName}</strong>
+        <span>{store.storeName}</span>
     )
 
 

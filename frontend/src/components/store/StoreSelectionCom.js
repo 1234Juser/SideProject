@@ -6,35 +6,24 @@ import {
     StoreTitle
 } from "../../style/store/StyleStoreSelection";
 import KakaoMapCom from "./KakaoMapCom";
+import StoreInfoCom from "./StoreInfoCom";
 
-function StoreSelectionCom({storeList, selectedStore, handleStoreSelect, handleConfirmSelection, userLocation}) {
+function StoreSelectionCom({storeList, selectedStore, handleStoreSelect, handleConfirmSelection, userLocation, handleStoreClose}) {
 
     // storeList가 없을 경우 (예: 로딩 중이거나 에러 발생 시)를 대비하여 안전하게 렌더링
     if (!storeList) {
         return null; // 또는 로딩 스피너 등을 반환할 수 있습니다.
     }
 
+    console.log('여기서 선택한 매장 확인하기...', selectedStore);
 
     return (
         <StorePageContainer>
-            <StoreTitle>매장을 선택해주세요</StoreTitle>
+            <StoreTitle>주문하실 곳을 선택하세요!</StoreTitle>
             <KakaoMapCom userLocation={userLocation} storeList={storeList} handleStoreSelect={handleStoreSelect} selectedStore={selectedStore}/>
-            {/*<StoreList>*/}
-            {/*    {storeList.map(store => (*/}
-            {/*        <StoreCard*/}
-            {/*            key={store.storeId}*/}
-            {/*            onClick={() => handleStoreSelect(store)}*/}
-            {/*            isSelected={selectedStore && selectedStore.id === store.storeId}     // selectedStore가 null이 아닌 경우에만 비교*/}
-            {/*        >*/}
-            {/*            <StoreName>{store.storeName}</StoreName>*/}
-            {/*            <StoreAddress>{store.storeAddress}</StoreAddress>*/}
-            {/*            /!*{store.operatingHours && <StoreInfo>영업 시간: {store.operatingHours}</StoreInfo>}*!/*/}
-            {/*            {store.storeTel && <StoreInfo>전화번호: {store.storeTel}</StoreInfo>}*/}
-            {/*        </StoreCard>*/}
-            {/*    ))}*/}
-            {/*</StoreList>*/}
+            <StoreInfoCom selectedStore={selectedStore} handleStoreClose={handleStoreClose}/>
             <StoreSelectButton onClick={handleConfirmSelection} disabled={!selectedStore}>
-                선택 완료
+                { selectedStore ? `${selectedStore.storeName} 으로 주문하기` : `매장을 선택하세요` }
             </StoreSelectButton>
         </StorePageContainer>
     )

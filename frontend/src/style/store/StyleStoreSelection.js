@@ -50,7 +50,7 @@ export const StoreInfo = styled.p`
 
 export const StoreSelectButton = styled.button`
     display: block;
-    width: 100%;
+    width: 300px;
     padding: 15px;
     background-color: #28a745;
     color: white;
@@ -58,7 +58,7 @@ export const StoreSelectButton = styled.button`
     border: none;
     border-radius: 8px;
     cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-    margin-top: 30px;
+    margin: 30px auto 0;
 
     &:hover {
         background-color: ${props => props.disabled ? '#28a745' : '#218838'};
