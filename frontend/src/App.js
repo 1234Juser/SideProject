@@ -29,6 +29,7 @@ import CartPage from "./pages/cart/CartPage";
 import OrderPage from "./pages/order/OrderPage";
 import StoreSelectionPage from "./pages/store/StoreSelectionPage";
 import useKakaoLoader from "./utils/useKakaoLoader";
+import OrderSuccessPage from "./pages/order/OrderSuccessPage";
 
 const queryClient = new QueryClient();
 
@@ -79,7 +80,7 @@ function App() {
                         <Route path="/mypage/cartItem" element={<CartPage/>}/>
                         {/* 주문   */}
                         <Route path="/order-confirm" element={<OrderPage />} />
-
+                        <Route path="/order-success" element={<OrderSuccessPage />} />
 
                     </Routes>
                   </MainLayout>

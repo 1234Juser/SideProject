@@ -20,6 +20,7 @@ public class OrderItemResponseDTO {
     private String menuName; // 추가
     private Integer quantity;
     private Integer priceAtPurchase;
+    private String imageUrl; // 메뉴 이미지 URL 필드 추가
 
     public static OrderItemResponseDTO from(OrderItemEntity orderItemEntity) {
         return OrderItemResponseDTO.builder()
@@ -28,6 +29,7 @@ public class OrderItemResponseDTO {
                 .menuName(orderItemEntity.getMenu().getMenuName()) // 메뉴 이름 추가
                 .quantity(orderItemEntity.getQuantity())
                 .priceAtPurchase(orderItemEntity.getPriceAtPurchase())
+                .imageUrl(orderItemEntity.getMenu().getMenuImageUrl()) // 메뉴 이미지 URL 설정
                 .build();
     }
 }

@@ -63,7 +63,7 @@ public class PaymentEntity {
     }
 
     public enum PaymentMethod {
-        CARD, VBANK, TRANS, PHONE, CULT_PHONE // 예시 결제 수단
+        CARD, VBANK, TRANS, PHONE, CULT_PHONE, KAKAOPAY, UNKNOWN // [수정됨] UNKNOWN 상수 다시 추가
     }
 
 }

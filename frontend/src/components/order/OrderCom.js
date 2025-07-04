@@ -173,7 +173,8 @@ function OrderCom() {
                         const finalResponse = await PaymentService.processPaymentCallback(paymentData, auth.accessToken);
                         alert('결제가 성공적으로 완료되었습니다.');
                         console.log('OrderCom: 백엔드 결제 검증 및 처리 성공. 결제 성공 페이지로 이동.'); // 추가
-                        navigate('/order-success', { state: { orderResponse: finalResponse } });
+                        // [수정됨] finalResponse (PaymentResponseDTO) 대신 orderResponse (OrderResponseDTO)를 전달합니다.
+                        navigate('/order-success', { state: { orderResponse: orderResponse } });
                     } catch (verifyError) {
                         const failMsg = verifyError.response?.data?.message || '알 수 없는 오류';
                         alert(`결제는 성공했으나 서버 처리 중 오류가 발생했습니다. 관리자에게 문의하세요.\n사유: ${failMsg}`);
