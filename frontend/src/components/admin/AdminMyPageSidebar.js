@@ -18,7 +18,11 @@ const AdminSidebar = () => {
                 </Link>
             </SidebarItem>
             <SidebarItem>메뉴 관리</SidebarItem>
-            <SidebarItem>주문 관리</SidebarItem>
+            <Link to="/adminmypage/payment">
+                <SidebarItem>
+                    주문 관리
+                </SidebarItem>
+            </Link>
             <SidebarItem>리뷰 관리</SidebarItem>
             <SidebarItem onClick={handleInquiryClick}> {/* 클릭 이벤트 추가 */}
                 1:1문의관리

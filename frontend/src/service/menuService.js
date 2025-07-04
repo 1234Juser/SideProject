@@ -13,6 +13,19 @@ export const fetchMenusByCategory = async (category) => {
     return response.data;
 }
 
+// 모든 메뉴 조회하는 함수
+export const fetchAllMenus = async (accessToken) => {
+    try {
+        const response = await axios.get(`${path}/api/menu/all`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
 
 // 단일 메뉴 조회해서 옵션 선택에 사용될 함수
 export const fetchMenuById = async (menuId) => {

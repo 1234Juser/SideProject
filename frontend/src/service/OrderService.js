@@ -9,8 +9,6 @@ const BASE_URL = 'http://localhost:8080/api/order';
  * @returns {Promise<object>} - 주문 성공 시 응답 데이터
  */
 export const placeOrder = async (orderRequestDTO, accessToken) => {
-    // [DEBUG] OrderService로 전달된 accessToken 값 확인
-    console.log('OrderService: placeOrder로 전달된 accessToken:', accessToken ? '토큰 존재' : '토큰 없음'); // 토큰 값 마스킹
     try {
         const response = await axios.post(
             BASE_URL,
@@ -26,16 +24,59 @@ export const placeOrder = async (orderRequestDTO, accessToken) => {
         return response.data;
     } catch (error) {
         // [DEBUG] 에러 발생 시 더 상세한 정보 로깅
-        console.error('OrderService: 주문 실패:', error);
         if (error.response) {
-            console.error('OrderService: 에러 응답 데이터:', error.response.data);
-            console.error('OrderService: 에러 응답 상태:', error.response.status);
-            console.error('OrderService: 에러 응답 헤더:', error.response.headers); // 추가
         } else if (error.request) {
-            console.error('OrderService: 에러 요청 (응답 없음):', error.request);
         } else {
-            console.error('OrderService: 에러 메시지:', error.message);
         }
         throw error; // 에러를 호출자에게 다시 던집니다.
+    }
+};
+
+/**
+ * 특정 주문의 상세 정보를 조회하는 API를 호출합니다.
+ * @param {Long} orderId - 조회할 주문의 ID
+ * @param {string} accessToken - 사용자 인증 토큰
+ * @returns {Promise<object>} - 주문 상세 정보 응답 데이터 (OrderResponseDTO)
+ */
+export const getOrderDetails = async (orderId, accessToken) => {
+    try {
+        const response = await axios.get(
+            `${BASE_URL}/${orderId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+
+        }
+        throw error;
+    }
+};
+
+/**
+ * 특정 회원의 모든 주문 내역을 조회하는 API를 호출합니다.
+ * @param {string} accessToken - 사용자 인증 토큰
+ * @returns {Promise<Array<object>>} - 주문 내역 리스트 응답 데이터 (List<OrderResponseDTO>)
+ */
+export const getOrdersByMember = async (accessToken) => { // [추가됨] export 추가
+    try {
+        const response = await axios.get(
+            `${BASE_URL}/user`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+
+        }
+        throw error;
     }
 };

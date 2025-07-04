@@ -19,6 +19,6 @@ public class PaymentCallbackRequestDTO {
     private BigDecimal paid_amount;
     private String pay_method;
     private String receipt_url;
-    private Long paid_at; // Unix timestamp
+    private Long paid_at;
     private String error_msg;
 }

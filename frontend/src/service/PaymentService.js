@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = '/api/payments'; // 백엔드 결제 컨트롤러 기본 URL
+const BASE_URL = 'http://localhost:8080/api/payments';
 
 const PaymentService = {
     /**
@@ -9,7 +9,6 @@ const PaymentService = {
      * @param {string} accessToken 사용자 인증 토큰
      */
     processPaymentCallback: async (paymentData, accessToken) => {
-        console.log('PaymentService: processPaymentCallback - accessToken 전송 여부:', accessToken ? '토큰 존재' : '토큰 없음'); // 추가
         try {
             const response = await axios.post(
                 `${BASE_URL}/callback`,
@@ -21,14 +20,10 @@ const PaymentService = {
                     },
                 }
             );
-            console.log('PaymentService: processPaymentCallback 성공:', response.data); // 추가
             return response.data;
         } catch (error) {
-            console.error('PaymentService: 결제 콜백 처리 실패:', error);
-            if (error.response) { // 추가
-                console.error('PaymentService: 에러 응답 데이터:', error.response.data);
-                console.error('PaymentService: 에러 응답 상태:', error.response.status);
-                console.error('PaymentService: 에러 응답 헤더:', error.response.headers);
+            if (error.response) {
+
             }
             throw error;
         }
@@ -40,7 +35,7 @@ const PaymentService = {
      * @param {string} accessToken 사용자 인증 토큰
      */
     getPaymentDetails: async (paymentId, accessToken) => {
-        console.log(`PaymentService: getPaymentDetails (ID: ${paymentId}) - accessToken 전송 여부:`, accessToken ? '토큰 존재' : '토큰 없음'); // 추가
+        console.log(`PaymentService: getPaymentDetails (ID: ${paymentId}) - accessToken 전송 여부:`, accessToken ? '토큰 존재' : '토큰 없음');
         try {
             const response = await axios.get(
                 `${BASE_URL}/${paymentId}`,
@@ -50,14 +45,10 @@ const PaymentService = {
                     },
                 }
             );
-            console.log(`PaymentService: 결제 상세 정보 조회 성공 (ID: ${paymentId}):`, response.data); // 추가
             return response.data;
         } catch (error) {
-            console.error(`PaymentService: 결제 상세 정보 조회 실패 (ID: ${paymentId}):`, error);
-            if (error.response) { // 추가
-                console.error('PaymentService: 에러 응답 데이터:', error.response.data);
-                console.error('PaymentService: 에러 응답 상태:', error.response.status);
-                console.error('PaymentService: 에러 응답 헤더:', error.response.headers);
+            if (error.response) {
+
             }
             throw error;
         }
@@ -68,7 +59,6 @@ const PaymentService = {
      * @param {string} accessToken 사용자 인증 토큰
      */
     getPaymentsByMember: async (accessToken) => {
-        console.log('PaymentService: getPaymentsByMember - accessToken 전송 여부:', accessToken ? '토큰 존재' : '토큰 없음'); // 추가
         try {
             const response = await axios.get(
                 `${BASE_URL}/user`,
@@ -78,14 +68,35 @@ const PaymentService = {
                     },
                 }
             );
-            console.log('PaymentService: 회원 결제 내역 조회 성공:', response.data); // 추가
             return response.data;
         } catch (error) {
-            console.error('PaymentService: 회원 결제 내역 조회 실패:', error);
-            if (error.response) { // 추가
-                console.error('PaymentService: 에러 응답 데이터:', error.response.data);
-                console.error('PaymentService: 에러 응답 상태:', error.response.status);
-                console.error('PaymentService: 에러 응답 헤더:', error.response.headers);
+            if (error.response) {
+
+            }
+            throw error;
+        }
+    },
+
+    /**
+     * [추가됨] 관리자용: 모든 결제 내역 조회 (날짜 필터링 포함)
+     * @param {string} accessToken 관리자 인증 토큰
+     * @param {string} date (선택 사항) 조회할 날짜 (YYYY-MM-DD 형식)
+     */
+    getAllPaymentsForAdmin: async (accessToken, date = null) => {
+        let url = `${BASE_URL}/admin/all`;
+        if (date) {
+            url += `?date=${date}`;
+        }
+        try {
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            if (error.response) {
+
             }
             throw error;
         }
@@ -98,7 +109,6 @@ const PaymentService = {
      * @param {string} accessToken 사용자 인증 토큰
      */
     cancelPayment: async (paymentId, cancelRequestDTO, accessToken) => {
-        console.log(`PaymentService: cancelPayment (ID: ${paymentId}) - accessToken 전송 여부:`, accessToken ? '토큰 존재' : '토큰 없음'); // 추가
         try {
             const response = await axios.post(
                 `${BASE_URL}/${paymentId}/cancel`,
@@ -110,14 +120,10 @@ const PaymentService = {
                     },
                 }
             );
-            console.log(`PaymentService: 결제 취소 성공 (ID: ${paymentId}):`, response.data); // 추가
             return response.data;
         } catch (error) {
-            console.error(`PaymentService: 결제 취소 실패 (ID: ${paymentId}):`, error);
-            if (error.response) { // 추가
-                console.error('PaymentService: 에러 응답 데이터:', error.response.data);
-                console.error('PaymentService: 에러 응답 상태:', error.response.status);
-                console.error('PaymentService: 에러 응답 헤더:', error.response.headers);
+            if (error.response) {
+
             }
             throw error;
         }

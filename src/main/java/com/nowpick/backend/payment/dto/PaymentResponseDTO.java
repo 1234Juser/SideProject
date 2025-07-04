@@ -17,6 +17,8 @@ import java.time.LocalDateTime;
 public class PaymentResponseDTO {
     private Long paymentId;
     private Long orderId;
+    private Long memberId;
+    private String memberUsername;
     private String impUid;
     private BigDecimal paymentAmount;
     private String paymentStatus;
@@ -25,11 +27,15 @@ public class PaymentResponseDTO {
     private LocalDateTime paidAt;
     private LocalDateTime createdAt;
     private String failureReason;
+    // OrderResponseDTO를 포함하여 주문 상세 정보도 함께 전달
+    private com.nowpick.backend.order.dto.OrderResponseDTO orderDetails;
 
     public static PaymentResponseDTO from(PaymentEntity entity) {
         return PaymentResponseDTO.builder()
                 .paymentId(entity.getPaymentId())
                 .orderId(entity.getOrder().getOrderId())
+                .memberId(entity.getOrder().getMember().getMemberId())
+                .memberUsername(entity.getOrder().getMember().getMemberUsername())
                 .impUid(entity.getImpUid())
                 .paymentAmount(entity.getPaymentAmount())
                 .paymentStatus(entity.getPaymentStatus().name())
@@ -38,6 +44,7 @@ public class PaymentResponseDTO {
                 .paidAt(entity.getPaidAt())
                 .createdAt(entity.getCreatedAt())
                 .failureReason(entity.getFailureReason())
+                .orderDetails(com.nowpick.backend.order.dto.OrderResponseDTO.from(entity.getOrder()))
                 .build();
     }
 }

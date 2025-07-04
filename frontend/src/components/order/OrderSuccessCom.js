@@ -12,7 +12,7 @@ import {
     OrderTotal,
     PlaceOrderButton,
     ErrorMessage
-} from '../../style/order/OrderStyle'; // 이 경로는 프로젝트 구조에 맞게 조정해주세요.
+} from '../../style/order/OrderStyle';
 
 
 function OrderSuccessCom() {
@@ -80,18 +80,15 @@ function OrderSuccessCom() {
                 <p><strong>주문 번호:</strong> {orderResponse.orderId}</p>
                 <p><strong>거래 번호:</strong> {orderResponse.merchantUid}</p>
                 <p><strong>주문 상태:</strong> {orderResponse.orderStatus}</p>
-                {/* [수정됨] pickupAt이 undefined 또는 null일 경우를 대비하여 ?. 사용 */}
                 <p><strong>픽업 예정 시간:</strong> {orderResponse.pickupAt ? new Date(orderResponse.pickupAt).toLocaleString('ko-KR', {
                     year: 'numeric', month: '2-digit', day: '2-digit',
                     hour: '2-digit', minute: '2-digit', hour12: false
                 }) : '정보 없음'}</p>
-                {/* [수정됨] createdAt이 undefined 또는 null일 경우를 대비하여 ?. 사용 */}
                 <p><strong>주문 일시:</strong> {orderResponse.createdAt ? new Date(orderResponse.createdAt).toLocaleString('ko-KR', {
                     year: 'numeric', month: '2-digit', day: '2-digit',
                     hour: '2-digit', minute: '2-digit', hour12: false
                 }) : '정보 없음'}</p>
                 <OrderTotal>
-                    {/* [수정됨] orderTotalAmount가 undefined 또는 null일 경우를 대비하여 ?. 사용 */}
                     총 결제 금액: {orderResponse.orderTotalAmount?.toLocaleString()}원
                 </OrderTotal>
             </OrderSummary>
@@ -101,9 +98,6 @@ function OrderSuccessCom() {
                 <OrderItemList>
                     {orderResponse.orderItems && orderResponse.orderItems.map((item, index) => (
                         <OrderItem key={index}>
-                            {/* OrderItemImage는 OrderCom에서만 사용되므로, 여기서는 메뉴 이름만 표시하거나,
-                                필요하다면 메뉴 이미지 URL을 포함하도록 OrderResponseDTO를 확장해야 합니다.
-                                현재 OrderItemResponseDTO에는 imageUrl이 없습니다. */}
                             <OrderItemImage src={item.imageUrl} alt={item.menuName} />
                             <OrderItemName>{item.menuName}</OrderItemName>
                             <OrderItemQuantityPrice>
