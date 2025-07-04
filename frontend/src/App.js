@@ -29,6 +29,12 @@ import CartPage from "./pages/cart/CartPage";
 import OrderPage from "./pages/order/OrderPage";
 import StoreSelectionPage from "./pages/store/StoreSelectionPage";
 import useKakaoLoader from "./utils/useKakaoLoader";
+import OrderSuccessPage from "./pages/order/OrderSuccessPage";
+import PaymentPage from "./pages/payment/PaymentPage";
+import PaymentDetailPage from "./pages/payment/PaymentDetailPage";
+import AdminChatDetailCon from "./containers/inquiry/AdminChatDetailCon";
+import AdminPaymentPage from "./pages/payment/AdminPaymentPage";
+import AdminPaymentDetailPage from "./pages/payment/AdminPaymentDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -79,6 +85,13 @@ function App() {
                         <Route path="/mypage/cartItem" element={<CartPage/>}/>
                         {/* 주문   */}
                         <Route path="/order-confirm" element={<OrderPage />} />
+                        <Route path="/order-success" element={<OrderSuccessPage />} />
+                        {/* 결제  */}
+                        <Route path="/mypage/payment" element={<PaymentPage />} />
+                        <Route path="/mypage/payments/:paymentId" element={<PaymentDetailPage />} />
+                        <Route path="/adminmypage/payment" element={<AdminPaymentPage />} />
+                        <Route path="/adminmypage/payment/detail/:productId" element={<AdminPaymentDetailPage />} />
+
 
 
                     </Routes>

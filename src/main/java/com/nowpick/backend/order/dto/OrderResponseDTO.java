@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 public class OrderResponseDTO {
     private Long orderId;
     private String merchantUid;
+    private Long memberId;
+    private String memberUsername;
     private BigDecimal orderTotalAmount;
     private String orderStatus;
     private LocalDateTime pickupAt;
@@ -32,6 +34,8 @@ public class OrderResponseDTO {
         return OrderResponseDTO.builder()
                 .orderId(orderEntity.getOrderId())
                 .merchantUid(orderEntity.getMerchantUid())
+                .memberId(orderEntity.getMember().getMemberId())
+                .memberUsername(orderEntity.getMember().getMemberUsername())
                 .orderTotalAmount(orderEntity.getOrderTotalAmount())
                 .orderStatus(orderEntity.getOrderStatus().name())
                 .pickupAt(orderEntity.getPickupAt())

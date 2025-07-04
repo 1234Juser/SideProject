@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +44,16 @@ public class MenuService {
         
         return new MenuDTO(menuEntity);
         
+    }
+
+    //  모든 메뉴 목록 조회
+    public List<MenuDTO> getAllMenus() {
+        log.info("MenuService: getAllMenus() 호출됨.");
+        List<MenuEntity> menus = menuRepository.findAll();
+        List<MenuDTO> menuDTOs = menus.stream()
+                .map(MenuDTO::new)
+                .collect(Collectors.toList());
+        log.info("MenuService: 모든 메뉴 {}개 조회 성공.", menuDTOs.size());
+        return menuDTOs;
     }
 }

@@ -64,7 +64,8 @@ public class SecurityConfig {
                             // [사용자] 채팅 세션 생성/가져오기 (POST /chat/session)는 USER 권한만 허용
                             .requestMatchers("/chat/session").hasRole("USER") // USER만 접근 가능하도록 추가
                             // [관리자] 열려있는 모든 채팅 세션 조회는 ADMIN 권한만 허용
-                            .requestMatchers( "/chat/sessions/open").hasRole("ADMIN")
+                            .requestMatchers( "/chat/sessions/open","/api/menu/all","/api/payments/admin/**")
+                    .hasRole("ADMIN")
                             
                            // 3. 마지막으로 인증이 필요한 넓은 범위의 경로 설정
                             // 예: /api/public/** 같은 공개 API는 permitAll(), /api/private/** 는 authenticated()

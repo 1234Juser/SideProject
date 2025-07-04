@@ -13,9 +13,11 @@ const MyPageSidebar = () => {
             <SidebarItem>
                 멤버십
             </SidebarItem>
-            <SidebarItem>
-                주문 내역
-            </SidebarItem>
+            <Link to="/mypage/payment">
+                <SidebarItem>
+                    주문 내역
+                </SidebarItem>
+            </Link>
             <Link to="/mypage/wishlist">
                 <SidebarItem>
                     찜한 메뉴

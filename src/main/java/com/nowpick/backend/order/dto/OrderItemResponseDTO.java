@@ -17,17 +17,19 @@ import lombok.NoArgsConstructor;
 public class OrderItemResponseDTO {
     private Long orderItemId;
     private Long menuId;
-    private String menuName; // 추가
+    private String menuName;
     private Integer quantity;
     private Integer priceAtPurchase;
+    private String imageUrl;
 
     public static OrderItemResponseDTO from(OrderItemEntity orderItemEntity) {
         return OrderItemResponseDTO.builder()
                 .orderItemId(orderItemEntity.getOrderItemId())
                 .menuId(orderItemEntity.getMenu().getMenuId())
-                .menuName(orderItemEntity.getMenu().getMenuName()) // 메뉴 이름 추가
+                .menuName(orderItemEntity.getMenu().getMenuName())
                 .quantity(orderItemEntity.getQuantity())
                 .priceAtPurchase(orderItemEntity.getPriceAtPurchase())
+                .imageUrl(orderItemEntity.getMenu().getMenuImageUrl())
                 .build();
     }
 }

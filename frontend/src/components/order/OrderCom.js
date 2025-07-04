@@ -33,14 +33,11 @@ function OrderCom() {
 
     useEffect(() => {
         if (!isAuthInitialized) {
-            console.log('OrderCom: AuthContext 초기화 대기 중...'); // 추가
             return;
         }
-        console.log('OrderCom: AuthContext 초기화 완료. 현재 인증 상태:', auth.isAuthenticated); // 추가
 
         if (!auth.isAuthenticated) {
             alert('로그인이 필요합니다.');
-            console.log('OrderCom: 로그인 필요. 로그인 페이지로 리다이렉트.'); // 추가
             navigate('/login');
             return;
         }
@@ -57,7 +54,6 @@ function OrderCom() {
                 pricePerItem: singleMenuItem.menuPrice,
                 imageUrl: singleMenuItem.menuImageUrl
             }]);
-            console.log('OrderCom: 단일 메뉴 주문 항목 설정됨.'); // 추가
         } else if (initialOrderItems.length > 0) {
             const formattedItems = initialOrderItems.map(item => ({
                 menuId: item.menu.menuId,
@@ -67,10 +63,8 @@ function OrderCom() {
                 imageUrl: item.menu.menuImageUrl
             }));
             setOrderItemsToDisplay(formattedItems);
-            console.log('OrderCom: 여러 메뉴 주문 항목 설정됨.'); // 추가
         } else {
             alert('주문할 상품 정보가 없습니다.');
-            console.log('OrderCom: 주문할 상품 정보 없음. 홈 페이지로 리다이렉트.'); // 추가
             navigate('/');
         }
 
@@ -84,7 +78,6 @@ function OrderCom() {
         const hh = String(now.getHours()).padStart(2, '0');
         const min = String(now.getMinutes()).padStart(2, '0');
         setPickupTime(`${hh}:${min}`);
-        console.log(`OrderCom: 초기 픽업 날짜/시간 설정됨: ${yyyy}-${mm}-${dd} ${hh}:${min}`); // 추가
 
     }, [location.state, auth.isAuthenticated, navigate, isAuthInitialized]);
 
@@ -96,31 +89,26 @@ function OrderCom() {
         setErrorMessage('');
         if (!pickupDate || !pickupTime) {
             setErrorMessage('픽업 날짜와 시간을 선택해주세요.');
-            console.warn('OrderCom: 픽업 날짜 또는 시간 선택 안됨.'); // 추가
             return;
         }
         const pickupDateTimeString = `${pickupDate}T${pickupTime}:00`;
         if (new Date(pickupDateTimeString) <= new Date()) {
             setErrorMessage('픽업 시간은 현재 시간보다 미래여야 합니다.');
-            console.warn('OrderCom: 픽업 시간이 현재보다 이전임.'); // 추가
             return;
         }
         setIsTimeConfirmed(true);
-        console.log(`OrderCom: 픽업 시간 확인 완료: ${pickupDate} ${pickupTime}`); // 추가
     };
 
     const handlePayment = async () => {
         setErrorMessage('');
-        console.log('OrderCom: 결제 시작 버튼 클릭됨.'); // 추가
 
         if (!auth.accessToken) {
             alert('인증 토큰이 없습니다. 다시 로그인 해주세요.');
-            console.error('OrderCom: auth.accessToken이 null 또는 undefined입니다. 로그아웃 처리.'); // 추가
             logout();
             navigate('/login');
             return;
         }
-        console.log('OrderCom: accessToken 존재 확인됨. 주문 생성 시도.'); // 추가
+        // console.log('OrderCom: accessToken 존재 확인됨. 주문 생성 시도.'); // 추가
 
         try {
             const orderItemsDTO = orderItemsToDisplay.map(item => ({
@@ -131,9 +119,9 @@ function OrderCom() {
                 orderItems: orderItemsDTO,
                 pickupAt: `${pickupDate}T${pickupTime}:00`
             };
-            console.log('OrderCom: orderRequestDTO:', orderRequestDTO); // 추가
+            // console.log('OrderCom: orderRequestDTO:', orderRequestDTO); // 추가
             const orderResponse = await placeOrder(orderRequestDTO, auth.accessToken);
-            console.log('OrderCom: 주문 생성 응답:', orderResponse); // 추가
+            // console.log('OrderCom: 주문 생성 응답:', orderResponse); // 추가
 
             const { IMP } = window;
             IMP.init('imp47720710');
@@ -162,46 +150,46 @@ function OrderCom() {
                 buyer_name: auth.memberNickname,
                 buyer_tel: '010-0000-0000',
             }, async (rsp) => {
-                console.log('OrderCom: 아임포트 결제 응답 (rsp):', rsp); // 추가
+                // console.log('OrderCom: 아임포트 결제 응답 (rsp):', rsp); // 추가
                 if (rsp.success) {
                     try {
                         const paymentData = {
                             imp_uid: rsp.imp_uid,
                             merchant_uid: rsp.merchant_uid,
                         };
-                        console.log('OrderCom: 결제 성공 후 백엔드 검증 요청 (paymentData):', paymentData); // 추가
+                        // console.log('OrderCom: 결제 성공 후 백엔드 검증 요청 (paymentData):', paymentData); // 추가
                         const finalResponse = await PaymentService.processPaymentCallback(paymentData, auth.accessToken);
                         alert('결제가 성공적으로 완료되었습니다.');
-                        console.log('OrderCom: 백엔드 결제 검증 및 처리 성공. 결제 성공 페이지로 이동.'); // 추가
-                        navigate('/order-success', { state: { orderResponse: finalResponse } });
+                        // console.log('OrderCom: 백엔드 결제 검증 및 처리 성공. 결제 성공 페이지로 이동.'); // 추가
+                        navigate('/order-success', { state: { orderResponse: orderResponse } });
                     } catch (verifyError) {
                         const failMsg = verifyError.response?.data?.message || '알 수 없는 오류';
                         alert(`결제는 성공했으나 서버 처리 중 오류가 발생했습니다. 관리자에게 문의하세요.\n사유: ${failMsg}`);
-                        console.error('OrderCom: 결제 성공 후 서버 검증 중 오류 발생:', verifyError); // 추가
+                        // console.error('OrderCom: 결제 성공 후 서버 검증 중 오류 발생:', verifyError); // 추가
                         if (verifyError.response) { // 추가
-                            console.error('OrderCom: 검증 오류 응답 데이터:', verifyError.response.data);
-                            console.error('OrderCom: 검증 오류 응답 상태:', verifyError.response.status);
-                            console.error('OrderCom: 검증 오류 응답 헤더:', verifyError.response.headers);
+                            // console.error('OrderCom: 검증 오류 응답 데이터:', verifyError.response.data);
+                            // console.error('OrderCom: 검증 오류 응답 상태:', verifyError.response.status);
+                            // console.error('OrderCom: 검증 오류 응답 헤더:', verifyError.response.headers);
                         }
                     }
                 } else {
                     alert(`결제에 실패했습니다. 에러: ${rsp.error_msg}`);
                     setErrorMessage(`결제 실패: ${rsp.error_msg}`);
-                    console.error('OrderCom: 아임포트 결제 실패:', rsp.error_msg); // 추가
+                    // console.error('OrderCom: 아임포트 결제 실패:', rsp.error_msg); // 추가
                 }
             });
         } catch (error) {
-            console.error('OrderCom: 주문 생성 또는 결제 처리 중 예외 발생:', error); // 추가
+            // console.error('OrderCom: 주문 생성 또는 결제 처리 중 예외 발생:', error); // 추가
             if (error.response && error.response.status === 401) {
                 setErrorMessage('인증이 만료되었습니다. 다시 로그인해주세요.');
-                console.error('OrderCom: 401 Unauthorized 응답 수신. 토큰 만료 또는 유효하지 않음. 로그아웃 처리.'); // 추가
-                console.error('OrderCom: 401 에러 응답 데이터:', error.response.data); // 추가
-                console.error('OrderCom: 401 에러 응답 헤더:', error.response.headers); // 추가
+                // console.error('OrderCom: 401 Unauthorized 응답 수신. 토큰 만료 또는 유효하지 않음. 로그아웃 처리.'); // 추가
+                // console.error('OrderCom: 401 에러 응답 데이터:', error.response.data); // 추가
+                // console.error('OrderCom: 401 에러 응답 헤더:', error.response.headers); // 추가
                 logout();
                 navigate('/login');
             } else {
                 setErrorMessage(`주문 생성 실패: ${error.response?.data?.message || '서버 오류'}`);
-                console.error('OrderCom: 주문 생성/처리 기타 오류:', error.response?.data || error.message); // 추가
+                // console.error('OrderCom: 주문 생성/처리 기타 오류:', error.response?.data || error.message); // 추가
             }
         }
     };
