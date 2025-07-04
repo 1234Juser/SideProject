@@ -122,59 +122,54 @@ function MenuListCom({ menuList }) {
         }
     };
 
-    const handleCartClick = async (menuId, menuName) => {
-        if (!auth.isAuthenticated || !auth.accessToken) {
-            alert('장바구니 기능을 사용하려면 로그인이 필요합니다.');
-            navigate('/login');
-            return;
-        }
-
-        const isInCart = cartStatus[menuId]?.inCart;
-        const cartItemId = cartStatus[menuId]?.cartItemId;
-
-        try {
-            if (isInCart) {
-                await removeCartItem(cartItemId, auth.accessToken);
-                alert(`${menuName} 장바구니에서 제거되었습니다.`);
-                setCartStatus(prevStatus => {
-                    const newStatus = { ...prevStatus };
-                    delete newStatus[menuId];
-                    return newStatus;
-                });
-                queryClient.invalidateQueries(['cartItems']); // 장바구니 항목 제거 후 쿼리 무효화
-            } else {
-                const addedItem = await addCartItem(menuId, 1, auth.accessToken); // 수량 1로 추가
-                alert(`${menuName} 장바구니에 추가되었습니다.`);
-                setCartStatus(prevStatus => ({
-                    ...prevStatus,
-                    [menuId]: {
-                        inCart: true,
-                        cartItemId: addedItem.cartItemId,
-                        quantity: 1 // 추가 시 수량은 1로 설정
-                    }
-                }));
-                queryClient.invalidateQueries(['cartItems']); // 장바구니 항목 추가 후 쿼리 무효화
-            }
-        } catch (error) {
-            const errorMessage = error.response?.data?.message || error.message;
-            if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-                alert('인증 정보가 유효하지 않습니다. 다시 로그인해주세요.');
-                navigate('/login');
-            } else {
-                alert(`장바구니 처리 중 오류가 발생했습니다: ${errorMessage}`);
-            }
-        }
-    };
-
-
-    const handleCheckoutClick = (menu) => { // 변경: menuId, menuName 대신 전체 menu 객체 받음
+    const handleCartClick = async (menuId, menuName) => { // menuName은 알림용으로 받음
         if (!auth.isAuthenticated) {
             alert('로그인이 필요합니다.');
             navigate('/login');
             return;
         }
-        // 단일 상품을 즉시 구매하는 경우, 기본 수량을 1로 설정하여 OrderCom으로 전달
-        navigate('/order-confirm', { state: { menu: menu, quantity: 1 } });
+
+        try {
+            if (cartStatus[menuId]?.inCart) {
+                // 장바구니에 이미 있으면 제거
+                // [수정됨] removeCartItem 호출 시 menuId 전달
+                await removeCartItem(menuId, auth.accessToken); // cartItemId 대신 menuId를 전달합니다.
+                alert(`${menuName}이(가) 장바구니에서 제거되었습니다.`);
+                setCartStatus(prevStatus => {
+                    const newStatus = { ...prevStatus };
+                    delete newStatus[menuId]; // 해당 메뉴의 장바구니 상태 제거
+                    return newStatus;
+                });
+            } else {
+                // 장바구니에 없으면 추가 (기본 수량 1)
+                await addCartItem(menuId, 1, auth.accessToken);
+                alert(`${menuName}이(가) 장바구니에 추가되었습니다.`);
+                setCartStatus(prevStatus => ({
+                    ...prevStatus,
+                    [menuId]: { inCart: true } // 새로운 항목 추가 시 inCart: true로 설정
+                }));
+            }
+            queryClient.invalidateQueries(['cartItems']); // 장바구니 목록 쿼리 무효화
+        } catch (error) {
+            console.error('장바구니 처리 실패:', error);
+            alert('장바구니 처리 중 오류가 발생했습니다.');
+        }
+    };
+
+    const handleCheckoutClick = (menu) => {
+        if (!auth.isAuthenticated) {
+            alert('로그인이 필요합니다.');
+            navigate('/login');
+            return;
+        }
+        // 바로구매는 단일 메뉴를 장바구니에 담고 바로 주문 확인 페이지로 이동하는 시나리오
+        // 이 예시에서는 간단히 해당 메뉴를 포함하는 orderItems 배열을 넘겨줍니다.
+        const itemsToOrder = [{
+            menu: menu, // 전체 메뉴 객체 전달
+            quantity: 1, // 기본 수량 1
+            cartItemId: `direct-purchase-${menu.menuId}` // 임시 ID (실제 DB에 저장되지 않음)
+        }];
+        navigate('/order-confirm', { state: { selectedItems: itemsToOrder } });
     };
 
 

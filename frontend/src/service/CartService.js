@@ -23,14 +23,18 @@ export const addCartItem = async (menuId, quantity, accessToken) => {
 };
 
 // 특정 장바구니 항목 삭제
-export const removeCartItem = async (cartItemId, accessToken) => {
+export const removeCartItem = async (menuId, accessToken) => {
     try {
-        await axios.delete(`${API_BASE_URL}/${cartItemId}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-        return true; // 삭제 성공
+        const response = await axios.delete(
+            `${API_BASE_URL}/${menuId}`, // [수정됨] API_BASE_URL 사용
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        console.log('장바구니 항목 삭제 성공:', response.data);
+        return response.data;
     } catch (error) {
         console.error('장바구니 항목 삭제 실패:', error);
         throw error;
@@ -53,10 +57,10 @@ export const fetchCartItems = async (accessToken) => {
 };
 
 // 장바구니 항목 수량 업데이트
-export const updateCartItemQuantity = async (cartItemId, quantity, accessToken) => {
+export const updateCartItemQuantity = async (menuId, quantity, accessToken) => {
     try {
         const response = await axios.put(
-            `${API_BASE_URL}/${cartItemId}`,
+            `${API_BASE_URL}/${menuId}`, // [수정됨] API_BASE_URL 사용
             { quantity },
             {
                 headers: {

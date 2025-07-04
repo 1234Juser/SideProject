@@ -28,6 +28,9 @@ function CartCom({ cartItems, selectedCartItems, setSelectedCartItems }) {
 
     // 모든 장바구니 항목이 선택 해제되면 selectedCartItems를 초기화
     useEffect(() => {
+        // [수정됨] selectedCartItems에 저장된 ID가 이제 menuId가 될 것이므로,
+        // cartItems의 menuId를 기준으로 필터링 로직을 변경해야 할 수 있습니다.
+        // 현재는 cartItemId를 기준으로 하므로, 이 부분은 추후 필요시 조정합니다.
         if (selectedCartItems.length > 0 && !cartItems.some(item => selectedCartItems.includes(item.cartItemId))) {
             setSelectedCartItems([]);
         }
@@ -43,12 +46,12 @@ function CartCom({ cartItems, selectedCartItems, setSelectedCartItems }) {
         });
     };
 
-    const handleRemoveItem = async (cartItemId) => {
+    const handleRemoveItem = async (menuId) => { // [수정됨] cartItemId 대신 menuId를 인자로 받음
         if (!window.confirm('선택하신 항목을 장바구니에서 삭제하시겠습니까?')) {
             return;
         }
         try {
-            await removeCartItem(cartItemId, auth.accessToken);
+            await removeCartItem(menuId, auth.accessToken); // [수정됨] menuId 전달
             alert('장바구니 항목이 삭제되었습니다.');
             queryClient.invalidateQueries(['cartItems']); // 장바구니 목록 쿼리 무효화하여 데이터 다시 불러오기
         } catch (error) {
@@ -57,24 +60,23 @@ function CartCom({ cartItems, selectedCartItems, setSelectedCartItems }) {
         }
     };
 
-    const handleUpdateQuantity = async (cartItemId, newQuantity) => {
+    const handleUpdateQuantity = async (menuId, newQuantity) => { // [수정됨] cartItemId 대신 menuId를 인자로 받음
         if (newQuantity <= 0) {
             // 수량이 0 이하면 삭제 처리
-            handleRemoveItem(cartItemId);
+            handleRemoveItem(menuId); // [수정됨] menuId 전달
             return;
         }
         try {
-            await updateCartItemQuantity(cartItemId, newQuantity, auth.accessToken);
+            await updateCartItemQuantity(menuId, newQuantity, auth.accessToken); // [수정됨] menuId 전달
             queryClient.invalidateQueries(['cartItems']); // 장바구니 목록 쿼리 무효화하여 데이터 다시 불러오기
         } catch (error) {
-            // console.error('장바구니 항목 수량 업데이트 실패:', error);
             alert('장바구니 항목 수량 업데이트에 실패했습니다.');
         }
     };
 
     const calculateTotal = () => {
         return cartItems
-            .filter(item => selectedCartItems.includes(item.cartItemId))
+            .filter(item => selectedCartItems.includes(item.cartItemId)) // [유지] 체크박스는 여전히 cartItemId를 사용
             .reduce((total, item) => total + (item.menu.menuPrice * item.quantity), 0);
     };
 
@@ -108,6 +110,7 @@ function CartCom({ cartItems, selectedCartItems, setSelectedCartItems }) {
             <CartHeader>나의 장바구니</CartHeader>
             <CartItemList>
                 {cartItems.map((item) => (
+                    // key는 여전히 Redis의 고유 ID인 item.cartItemId를 사용하는 것이 적절합니다.
                     <CartItem key={item.cartItemId}>
                         <input
                             type="checkbox"
@@ -122,9 +125,11 @@ function CartCom({ cartItems, selectedCartItems, setSelectedCartItems }) {
                             <CartItemPrice>{(item.menu.menuPrice * item.quantity).toLocaleString()}원</CartItemPrice>
                         </CartItemDetails>
                         <CartActions>
-                            <QuantityButton onClick={() => handleUpdateQuantity(item.cartItemId, item.quantity + 1)}>+</QuantityButton>
-                            <QuantityButton onClick={() => handleUpdateQuantity(item.cartItemId, item.quantity - 1)}>-</QuantityButton>
-                            <RemoveButton onClick={() => handleRemoveItem(item.cartItemId)}>삭제</RemoveButton>
+                            {/* [수정됨] item.cartItemId 대신 item.menu.menuId 전달 */}
+                            <QuantityButton onClick={() => handleUpdateQuantity(item.menu.menuId, item.quantity + 1)}>+</QuantityButton>
+                            <QuantityButton onClick={() => handleUpdateQuantity(item.menu.menuId, item.quantity - 1)}>-</QuantityButton>
+                            {/* [수정됨] item.cartItemId 대신 item.menu.menuId 전달 */}
+                            <RemoveButton onClick={() => handleRemoveItem(item.menu.menuId)}>삭제</RemoveButton>
                         </CartActions>
                     </CartItem>
                 ))}
