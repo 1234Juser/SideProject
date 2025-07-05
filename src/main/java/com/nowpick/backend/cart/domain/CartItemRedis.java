@@ -30,7 +30,7 @@ public class CartItemRedis implements Serializable {
 
     // 장바구니 항목을 새로 생성할 때 호출되는 생성자
     public CartItemRedis(Long memberId, Long menuId, Integer quantity) {
-        this.id = UUID.randomUUID().toString(); // [수정됨] 새로운 항목 생성 시 고유 ID 할당
+        this.id = UUID.randomUUID().toString(); //  새로운 항목 생성 시 고유 ID 할당
         this.memberId = memberId;
         this.menuId = menuId;
         this.quantity = quantity;

@@ -26,7 +26,7 @@ export const addCartItem = async (menuId, quantity, accessToken) => {
 export const removeCartItem = async (menuId, accessToken) => {
     try {
         const response = await axios.delete(
-            `${API_BASE_URL}/${menuId}`, // [수정됨] API_BASE_URL 사용
+            `${API_BASE_URL}/${menuId}`,
             {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -60,7 +60,7 @@ export const fetchCartItems = async (accessToken) => {
 export const updateCartItemQuantity = async (menuId, quantity, accessToken) => {
     try {
         const response = await axios.put(
-            `${API_BASE_URL}/${menuId}`, // [수정됨] API_BASE_URL 사용
+            `${API_BASE_URL}/${menuId}`, //
             { quantity },
             {
                 headers: {

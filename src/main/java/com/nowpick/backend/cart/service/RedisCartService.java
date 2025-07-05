@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class RedisCartService { // [이름 변경 확인] CartService 대신 RedisCartService로 사용 중인 경우
+public class RedisCartService {
 
     private final RedisCartRepository cartRepository;
     private final MemberRepository memberRepository;
@@ -46,7 +46,7 @@ public class RedisCartService { // [이름 변경 확인] CartService 대신 Red
         }
 
         CartItemRedis savedCartItem = cartRepository.save(cartItem);
-        return new RedisCartItemResponseDTO(savedCartItem, menu); // [수정됨] RedisCartItemResponseDTO 반환
+        return new RedisCartItemResponseDTO(savedCartItem, menu); //
     }
 
     // 특정 사용자의 장바구니 목록 조회
@@ -60,7 +60,7 @@ public class RedisCartService { // [이름 변경 확인] CartService 대신 Red
                 .map(redisItem -> {
                     MenuEntity menu = menuRepository.findById(redisItem.getMenuId())
                             .orElseThrow(() -> new IllegalArgumentException("메뉴를 찾을 수 없습니다: " + redisItem.getMenuId()));
-                    return new RedisCartItemResponseDTO(redisItem, menu); // [수정됨] RedisCartItemResponseDTO 반환
+                    return new RedisCartItemResponseDTO(redisItem, menu);
                 })
                 .collect(Collectors.toList());
     }
@@ -84,7 +84,7 @@ public class RedisCartService { // [이름 변경 확인] CartService 대신 Red
 
             MenuEntity menu = menuRepository.findById(updatedCartItem.getMenuId())
                     .orElseThrow(() -> new IllegalArgumentException("메뉴를 찾을 수 없습니다: " + updatedCartItem.getMenuId()));
-            return new RedisCartItemResponseDTO(updatedCartItem, menu); // [수정됨] RedisCartItemResponseDTO 반환
+            return new RedisCartItemResponseDTO(updatedCartItem, menu);
         }
     }
 
@@ -103,16 +103,5 @@ public class RedisCartService { // [이름 변경 확인] CartService 대신 Red
                             throw new IllegalArgumentException("장바구니 항목을 찾을 수 없습니다: memberId=" + member.getMemberId() + ", menuId=" + menuId);
                         }
                 );
-    }
-
-    /**
-     * 특정 회원의 장바구니를 모두 비웁니다. (결제 완료 후 등)
-     * @param username 회원 사용자명
-     */
-    public void clearCart(String username) {
-        MemberEntity member = memberRepository.findByMemberUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + username));
-        cartRepository.deleteAllByMemberId(member.getMemberId());
-        log.info("Redis 장바구니 전체 비우기 완료: memberId={}", member.getMemberId());
     }
 }

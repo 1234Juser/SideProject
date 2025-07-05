@@ -55,14 +55,14 @@ public class RedisCartController {
 
 
     // 장바구니 항목 수량 업데이트
-    // [수정됨] @PathVariable Long cartItemId -> @PathVariable Long menuId
+    // @PathVariable Long cartItemId -> @PathVariable Long menuId
     @PutMapping("/{menuId}")
     public ResponseEntity<RedisCartItemResponseDTO> updateCartItemQuantity(@AuthenticationPrincipal UserDetails userDetails,
-                                                                      @PathVariable Long menuId, // [수정됨]
+                                                                      @PathVariable Long menuId,
                                                                       @RequestBody CartItemUpdateRequestDTO dto) {
         log.info("장바구니 항목 수량 업데이트 요청: 사용자 = {}, 메뉴 ID = {}, 새 수량 = {}", userDetails.getUsername(), menuId, dto.getQuantity());
         try {
-            RedisCartItemResponseDTO response = cartService.updateCartItemQuantity(userDetails.getUsername(), menuId, dto); // [수정됨]
+            RedisCartItemResponseDTO response = cartService.updateCartItemQuantity(userDetails.getUsername(), menuId, dto);
             if (response == null) {
                 return ResponseEntity.noContent().build();
             }
@@ -74,13 +74,12 @@ public class RedisCartController {
     }
 
     // 장바구니 항목 삭제
-    // [수정됨] @PathVariable Long cartItemId -> @PathVariable Long menuId
     @DeleteMapping("/{menuId}")
     public ResponseEntity<Void> removeItemFromCart(@AuthenticationPrincipal UserDetails userDetails,
-                                                   @PathVariable Long menuId) { // [수정됨]
+                                                   @PathVariable Long menuId) {
         log.info("장바구니 항목 삭제 요청: 사용자 = {}, 메뉴 ID = {}", userDetails.getUsername(), menuId);
         try {
-            cartService.removeItemFromCart(userDetails.getUsername(), menuId); // [수정됨]
+            cartService.removeItemFromCart(userDetails.getUsername(), menuId);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             log.error("장바구니 항목 삭제 실패: {}", e.getMessage());

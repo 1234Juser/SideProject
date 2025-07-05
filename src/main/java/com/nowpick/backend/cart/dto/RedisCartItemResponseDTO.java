@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class RedisCartItemResponseDTO {
-    private String cartItemId; // [수정됨] Redis ID는 String 타입
+    private String cartItemId; // Redis ID는 String 타입
     private Integer quantity;
     private MenuDTO menu; // 메뉴 정보를 포함하기 위한 MenuDTO
 
